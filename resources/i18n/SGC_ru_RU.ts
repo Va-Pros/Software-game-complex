@@ -4,6 +4,7 @@
 <context>
     <name>Puzzle::MainMenu</name>
     <message>
+        <location filename="../../src/Admin/main-menu.cpp" line="47"/>
         <source>Question constructor</source>
         <translation>Конструктор вопросов</translation>
     </message>
