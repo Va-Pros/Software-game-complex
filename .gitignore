@@ -36,3 +36,6 @@ cmake-build-debug/
 *.exe
 *.out
 *.app
+
+# QT compiled translation file
+*.qm

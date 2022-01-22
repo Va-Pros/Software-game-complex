@@ -44,7 +44,7 @@ Puzzle::MainMenu::MainMenu() {
 	questionDesignerBtn.setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
 	// TODO Красивое оформление
 	questionDesignerBtn.setStyleSheet("QPushButton { color : blue; }");
-	questionDesignerBtn.setText("Конструктор вопросов");
+	questionDesignerBtn.setText(tr("Question constructor"));
 	QObject::connect(&questionDesignerBtn, SIGNAL(clicked()), SLOT(questionDesignerBtnClick()));
 
 	/*** situationDesignerBtn ***/
