@@ -1,9 +1,12 @@
 #include <QApplication>
 #include <QTranslator>
-#include "Admin/admin.h"
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <KLocalizedContext>
 
 int main(int argc, char **argv) {
-	QApplication app(argc, argv);
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QApplication app(argc, argv);
 
     QTranslator translator;
 
@@ -18,7 +21,14 @@ int main(int argc, char **argv) {
         }
     }
 
-	Puzzle::Admin admin;
-	admin.show();
-	return app.exec();
+    QQmlApplicationEngine engine;
+
+    engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
+    engine.load(QUrl(QStringLiteral("qrc:ui/main.qml")));
+
+    if (engine.rootObjects().isEmpty()) {
+        return -1;
+    }
+
+    return app.exec();
 }

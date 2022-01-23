@@ -1,5 +1,11 @@
 <RCC>
     <qresource prefix="/">
         <file>i18n/SGC_ru_RU.qm</file>
+        <file>ui/main.qml</file>
+        <file>ui/MainMenu.qml</file>
+        <file>ui/QuestionConstructor.qml</file>
+        <file>ui/SituationConstructor.qml</file>
+        <file>ui/ResultsViewer.qml</file>
+        <file>ui/GameManagement.qml</file>
     </qresource>
 </RCC>

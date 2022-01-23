@@ -24,7 +24,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-set(COMPONENTS Widgets LinguistTools)
+set(COMPONENTS Widgets LinguistTools Quick Qml)
 
 if($ENV{QT_PATH})
     find_package(Qt5 COMPONENTS ${COMPONENTS} REQUIRED
@@ -34,27 +34,30 @@ else()
     find_package(Qt5 COMPONENTS ${COMPONENTS} REQUIRED)
 endif()
 
+set(KF_MIN_VERSION "5.89.0")
+find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
+
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
+
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+
+find_package(KF5 ${KF_MIN_VERSION} REQUIRED COMPONENTS Kirigami2 I18n CoreAddons)
+
 add_executable(Admin
         main.cpp
         ../../resources/resources.qrc
-########################################################################################################################
-        admin.cpp
-        "${CMAKE_SOURCE_DIR}/include/Admin/admin.h"
-########################################################################################################################
-        main-menu.cpp
-        "${CMAKE_SOURCE_DIR}/include/Admin/main-menu.h"
-########################################################################################################################
-        question-designer.cpp
-        "${CMAKE_SOURCE_DIR}/include/Admin/question-designer.h"
-########################################################################################################################
-     )
-target_link_libraries(Admin Qt5::Widgets)
+        ../../resources/ui/main.qml
+)
+
+target_link_libraries(Admin Qt5::Widgets Qt5::Quick KF5::Kirigami2 KF5::I18n)
 
 get_filename_component(TRANSLATION_ROOT ../../resources/i18n ABSOLUTE)
 set(TS_FILES ${TRANSLATION_ROOT}/SGC_ru_RU.ts)
 
+get_filename_component(UI_PATH ../../resources/ui ABSOLUTE)
 add_custom_target(AdminTranslationsUpdate
-        COMMAND ${Qt5_LUPDATE_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR} -recursive -ts ${TS_FILES}
+        COMMAND ${Qt5_LUPDATE_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR} ${UI_PATH} -recursive -ts ${TS_FILES}
 )
 
 add_custom_target(AdminTranslationsRelease
@@ -62,5 +65,5 @@ add_custom_target(AdminTranslationsRelease
 )
 
 add_custom_target(AdminTranslateAndRun
-        DEPENDS AdminTranslationsUpdate AdminTranslationsRelease Admin
+        DEPENDS AdminTranslationsUpdate AdminTranslationsRelease
 )

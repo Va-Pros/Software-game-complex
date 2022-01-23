@@ -7,32 +7,16 @@
 #include <QWidget>
 
 namespace Puzzle {
-class MainMenu : public QWidget {
-	Q_OBJECT
+    class MainMenu : public QObject {
+        Q_OBJECT
 
 public:
-	MainMenu();
 
-public slots:
-	void questionDesignerBtnClick();
-	void situationDesignerBtnClick();
-	void resultsViewerBtnClick();
-	void gameManagementBtnClick();
+	Q_INVOKABLE void questionDesignerBtnClick();
+    Q_INVOKABLE void situationDesignerBtnClick();
+    Q_INVOKABLE void resultsViewerBtnClick();
+    Q_INVOKABLE void gameManagementBtnClick();
 
-signals:
-	void needSceneChanged(int idx);
-
-private:
-	QLabel header;
-
-	QPushButton questionDesignerBtn;
-	QPushButton situationDesignerBtn;
-	QPushButton resultsViewerBtn;
-	QPushButton gameManagementBtn;
-
-	QVBoxLayout mainLayout;
-	QVBoxLayout headerLayout;
-	QHBoxLayout buttonsLayout;
 };
 
 }  // namespace Puzzle
