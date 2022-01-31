@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.15
 import org.kde.kirigami 2.15 as Kirigami
 
 Kirigami.Page {
+    id: mainMenuPage
     title: qsTr("Main menu")
 
     ColumnLayout {
@@ -11,7 +12,7 @@ Kirigami.Page {
 
         Controls.Button {
             text: qsTr("Question constructor")
-            onClicked: applicationWindow().pageStack.push("qrc:ui/QuestionConstructor.qml")
+            onClicked: applicationWindow().pageStack.push("qrc:ui/QuestionConstructor.qml");
         }
 
         Controls.Button {
@@ -28,5 +29,27 @@ Kirigami.Page {
             text: qsTr("Game management")
             onClicked: applicationWindow().pageStack.push("qrc:ui/GameManagement.qml")
         }
+
+
+    }
+
+    Controls.StackView.onActivated: {
+        console.log("onActivated");
+    }
+
+    Controls.StackView.onActivating: {
+        console.log("onActivating");
+    }
+
+    Controls.StackView.onDeactivated: {
+        console.log("onDeactivated");
+    }
+
+    Controls.StackView.onDeactivating: {
+        console.log("deactivating");
+    }
+
+    Controls.StackView.onRemoved: {
+        console.log("removed");
     }
 }

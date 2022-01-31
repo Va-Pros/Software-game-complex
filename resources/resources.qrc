@@ -7,5 +7,20 @@
         <file>ui/SituationConstructor.qml</file>
         <file>ui/ResultsViewer.qml</file>
         <file>ui/GameManagement.qml</file>
+        <file>ui/QuestionEditorPage.qml</file>
+        <file>ui/QuestionEditorWidgets/TypeInQuestionEditor.qml</file>
+        <file>ui/QuestionEditorWidgets/SingleChoiceQuestionEditor.qml</file>
+        <file>ui/QuestionEditorWidgets/MultipleChoiceQuestionEditor.qml</file>
+        <file>ui/QuestionEditorWidgets/ChoiceQuestionEditor.qml</file>
+        <file>ui/QuestionEditorWidgets/RegularQuestionInput.qml</file>
+        <file>ui/QuestionEditorWidgets/MatchQuestionEditor.qml</file>
+        <file>ui/QuestionEditorWidgets/EditorUtils.js</file>
+        <file>ui/QuestionEditorWidgets/DropDownFillQuestionEditor.qml</file>
+        <file>ui/QuestionEditorWidgets/TypeInFillQuestionEditor.qml</file>
+        <file>ui/QuestionEditorWidgets/AnswerInput.qml</file>
+        <file>ui/QuestionEditorWidgets/OneColumnAnswersQuestionEditor.qml</file>
+        <file>ui/QuestionEditorWidgets/TypeInQuestionEditor2.qml</file>
+        <file>ui/QuestionEditorWidgets/SingleChoiceQuestionEditor2.qml</file>
+        <file>ui/QuestionEditorWidgets/SingleChoiceAnswerInput.qml</file>
     </qresource>
 </RCC>

@@ -8,5 +8,4 @@ Kirigami.ApplicationWindow {
     title: qsTr("Admin Panel")
 
     pageStack.initialPage: Qt.resolvedUrl("MainMenu.qml")
-
 }

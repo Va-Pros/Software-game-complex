@@ -40,16 +40,25 @@ find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
 include(KDEInstallDirs)
+include(ECMInstallIcons)
 
-find_package(KF5 ${KF_MIN_VERSION} REQUIRED COMPONENTS Kirigami2 I18n CoreAddons)
+find_package(KF5 ${KF_MIN_VERSION} REQUIRED COMPONENTS Kirigami2 I18n CoreAddons IconThemes)
 
 add_executable(Admin
         main.cpp
         ../../resources/resources.qrc
-        ../../resources/ui/main.qml
-)
+        QuestionCreator/include/QuestionTypeListModel.h
+        QuestionCreator/include/QuestionTypeItem.h
+        QuestionCreator/include/QuestionCreatorModel.h
+        Test/include/Question.h
+        Test/Question.cpp
+        Test/include/TypeInQuestion.h
+        Test/TypeInQuestion.cpp
+        Test/include/TypeInAnswer.h
+        Test/TypeInAnswer.cpp
+        QuestionCreator/include/QuestionSaver.h)
 
-target_link_libraries(Admin Qt5::Widgets Qt5::Quick KF5::Kirigami2 KF5::I18n)
+target_link_libraries(Admin Qt5::Widgets Qt5::Quick KF5::Kirigami2 KF5::I18n KF5::IconThemes)
 
 get_filename_component(TRANSLATION_ROOT ../../resources/i18n ABSOLUTE)
 set(TS_FILES ${TRANSLATION_ROOT}/SGC_ru_RU.ts)

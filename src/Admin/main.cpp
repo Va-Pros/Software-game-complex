@@ -3,10 +3,54 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <KLocalizedContext>
+#include <QDirIterator>
+#include "QuestionCreator/include/QuestionCreatorModel.h"
+#include "Test/include/TypeInQuestion.h"
+#include "QuestionCreator/include/QuestionSaver.h"
+//#include "QuestionCreator/include/QuestionTypeItem.h"
+//#include "QuestionCreator/include/QuestionTypeListModel.h"
+
+template<class T>
+concept DerivesQObject = std::is_base_of<QObject, T>::value;
+
+template<DerivesQObject T>
+int registerVersion1(const char *uri) {
+    return qmlRegisterType<T>(uri, 1, 0, T::staticMetaObject.className());
+}
+
+template<DerivesQObject T>
+int registerInterfaceVersion1(const char *uri) {
+    return qmlRegisterInterface<T>(uri, 1);
+}
+
+// TODO use plugins for each subsystem
+void registerQmlTypes() {
+
+    // QuestionCreator
+    const char* questionCreatorUri = "QuestionCreator";
+    registerVersion1<QuestionCreatorModel>(questionCreatorUri);
+    registerVersion1<TypeInAnswer>(questionCreatorUri);
+    registerVersion1<TypeInQuestion>(questionCreatorUri);
+    registerInterfaceVersion1<QuestionTypeItem>(questionCreatorUri);
+    registerInterfaceVersion1<QuestionTypeListModel>(questionCreatorUri);
+
+    qmlRegisterSingletonType<QuestionSaver>(questionCreatorUri, 1, 0, "QuestionSaver", QuestionSaver::singletonProvider);
+
+//    qmlregister
+}
+
+#define LIST_RESOURCES
 
 int main(int argc, char **argv) {
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication app(argc, argv);
+
+#ifdef LIST_RESOURCES
+    QDirIterator it(":", QDirIterator::Subdirectories);
+    while (it.hasNext()) {
+        qDebug() << "res: " << it.next();
+    }
+#endif
 
     QTranslator translator;
 
@@ -21,6 +65,7 @@ int main(int argc, char **argv) {
         }
     }
 
+    registerQmlTypes();
     QQmlApplicationEngine engine;
 
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
