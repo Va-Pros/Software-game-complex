@@ -34,7 +34,7 @@ else()
     find_package(Qt5 COMPONENTS ${COMPONENTS} REQUIRED)
 endif()
 
-set(KF_MIN_VERSION "5.89.0")
+set(KF_MIN_VERSION "5.86.0")
 find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
 
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
