@@ -6,7 +6,8 @@ RowLayout {
     id: rootLayout
     property var listModel: answerModel
     property bool deleteVisible: true
-    width: ListView.view.width - (ListView.view.ScrollBar.vertical && ListView.view.ScrollBar.vertical.visible ? ListView.view.ScrollBar.vertical.width : 0)
+    property var list: parentList ?? ListView.view
+    width: list.width - (list.ScrollBar.vertical && list.ScrollBar.vertical.visible ? list.ScrollBar.vertical.width : 0)
 
     Component {
         id: defaultContent

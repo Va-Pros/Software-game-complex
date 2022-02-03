@@ -4,6 +4,7 @@ import QtQuick.Controls 2.15 as Controls
 import org.kde.kirigami 2.15 as Kirigami
 import QuestionCreator 1.0
 import "EditorUtils.js" as EditorUtils
+import "AnswerWidgets"
 
 ColumnLayout {
     id: questionRoot

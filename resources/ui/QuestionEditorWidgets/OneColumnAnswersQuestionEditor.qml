@@ -13,9 +13,8 @@ ColumnLayout {
 
     property var dataItemCreator: function(isFirstElement) { return { variant: "" } }
 
-    property var beforeAnswerTextField: undefined
-    property var beforeAnswerTextFieldProperties: undefined
-    property var beforeAnswerTextFieldSetup: function(element) {}
+    required property var answerQmlFileName
+    property var answerComponentProperties: ({})
 
     function getQuestionText() {
         return input.getText()
@@ -47,26 +46,17 @@ ColumnLayout {
 
     Component {
         id: answerDelegate
-        AnswerInput {
-            id: someInput
-            Component.onCompleted: {
-                if (beforeAnswerTextField) {
-                    for (var a in beforeAnswerTextFieldProperties) {
-                        console.log(a);
-                    }
-                    const obj = beforeAnswerTextField.createObject(someInput, beforeAnswerTextFieldProperties);
-                    beforeAnswerTextFieldSetup(obj);
-                }
-            }
+        Loader {
+            property var parentList: answerListView
+
+            Component.onCompleted: setSource(answerQmlFileName, answerComponentProperties)
         }
     }
 
     Controls.Button {
         Layout.fillWidth: true
         text: qsTr("Add answer variant")
-        onClicked: {
-            answerModel.append(dataItemCreator(false))
-        }
+        onClicked: answerModel.append(dataItemCreator(false))
     }
 
     ListView {

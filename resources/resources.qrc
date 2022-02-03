@@ -17,10 +17,9 @@
         <file>ui/QuestionEditorWidgets/EditorUtils.js</file>
         <file>ui/QuestionEditorWidgets/DropDownFillQuestionEditor.qml</file>
         <file>ui/QuestionEditorWidgets/TypeInFillQuestionEditor.qml</file>
-        <file>ui/QuestionEditorWidgets/AnswerInput.qml</file>
         <file>ui/QuestionEditorWidgets/OneColumnAnswersQuestionEditor.qml</file>
-        <file>ui/QuestionEditorWidgets/TypeInQuestionEditor2.qml</file>
-        <file>ui/QuestionEditorWidgets/SingleChoiceQuestionEditor2.qml</file>
-        <file>ui/QuestionEditorWidgets/SingleChoiceAnswerInput.qml</file>
+        <file>ui/QuestionEditorWidgets/AnswerWidgets/AnswerInput.qml</file>
+        <file>ui/QuestionEditorWidgets/AnswerWidgets/SingleChoiceAnswerInput.qml</file>
+        <file>ui/QuestionEditorWidgets/AnswerWidgets/MultipleChoiceAnswerInput.qml</file>
     </qresource>
 </RCC>
