@@ -5,68 +5,22 @@ import org.kde.kirigami 2.15 as Kirigami
 import QuestionCreator 1.0
 import "EditorUtils.js" as EditorUtils
 
-ColumnLayout {
-    id: questionRoot
-    Layout.fillWidth: true
-    Layout.fillHeight: true
-    Layout.alignment: Qt.AlignTop
+MultipleColumnsAnswersQuestionEditor {
 
-    property var dataItemCreator: function(isFirstElement) { return { variant: "" } }
-
-    required property var answerQmlFileName
-    property var answerComponentProperties: ({})
-
-    function getQuestionText() {
-        return input.getText()
-    }
+    maxListCount: 1
+    modifiable: false
 
     function getVariants() {
-        return EditorUtils.mapModel(answerModel, item => item.variant);
+        return EditorUtils.mapModel(getAnswerModel(), item => item.variant);
     }
 
+    // override MultipleColumnsAnswersQuestionEditor
+    function getArrayOfAnswerSubModels() {
+        throw "unsupported"
+    }
+
+    // override MultipleColumnsAnswersQuestionEditor
     function getAnswerModel() {
-        return answerModel;
+        return getFirstSubModel();
     }
-
-    RegularQuestionInput {
-        id: input
-    }
-
-    Controls.Label {
-        id: answerLabel
-        text: qsTr("Answer")
-    }
-
-    ListModel {
-        id: answerModel
-        Component.onCompleted: {
-            answerModel.append(dataItemCreator(true))
-        }
-    }
-
-    Component {
-        id: answerDelegate
-        Loader {
-            property var parentList: answerListView
-
-            Component.onCompleted: setSource(answerQmlFileName, answerComponentProperties)
-        }
-    }
-
-    Controls.Button {
-        Layout.fillWidth: true
-        text: qsTr("Add answer variant")
-        onClicked: answerModel.append(dataItemCreator(false))
-    }
-
-    ListView {
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        id: answerListView
-        model: answerModel
-        delegate: answerDelegate
-        clip: true
-        Controls.ScrollBar.vertical: Controls.ScrollBar {}
-    }
-
 }

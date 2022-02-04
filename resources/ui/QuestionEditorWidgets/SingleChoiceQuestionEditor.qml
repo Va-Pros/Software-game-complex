@@ -6,18 +6,18 @@ import QuestionCreator 1.0
 import "EditorUtils.js" as EditorUtils
 
 OneColumnAnswersQuestionEditor {
-    id: typeInRoot
+
     dataItemCreator: function(isFirstElement) { return { variant: "", isRightAnswer: isFirstElement } }
+    answerQmlFileName: "AnswerWidgets/SingleChoiceAnswerInput.qml"
+    answerComponentProperties: (index) => ({ buttonGroup: answerRadioGroup})
+
+    // override BaseQuestionEditor
+    function saveQuestion() {
+        const rightIndex = EditorUtils.findIndexInModel(getAnswerModel(), item => item.isRightAnswer);
+        QuestionSaver.saveSingleChoiceQuestion(getQuestionText(), getVariants(), rightIndex);
+    }
 
     Controls.ButtonGroup {
         id: answerRadioGroup
-    }
-
-    answerQmlFileName: "AnswerWidgets/SingleChoiceAnswerInput.qml"
-    answerComponentProperties: ({ buttonGroup: answerRadioGroup})
-
-    function saveQuestion() {
-        const rightIndex = EditorUtils.findIndexInModel(typeInRoot.getAnswerModel(), item => item.isRightAnswer);
-        QuestionSaver.saveSingleChoiceQuestion(typeInRoot.getQuestionText(), typeInRoot.getVariants(), rightIndex);
     }
 }

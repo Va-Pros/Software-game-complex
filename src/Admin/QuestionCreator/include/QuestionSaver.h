@@ -53,9 +53,12 @@ public:
         int fixer = 0;
         for (int i = 0; i < offsets.size(); ++i) {
             int offset = offsets[i];
-            QString gapAnswersString = "[" + std::reduce(answers[i].begin(), answers[i].end(), QString(), [](auto& acc, auto& item) {
-               return acc + item + ", ";
-            }) + "]";
+            auto listAnswers = answers[i];
+            QString gapAnswersString = "[";
+            for (int j = 0; j < listAnswers.size(); ++j) {
+                gapAnswersString += listAnswers[j] + (j == listAnswers.size() - 1 ? "" : ", ");
+            }
+            gapAnswersString += "]";
             debugString.insert(offset + fixer, gapAnswersString);
             fixer += gapAnswersString.size();
         }

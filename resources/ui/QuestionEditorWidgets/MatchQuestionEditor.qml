@@ -6,87 +6,23 @@ import QuestionCreator 1.0
 import "EditorUtils.js" as EditorUtils
 import "AnswerWidgets"
 
-ColumnLayout {
-    Layout.fillWidth: true
-    Layout.fillHeight: true
+MultipleColumnsAnswersQuestionEditor {
+
+    maxColumnCount: 2
+    maxListCount: 2
+    defaultListCount: 2
+    modifiable: false
+
+    answerQmlFileName: "AnswerWidgets/AnswerInput.qml"
 
     function saveQuestion() {
+        const allModels = getArrayOfAnswerSubModels();
+        const leftColumnModel = allModels[0];
+        const rightColumnModel = allModels[1];
         const leftVarinats = EditorUtils.mapModel(leftColumnModel, item => item.variant);
         const rightVarinats = EditorUtils.mapModel(rightColumnModel, item => item.variant);
-        QuestionSaver.saveMatchQuestion(input.getText(), leftVarinats, rightVarinats);
-    }
-
-    RegularQuestionInput {
-        id: input
-    }
-
-    Controls.Label {
-        id: answerLabel
-        text: qsTr("Answer")
+        QuestionSaver.saveMatchQuestion(getQuestionText(), leftVarinats, rightVarinats);
     }
 
 
-    Component {
-        id: columnDelegate
-
-        AnswerInput {
-            listModel: model
-        }
-    }
-
-    ListModel {
-        id: leftColumnModel
-        Component.onCompleted: {
-            append({variant: "", model: leftColumnModel})
-        }
-    }
-
-    ListModel {
-        id: rightColumnModel
-        Component.onCompleted: {
-            append({variant: "", model: rightColumnModel})
-        }
-    }
-
-    RowLayout {
-        id: scrollContainer
-        Layout.fillWidth: true
-
-        Controls.Button {
-            Layout.fillWidth: true
-            text: qsTr("Add answer variant")
-            onClicked: leftColumnModel.append({variant: "", model: leftColumnModel})
-        }
-
-        Controls.Button {
-            Layout.fillWidth: true
-            text: qsTr("Add answer variant")
-            onClicked: rightColumnModel.append({variant: "", model: rightColumnModel})
-        }
-    }
-
-    RowLayout {
-        Layout.fillWidth: true
-
-        ListView {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            id: leftColumnListView
-            model: leftColumnModel
-            delegate: columnDelegate
-            clip: true
-            Controls.ScrollBar.vertical: Controls.ScrollBar {}
-        }
-
-        ListView {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            id: rightColumnListView
-            model: rightColumnModel
-            delegate: columnDelegate
-            clip: true
-            Controls.ScrollBar.vertical: Controls.ScrollBar {}
-        }
-
-    }
 }

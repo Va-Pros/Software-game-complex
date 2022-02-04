@@ -8,24 +8,29 @@ Kirigami.Page {
     title: qsTr("Main menu")
 
     ColumnLayout {
-
+        anchors.left : parent.left
+        anchors.right : parent.right
 
         Controls.Button {
+            Layout.fillWidth: true
             text: qsTr("Question constructor")
             onClicked: applicationWindow().pageStack.push("qrc:ui/QuestionConstructor.qml");
         }
 
         Controls.Button {
+            Layout.fillWidth: true
             text: qsTr("Situation constructor")
             onClicked: applicationWindow().pageStack.push("qrc:ui/SituationConstructor.qml")
         }
 
         Controls.Button {
+            Layout.fillWidth: true
             text: qsTr("Results viewer")
             onClicked: applicationWindow().pageStack.push("qrc:ui/ResultsViewer.qml")
         }
 
         Controls.Button {
+            Layout.fillWidth: true
             text: qsTr("Game management")
             onClicked: applicationWindow().pageStack.push("qrc:ui/GameManagement.qml")
         }

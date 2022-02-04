@@ -6,12 +6,27 @@ RowLayout {
     id: rootLayout
     property var listModel: answerModel
     property bool deleteVisible: true
-    property var list: parentList ?? ListView.view
-    width: list.width - (list.ScrollBar.vertical && list.ScrollBar.vertical.visible ? list.ScrollBar.vertical.width : 0)
+    property var list
+
+    Binding on width {
+     when: list !== undefined
+     value: (function() {
+         if (!list) return undefined;
+         return list.width - (list.ScrollBar.vertical && list.ScrollBar.vertical.visible ? list.ScrollBar.vertical.width : 0)
+     }());
+    }
+
+//    Binding on Layout.fillWidth {
+//     when: list === undefined
+//     value: true
+//    }
+
+    Layout.fillWidth: true
 
     Component {
         id: defaultContent
         RowLayout {
+            Layout.fillWidth: true
             TextField {
                 Layout.fillWidth: true
                 text: variant

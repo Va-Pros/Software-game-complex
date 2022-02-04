@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
 
 ColumnLayout {
-    Layout.fillWidth: true
 
     function getText() {
         return inputArea.text;

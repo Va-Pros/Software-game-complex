@@ -6,11 +6,11 @@ import QuestionCreator 1.0
 import "EditorUtils.js" as EditorUtils
 
 OneColumnAnswersQuestionEditor {
-    id: typeInRoot
 
     answerQmlFileName: "AnswerWidgets/AnswerInput.qml"
 
+    // override BaseQuestionEditor
     function saveQuestion() {
-        QuestionSaver.saveTypeInQuestion(typeInRoot.getQuestionText(), typeInRoot.getVariants());
+        QuestionSaver.saveTypeInQuestion(getQuestionText(), getVariants());
     }
 }

@@ -6,15 +6,16 @@ import QuestionCreator 1.0
 import "EditorUtils.js" as EditorUtils
 
 OneColumnAnswersQuestionEditor {
-    id: typeInRoot
+
     dataItemCreator: function(isFirstElement) { return { variant: "", isRightAnswer: isFirstElement } }
 
     answerQmlFileName: "AnswerWidgets/MultipleChoiceAnswerInput.qml"
 
+    // override BaseQuestionEditor
     function saveQuestion() {
-        const answerModel = typeInRoot.getAnswerModel();
+        const answerModel = getAnswerModel();
         const answers = EditorUtils.mapModel(answerModel, item => item.variant);
         const rightIndices = EditorUtils.findAllIndicesInModel(answerModel, item => item.isRightAnswer);
-        QuestionSaver.saveMultipleChoiceQuestion(typeInRoot.getQuestionText(), answers, rightIndices);
+        QuestionSaver.saveMultipleChoiceQuestion(getQuestionText(), answers, rightIndices);
     }
 }
