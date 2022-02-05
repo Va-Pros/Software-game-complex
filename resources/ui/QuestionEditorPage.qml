@@ -10,27 +10,43 @@ Kirigami.Page {
 
     title: questionType
 
+    function showError(text) {
+        errorMessage.text = text
+        errorMessage.visible = true
+        errorMessageTimer.running = true
+    }
+
+    function removeErrorMessage() {
+        errorMessage.visible = false
+        errorMessageTimer.running = false
+    }
+
     ColumnLayout {
         id: editorStub
         anchors.top: parent.top
-        anchors.bottom: bottomRow.top
+        anchors.bottom: errorMessage.top
         anchors.left: parent.left
         anchors.right: parent.right
     }
 
-//    Loader
-//    {
-//      id: editorStub
-//      anchors.top: parent.top
-//      anchors.bottom: parent.bottom
-//      anchors.left: parent.left
-//      anchors.right: parent.right
-//      source: widgetPath
-//    }
+    Timer {
+        id: errorMessageTimer
+        interval: 10000; repeat: false
+        onTriggered: errorMessage.visible = false
+    }
+
+    Kirigami.InlineMessage {
+        id: errorMessage
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: bottomRow.top
+        type: Kirigami.MessageType.Error
+    }
 
     RowLayout {
         id: bottomRow
         anchors.bottom: parent.bottom
+        anchors.left: parent.left
         anchors.right: parent.right
         layoutDirection: Qt.RightToLeft
 
@@ -45,7 +61,7 @@ Kirigami.Page {
 
     function finishCreation(comp, compParent) {
         if (comp.status === Component.Ready) {
-            comp.createObject(compParent);
+            comp.createObject(compParent, {questionShowError: showError, questionRemoveError: removeErrorMessage});
         } else if (comp.status === Component.Error) {
             console.log("Error loading component:", comp.errorString());
         }
@@ -58,25 +74,5 @@ Kirigami.Page {
         } else {
             finishCreation(questionEditor, editorStub);
         }
-    }
-
-    Controls.StackView.onActivated: {
-        console.log("onActivated");
-    }
-
-    Controls.StackView.onActivating: {
-        console.log("onActivating");
-    }
-
-    Controls.StackView.onDeactivated: {
-        console.log("onDeactivated");
-    }
-
-    Controls.StackView.onDeactivating: {
-        console.log("deactivating");
-    }
-
-    Controls.StackView.onRemoved: {
-        console.log("removed");
     }
 }

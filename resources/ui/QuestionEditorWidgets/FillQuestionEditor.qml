@@ -11,6 +11,8 @@ MultipleColumnsAnswersQuestionEditor {
 
     // override BaseQuestionEditor
     function saveQuestion() {
+        removeErrorMessage()
+
         var questionText = getQuestionText();
         const formatter = "{txt}";
 
@@ -29,7 +31,8 @@ MultipleColumnsAnswersQuestionEditor {
         if (gapIndices.length === answerModels.length) {
             saveFillQuestion(questionText, gapIndices, answerModels);
         } else {
-            console.log("ERROR! gapsCount: " + gapIndices.length + "; answersListsCount: " + answerModels.length); // TODO show error to user
+            const saveErrorText = qsTr("Text gap count: %1; answer list count: %2").arg(gapIndices.length).arg(answerModels.length)
+            showError(saveErrorText)
         }
     }
 

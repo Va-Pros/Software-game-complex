@@ -15,6 +15,10 @@ ColumnLayout {
     required property var answerQmlFileName
     property var answerComponentProperties: (index) => ({})
 
+    // these two are passed from QuestionEditorPage
+    required property var questionShowError
+    required property var questionRemoveError
+
     function getQuestionText() {
         return input.getText()
     }
@@ -31,6 +35,14 @@ ColumnLayout {
         throw "AbstractFunction"
     }
 
+    function showError(text) {
+        questionShowError(text)
+    }
+
+    function removeErrorMessage() {
+        questionRemoveError()
+    }
+
     ColumnLayout {
         id: inputLayout
         Layout.fillWidth: true
@@ -44,5 +56,9 @@ ColumnLayout {
     Controls.Label {
         id: answerLabel
         text: qsTr("Answer")
+    }
+
+    Component.onCompleted: {
+        console.log("err: ", bottomRow)
     }
 }
