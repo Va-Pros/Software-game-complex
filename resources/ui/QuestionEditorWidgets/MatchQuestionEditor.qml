@@ -15,13 +15,13 @@ MultipleColumnsAnswersQuestionEditor {
 
     answerQmlFileName: "AnswerWidgets/AnswerInput.qml"
 
-    function saveQuestion() {
+    function saveQuestion(theme, difficulty, isActive) {
         const allModels = getArrayOfAnswerSubModels();
         const leftColumnModel = allModels[0];
         const rightColumnModel = allModels[1];
         const leftVarinats = EditorUtils.mapModel(leftColumnModel, item => item.variant);
         const rightVarinats = EditorUtils.mapModel(rightColumnModel, item => item.variant);
-        QuestionSaver.saveMatchQuestion(getQuestionText(), leftVarinats, rightVarinats);
+        QuestionSaver.saveMatchQuestion(theme, difficulty, isActive, getQuestionText(), leftVarinats, rightVarinats);
     }
 
 

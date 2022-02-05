@@ -1,6 +1,6 @@
 # TODO
 add_compile_options(
-     -Werror
+#     -Werror
 
      -Wall
      -Wextra
@@ -56,7 +56,7 @@ add_executable(Admin
         Test/TypeInQuestion.cpp
         Test/include/TypeInAnswer.h
         Test/TypeInAnswer.cpp
-        QuestionCreator/include/QuestionSaver.h)
+        QuestionCreator/include/QuestionSaver.h QuestionCreator/include/QuestionThemeModel.h QuestionCreator/include/QuestionThemeItem.h QuestionCreator/include/QuestionThemes.h QuestionCreator/include/QuestionDifficulty.h)
 
 target_link_libraries(Admin Qt5::Widgets Qt5::Quick KF5::Kirigami2 KF5::I18n KF5::IconThemes)
 

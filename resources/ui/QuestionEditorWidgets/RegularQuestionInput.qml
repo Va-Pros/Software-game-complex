@@ -19,5 +19,11 @@ ColumnLayout {
         placeholderText: qsTr("Question text")
     }
 
+    Action {
+        shortcut: "Ctrl+Shift+Q"
+        onTriggered: {
+            inputArea.focus = true
+        }
+    }
 
 }

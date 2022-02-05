@@ -23,4 +23,9 @@ MultipleColumnsAnswersQuestionEditor {
     function getAnswerModel() {
         return getFirstSubModel();
     }
+
+    Controls.Action {
+        shortcut: StandardKey.New
+        onTriggered: getAnswerModel().append(dataItemCreator(false))
+    }
 }

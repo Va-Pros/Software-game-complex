@@ -10,7 +10,7 @@ OneColumnAnswersQuestionEditor {
     answerQmlFileName: "AnswerWidgets/AnswerInput.qml"
 
     // override BaseQuestionEditor
-    function saveQuestion() {
-        QuestionSaver.saveTypeInQuestion(getQuestionText(), getVariants());
+    function saveQuestion(theme, difficulty, isActive) {
+        QuestionSaver.saveTypeInQuestion(theme, difficulty, isActive, getQuestionText(), getVariants());
     }
 }

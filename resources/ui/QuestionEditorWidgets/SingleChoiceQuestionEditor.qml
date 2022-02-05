@@ -12,9 +12,9 @@ OneColumnAnswersQuestionEditor {
     answerComponentProperties: (index) => ({ buttonGroup: answerRadioGroup})
 
     // override BaseQuestionEditor
-    function saveQuestion() {
+    function saveQuestion(theme, difficulty, isActive) {
         const rightIndex = EditorUtils.findIndexInModel(getAnswerModel(), item => item.isRightAnswer);
-        QuestionSaver.saveSingleChoiceQuestion(getQuestionText(), getVariants(), rightIndex);
+        QuestionSaver.saveSingleChoiceQuestion(theme, difficulty, isActive, getQuestionText(), getVariants(), rightIndex);
     }
 
     Controls.ButtonGroup {

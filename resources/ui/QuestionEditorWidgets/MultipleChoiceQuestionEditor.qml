@@ -12,10 +12,10 @@ OneColumnAnswersQuestionEditor {
     answerQmlFileName: "AnswerWidgets/MultipleChoiceAnswerInput.qml"
 
     // override BaseQuestionEditor
-    function saveQuestion() {
+    function saveQuestion(theme, difficulty, isActive) {
         const answerModel = getAnswerModel();
         const answers = EditorUtils.mapModel(answerModel, item => item.variant);
         const rightIndices = EditorUtils.findAllIndicesInModel(answerModel, item => item.isRightAnswer);
-        QuestionSaver.saveMultipleChoiceQuestion(getQuestionText(), answers, rightIndices);
+        QuestionSaver.saveMultipleChoiceQuestion(theme, difficulty, isActive, getQuestionText(), answers, rightIndices);
     }
 }

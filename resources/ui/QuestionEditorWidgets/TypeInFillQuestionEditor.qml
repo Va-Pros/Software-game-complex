@@ -10,8 +10,8 @@ FillQuestionEditor {
     answerQmlFileName: "AnswerWidgets/AnswerInput.qml"
 
     // override FillQuestionEditor
-    function saveFillQuestion(questionText, gapIndices, answerModels) {
+    function saveFillQuestion(theme, difficulty, isActive, questionText, gapIndices, answerModels) {
         const answers = answerModels.map(qtModel => EditorUtils.mapModel(qtModel, item => item.variant));
-        QuestionSaver.saveTypeInFillQuestion(questionText, gapIndices, answers);
+        QuestionSaver.saveTypeInFillQuestion(theme, difficulty, isActive, questionText, gapIndices, answers);
     }
 }

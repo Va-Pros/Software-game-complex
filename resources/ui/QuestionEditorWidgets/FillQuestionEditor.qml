@@ -10,8 +10,8 @@ MultipleColumnsAnswersQuestionEditor {
     inputFormatting: qsTr("Input {txt} to spicify fill position. i'th entering of {txt} in text will use i'th variants list")
 
     // override BaseQuestionEditor
-    function saveQuestion() {
-        removeErrorMessage()
+    function saveQuestion(theme, difficulty, isActive) {
+        removeMessage()
 
         var questionText = getQuestionText();
         const formatter = "{txt}";
@@ -29,14 +29,14 @@ MultipleColumnsAnswersQuestionEditor {
 
         // TODO null && empty values validation
         if (gapIndices.length === answerModels.length) {
-            saveFillQuestion(questionText, gapIndices, answerModels);
+            saveFillQuestion(theme, difficulty, isActive, questionText, gapIndices, answerModels);
         } else {
             const saveErrorText = qsTr("Text gap count: %1; answer list count: %2").arg(gapIndices.length).arg(answerModels.length)
             showError(saveErrorText)
         }
     }
 
-    function saveFillQuestion(questionText, gapIndices, answerModels) {
+    function saveFillQuestion(theme, difficulty, isActive, questionText, gapIndices, answerModels) {
         throw "AbstractFunction"
     }
 }

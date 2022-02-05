@@ -6,34 +6,66 @@
 #define SOFTWARE_GAME_COMPLEX_QUESTIONSAVER_H
 
 #include <QQmlEngine>
+#include "QuestionDifficulty.h"
 
 class QuestionSaver: public QObject{
     Q_OBJECT
 
 public:
-    Q_INVOKABLE void saveTypeInQuestion(const QString& questionText, const QVector<QString>& answers) {
+    Q_INVOKABLE void saveTypeInQuestion(
+        const QString& theme,
+        const int difficulty,
+        const bool isActive,
+        const QString& questionText,
+        const QVector<QString>& answers
+    ) {
         qDebug() << "Save type in question. Text: " << questionText;
+        qDebug() << "Theme: '" << theme << "'; difficulty: " << difficulty << "; isActive: " << isActive;
         for (auto& answer : answers) {
             qDebug() << "Answer: " << answer;
         }
     }
 
-    Q_INVOKABLE void saveSingleChoiceQuestion(const QString& questionText, const QVector<QString>& variants, int rightAnswerIndex) {
+    Q_INVOKABLE void saveSingleChoiceQuestion(
+        const QString& theme,
+        const int difficulty,
+        const bool isActive,
+        const QString& questionText,
+        const QVector<QString>& variants,
+        int rightAnswerIndex
+    ) {
         qDebug() << "Save single choice question. Text: " << questionText;
+        qDebug() << "Theme: '" << theme << "'; difficulty: " << difficulty << "; isActive: " << isActive;
         for (int i = 0; i < variants.size(); i++) {
             qDebug() << "Variant: " << variants[i] << " : " << (i == rightAnswerIndex ? "+" : "-");
         }
     }
 
-    Q_INVOKABLE void saveMultipleChoiceQuestion(const QString& questionText, const QVector<QString>& variants, const QVector<int>& rightAnswerIndices) {
+    Q_INVOKABLE void saveMultipleChoiceQuestion(
+        const QString& theme,
+        const int difficulty,
+        const bool isActive,
+        const QString& questionText,
+        const QVector<QString>& variants,
+        const QVector<int>& rightAnswerIndices
+    ) {
         qDebug() << "Save multiple choice question. Text: " << questionText;
+        qDebug() << "Theme: '" << theme << "'; difficulty: " << difficulty << "; isActive: " << isActive;
         for (int i = 0; i < variants.size(); i++) {
             qDebug() << "Variant: " << variants[i] << " : " << (rightAnswerIndices.contains(i) ? "+" : "-");
         }
     }
 
-    Q_INVOKABLE void saveMatchQuestion(const QString& questionText, const QVector<QString>& leftColumn, const QVector<QString>& rightColumn) {
+    Q_INVOKABLE void saveMatchQuestion(
+        const QString& theme,
+        const int difficulty,
+        const bool isActive,
+        const QString& questionText,
+        const QVector<QString>& leftColumn,
+        const QVector<QString>& rightColumn
+    ) {
         qDebug() << "Save match question. Text: " << questionText;
+        qDebug() << "Theme: '" << theme << "'; difficulty: " << difficulty << "; isActive: " << isActive;
 
         const QVector<QString>& smaller = leftColumn.size() <= rightColumn.size() ? leftColumn : rightColumn;
         const QVector<QString>& bigger = smaller == leftColumn ? rightColumn : leftColumn;
@@ -47,7 +79,14 @@ public:
         }
     }
 
-    Q_INVOKABLE void saveTypeInFillQuestion(const QString& questionText, const QVector<int>& offsets, const QVector<QVector<QString>>& answers) {
+    Q_INVOKABLE void saveTypeInFillQuestion(
+        const QString& theme,
+        const int difficulty,
+        const bool isActive,
+        const QString& questionText,
+        const QVector<int>& offsets,
+        const QVector<QVector<QString>>& answers
+    ) {
         QString debugString = questionText;
 
         int fixer = 0;
@@ -64,9 +103,18 @@ public:
         }
 
         qDebug() << "Save type in fill question. Text: " << debugString;
+        qDebug() << "Theme: '" << theme << "'; difficulty: " << difficulty << "; isActive: " << isActive;
     }
 
-    Q_INVOKABLE void saveDropDownFillQuestion(const QString& questionText, const QVector<int>& offsets, const QVector<QVector<QString>>& answers, const QVector<int>& rightAnswerIndices) {
+    Q_INVOKABLE void saveDropDownFillQuestion(
+        const QString& theme,
+        const int difficulty,
+        const bool isActive,
+        const QString& questionText,
+        const QVector<int>& offsets,
+        const QVector<QVector<QString>>& answers,
+        const QVector<int>& rightAnswerIndices
+    ) {
         QString debugString = questionText;
 
         int fixer = 0;
@@ -83,6 +131,7 @@ public:
         }
 
         qDebug() << "Save type in fill question. Text: " << debugString;
+        qDebug() << "Theme: '" << theme << "'; difficulty: " << difficulty << "; isActive: " << isActive;
     }
 
     static QuestionSaver* singletonProvider(QQmlEngine* engine, QJSEngine* scriptEngine)

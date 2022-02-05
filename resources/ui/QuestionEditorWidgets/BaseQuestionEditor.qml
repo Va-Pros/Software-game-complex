@@ -15,9 +15,11 @@ ColumnLayout {
     required property var answerQmlFileName
     property var answerComponentProperties: (index) => ({})
 
-    // these two are passed from QuestionEditorPage
-    required property var questionShowError
-    required property var questionRemoveError
+    // these functions are passed from QuestionEditorPage
+    required property var showInfo
+    required property var showError
+    required property var showSuccess
+    required property var removeMessage
 
     function getQuestionText() {
         return input.getText()
@@ -31,16 +33,8 @@ ColumnLayout {
         return inputLayout;
     }
 
-    function saveQuestion() {
+    function saveQuestion(theme, difficulty, isActive) {
         throw "AbstractFunction"
-    }
-
-    function showError(text) {
-        questionShowError(text)
-    }
-
-    function removeErrorMessage() {
-        questionRemoveError()
     }
 
     ColumnLayout {
@@ -56,9 +50,5 @@ ColumnLayout {
     Controls.Label {
         id: answerLabel
         text: qsTr("Answer")
-    }
-
-    Component.onCompleted: {
-        console.log("err: ", bottomRow)
     }
 }

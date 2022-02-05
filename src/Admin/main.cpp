@@ -7,6 +7,8 @@
 #include "QuestionCreator/include/QuestionCreatorModel.h"
 #include "Test/include/TypeInQuestion.h"
 #include "QuestionCreator/include/QuestionSaver.h"
+#include "QuestionCreator/include/QuestionThemes.h"
+#include "QuestionCreator/include/QuestionDifficulty.h"
 //#include "QuestionCreator/include/QuestionTypeItem.h"
 //#include "QuestionCreator/include/QuestionTypeListModel.h"
 
@@ -34,12 +36,18 @@ void registerQmlTypes() {
     registerInterfaceVersion1<QuestionTypeItem>(questionCreatorUri);
     registerInterfaceVersion1<QuestionTypeListModel>(questionCreatorUri);
 
+    registerVersion1<QuestionThemes>(questionCreatorUri);
+    registerInterfaceVersion1<QuestionThemeItem>(questionCreatorUri);
+    registerInterfaceVersion1<QuestionThemeModel>(questionCreatorUri);
+    registerVersion1<QuestionDifficulty>(questionCreatorUri);
+
     qmlRegisterSingletonType<QuestionSaver>(questionCreatorUri, 1, 0, "QuestionSaver", QuestionSaver::singletonProvider);
+//    qmlRegisterSingletonType<QuestionThemes>(questionCreatorUri, 1, 0, "QuestionThemes", QuestionThemes::singletonProvider);
 
 //    qmlregister
 }
 
-#define LIST_RESOURCES
+//#define LIST_RESOURCES
 
 int main(int argc, char **argv) {
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);

@@ -16,7 +16,7 @@ FillQuestionEditor {
     }
 
     // override FillQuestionEditor
-    function saveFillQuestion(questionText, gapIndices, answerModels) {
+    function saveFillQuestion(theme, difficulty, isActive, questionText, gapIndices, answerModels) {
         const variants = answerModels.map(qtModel => EditorUtils.mapModel(qtModel, item => item.variant));
         const rightAnswers = answerModels.map(qtModel => EditorUtils.findIndexInModel(qtModel, item => item.isRightAnswer));
         QuestionSaver.saveDropDownFillQuestion(questionText, gapIndices, variants, rightAnswers);
