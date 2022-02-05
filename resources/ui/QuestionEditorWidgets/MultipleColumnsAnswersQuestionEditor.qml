@@ -116,8 +116,10 @@ BaseQuestionEditor {
     Component {
         id: hintComponent
         Controls.Label {
+            Layout.fillWidth: true
             id: hintLabel
             text: inputFormatting
+            wrapMode: Text.Wrap
         }
     }
 
