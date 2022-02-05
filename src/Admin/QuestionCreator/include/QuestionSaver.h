@@ -6,9 +6,10 @@
 #define SOFTWARE_GAME_COMPLEX_QUESTIONSAVER_H
 
 #include <QQmlEngine>
+#include <QTimer>
 #include "QuestionDifficulty.h"
 
-class QuestionSaver: public QObject{
+class QuestionSaver: public QObject {
     Q_OBJECT
 
 public:
@@ -24,6 +25,8 @@ public:
         for (auto& answer : answers) {
             qDebug() << "Answer: " << answer;
         }
+
+        QTimer::singleShot(1000, this, [this] { emit questionSaved(); });
     }
 
     Q_INVOKABLE void saveSingleChoiceQuestion(
@@ -39,6 +42,8 @@ public:
         for (int i = 0; i < variants.size(); i++) {
             qDebug() << "Variant: " << variants[i] << " : " << (i == rightAnswerIndex ? "+" : "-");
         }
+
+        emit saveFailed("I don't want to save this question!");
     }
 
     Q_INVOKABLE void saveMultipleChoiceQuestion(
@@ -141,6 +146,12 @@ public:
 
         return new QuestionSaver();
     }
+
+signals:
+    void questionSaved();
+
+    void saveFailed(QString errorMessage);
+
 };
 
 #endif //SOFTWARE_GAME_COMPLEX_QUESTIONSAVER_H

@@ -176,6 +176,16 @@ Kirigami.Page {
         }
     }
 
+    Connections {
+        target: QuestionSaver
+        function onQuestionSaved() {
+            showSuccess(qsTr("Saved!"))
+        }
+        function onSaveFailed(message) {
+            showError(message)
+        }
+    }
+
     Component {
         id: dynamicAction
         Kirigami.Action {
@@ -198,7 +208,13 @@ Kirigami.Page {
         } else if (difficultyAction.text === hardDifficultyAction.text) {
             difficulty = QuestionDifficulty.HARD
         }
-        editorStub.children[0].saveQuestion(theme, difficulty, getActiveSwitch().checked)
+
+        showInfo(qsTr("Saving.."))
+        try {
+            editorStub.children[0].saveQuestion(theme, difficulty, getActiveSwitch().checked)
+        } catch(e) {
+            showError(qsTr("Unhandled error while saving: %1").arg(e))
+        }
     }
 
     function appendReceivedThemes(themeModel) {
