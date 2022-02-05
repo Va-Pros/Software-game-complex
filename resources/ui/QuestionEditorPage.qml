@@ -165,7 +165,7 @@ Kirigami.Page {
 
         Controls.Button {
             Layout.alignment: Qt.AlignRight
-            text: "Save"
+            text: qsTr("Save")
             icon.name: "document-save"
             onClicked: save()
         }

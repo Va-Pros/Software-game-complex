@@ -43,7 +43,7 @@ public:
             qDebug() << "Variant: " << variants[i] << " : " << (i == rightAnswerIndex ? "+" : "-");
         }
 
-        emit saveFailed("I don't want to save this question!");
+        emit saveFailed(tr("I don't want to save this question!"));
     }
 
     Q_INVOKABLE void saveMultipleChoiceQuestion(
