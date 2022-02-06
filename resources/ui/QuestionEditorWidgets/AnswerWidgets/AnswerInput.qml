@@ -32,6 +32,9 @@ RowLayout {
                 text: variant
                 placeholderText: qsTr("Variant")
                 onEditingFinished: variant = text;
+                Keys.onReleased: {
+                    variant = text;
+                }
             }
             Button {
                 icon.name: "delete"

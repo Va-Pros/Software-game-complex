@@ -24,7 +24,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-set(COMPONENTS Widgets LinguistTools Quick Qml)
+set(COMPONENTS Widgets LinguistTools Quick QuickControls2 Qml)
 
 if($ENV{QT_PATH})
     find_package(Qt5 COMPONENTS ${COMPONENTS} REQUIRED
@@ -58,7 +58,10 @@ add_executable(Admin
         Test/TypeInAnswer.cpp
         QuestionCreator/include/QuestionSaver.h QuestionCreator/include/QuestionThemeModel.h QuestionCreator/include/QuestionThemeItem.h QuestionCreator/include/QuestionThemes.h QuestionCreator/include/QuestionDifficulty.h)
 
-target_link_libraries(Admin Qt5::Widgets Qt5::Quick KF5::Kirigami2 KF5::I18n KF5::IconThemes)
+target_link_libraries(Admin
+        Qt5::Widgets Qt5::Quick Qt5::QuickControls2
+        KF5::Kirigami2 KF5::I18n KF5::IconThemes
+)
 
 get_filename_component(TRANSLATION_ROOT ../../resources/i18n ABSOLUTE)
 set(TS_FILES ${TRANSLATION_ROOT}/SGC_ru_RU.ts)

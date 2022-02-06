@@ -4,23 +4,22 @@
 #include <QQmlContext>
 #include <KLocalizedContext>
 #include <QDirIterator>
+#include <QQuickStyle>
 #include "QuestionCreator/include/QuestionCreatorModel.h"
 #include "Test/include/TypeInQuestion.h"
 #include "QuestionCreator/include/QuestionSaver.h"
 #include "QuestionCreator/include/QuestionThemes.h"
 #include "QuestionCreator/include/QuestionDifficulty.h"
-//#include "QuestionCreator/include/QuestionTypeItem.h"
-//#include "QuestionCreator/include/QuestionTypeListModel.h"
 
-template<class T>
-concept DerivesQObject = std::is_base_of<QObject, T>::value;
+//template<class T>
+//concept DerivesQObject = std::is_base_of<QObject, T>::value;
 
-template<DerivesQObject T>
+template<typename T>
 int registerVersion1(const char *uri) {
     return qmlRegisterType<T>(uri, 1, 0, T::staticMetaObject.className());
 }
 
-template<DerivesQObject T>
+template<typename T>
 int registerInterfaceVersion1(const char *uri) {
     return qmlRegisterInterface<T>(uri, 1);
 }
@@ -50,8 +49,20 @@ void registerQmlTypes() {
 //#define LIST_RESOURCES
 
 int main(int argc, char **argv) {
+
+	QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
+#if defined(Q_OS_WIN)
+	QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);
+#endif
+
     QApplication app(argc, argv);
+
+#ifdef Q_OS_WIN
+	QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
+	QApplication::setStyle(QStringLiteral("breeze"));
+#endif
 
 #ifdef LIST_RESOURCES
     QDirIterator it(":", QDirIterator::Subdirectories);
