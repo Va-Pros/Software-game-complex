@@ -218,7 +218,6 @@ Kirigami.Page {
     }
 
     function appendReceivedThemes(themeModel) {
-        console.log("AAAAAAAAAAAAAAAAA");
         for (let i = 0; i < themeModel.count(); ++i) {
             const theme = themeModel.getTheme(i);
             const title = theme.title;
@@ -233,7 +232,6 @@ Kirigami.Page {
         } else if (comp.status === Component.Error) {
             console.log("Error loading component:", comp.errorString());
         }
-        console.log(QuestionDifficulty.MEDIUM)
     }
 
     Component.onCompleted: {
