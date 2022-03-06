@@ -44,9 +44,9 @@ include(ECMInstallIcons)
 
 find_package(KF5 ${KF_MIN_VERSION} REQUIRED COMPONENTS Kirigami2 I18n CoreAddons IconThemes)
 
-add_executable(Admin
+add_executable(Client
         main.cpp
-        ../../resources/Admin/resources.qrc
+        ../../resources/Client/resources.qrc
         QuestionCreator/include/QuestionTypeListModel.h
         QuestionCreator/include/QuestionTypeItem.h
         QuestionCreator/include/QuestionCreatorModel.h
@@ -64,23 +64,23 @@ add_executable(Admin
 
 )
 
-target_link_libraries(Admin
+target_link_libraries(Client
         Qt5::Widgets Qt5::Quick Qt5::QuickControls2
         KF5::Kirigami2 KF5::I18n KF5::IconThemes
 )
 
-get_filename_component(TRANSLATION_ROOT ../../resources/Admin/i18n ABSOLUTE)
+get_filename_component(TRANSLATION_ROOT ../../resources/Client/i18n ABSOLUTE)
 set(TS_FILES ${TRANSLATION_ROOT}/SGC_ru_RU.ts)
 
-get_filename_component(UI_PATH ../../resources/Admin/ui ABSOLUTE)
-add_custom_target(AdminTranslationsUpdate
+get_filename_component(UI_PATH ../../resources/Client/ui ABSOLUTE)
+add_custom_target(ClientTranslationsUpdate
         COMMAND ${Qt5_LUPDATE_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR} ${UI_PATH} -recursive -ts ${TS_FILES}
 )
 
-add_custom_target(AdminTranslationsRelease
+add_custom_target(ClientTranslationsRelease
         COMMAND ${Qt5_LRELEASE_EXECUTABLE} ${TS_FILES}
 )
 
-add_custom_target(AdminTranslateAndRun
-        DEPENDS AdminTranslationsUpdate AdminTranslationsRelease
+add_custom_target(ClientTranslateAndRun
+        DEPENDS ClientTranslationsUpdate ClientTranslationsRelease
 )
