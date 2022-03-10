@@ -5,6 +5,7 @@
 #include <KLocalizedContext>
 #include <QDirIterator>
 #include <QQuickStyle>
+#include <QIcon>
 #include "QuestionCreator/include/QuestionCreatorModel.h"
 #include "Test/include/TypeInQuestion.h"
 #include "QuestionCreator/include/QuestionSaver.h"
@@ -85,7 +86,7 @@ int main(int argc, char **argv) {
             break;
         }
     }
-
+	app.setWindowIcon(QIcon("../icon.svg"));
     registerQmlTypes();
     QQmlApplicationEngine engine;
 
