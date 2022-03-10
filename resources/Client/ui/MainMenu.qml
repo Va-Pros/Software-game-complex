@@ -78,8 +78,8 @@ Kirigami.Page {
             text: qsTr("Start Test")
             onClicked: {
                 if (client.isConnected()) {
-                    client.sendMessage(nameField.text + " " + platoonField.text)
-                    applicationWindow().pageStack.push("qrc:ui/GameManagement.qml")
+                    client.sendMessage("0;" + nameField.text + "; " + platoonField.text)
+                    applicationWindow().pageStack.push("qrc:ui/QuestionPage.qml")
                 }
             }
         }

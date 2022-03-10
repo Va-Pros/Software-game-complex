@@ -6,7 +6,7 @@
         <file>ui/QuestionConstructor.qml</file>
         <file>ui/SituationConstructor.qml</file>
         <file>ui/ResultsViewer.qml</file>
-        <file>ui/GameManagement.qml</file>
+        <file>ui/QuestionPage.qml</file>
         <file>ui/QuestionEditorPage.qml</file>
         <file>ui/QuestionEditorWidgets/RegularQuestionInput.qml</file>
         <file>ui/QuestionEditorWidgets/BaseQuestionEditor.qml</file>

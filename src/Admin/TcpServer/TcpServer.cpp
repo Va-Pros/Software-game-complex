@@ -28,7 +28,19 @@ void TcpServer::onReadyRead() {
 		return;
 	}
 
-	const auto message = this->getClientKey(client).toUtf8() + ": " + client->readAll();
+	QByteArray request	   = client->readAll();
+	QList<QByteArray> data = request.split(';');
+	if (!data.empty()) {
+		qInfo() << "user# " + this->getClientKey(client).toUtf8();
+		qInfo() << "type = " + data[0];
+		for (int i = 1; i < data.size(); i++)
+			qInfo() << "  + " + data[i];
+
+
+		//todo: if(type==0) database.insertIntoTable(data[1], data[2]);
+	}
+
+	const auto message = this->getClientKey(client).toUtf8() + ": " + request;
 
 	emit newMessage(message);
 }
@@ -65,8 +77,8 @@ void TcpServer::onStart() {
 void TcpServer::onStop() {
 	qInfo() << "Stop listening";
 	_server.close();
-	for(auto client: qAsConst(_clients)){
-//		qInfo() << this->getClientKey(client).toUtf8();
+	for (auto client : qAsConst(_clients)) {
+		//		qInfo() << this->getClientKey(client).toUtf8();
 		client->deleteLater();
 	}
 	_isServerAvailable = false;
