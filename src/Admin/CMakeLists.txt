@@ -24,7 +24,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-set(COMPONENTS Widgets LinguistTools Quick QuickControls2 Qml)
+set(COMPONENTS Widgets LinguistTools Quick QuickControls2 Qml Network)
 
 if($ENV{QT_PATH})
     find_package(Qt5 COMPONENTS ${COMPONENTS} REQUIRED
@@ -61,12 +61,15 @@ add_executable(Admin
         QuestionCreator/include/QuestionThemeItem.h
         QuestionCreator/include/QuestionThemes.h
         QuestionCreator/include/QuestionDifficulty.h
+        TcpServer/TcpServer.cpp
+        TcpServer/TcpServer.hpp
 
 )
 
 target_link_libraries(Admin
         Qt5::Widgets Qt5::Quick Qt5::QuickControls2
         KF5::Kirigami2 KF5::I18n KF5::IconThemes
+        Qt5::Network
 )
 
 get_filename_component(TRANSLATION_ROOT ../../resources/Admin/i18n ABSOLUTE)

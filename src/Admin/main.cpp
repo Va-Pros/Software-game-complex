@@ -10,6 +10,8 @@
 #include "QuestionCreator/include/QuestionSaver.h"
 #include "QuestionCreator/include/QuestionThemes.h"
 #include "QuestionCreator/include/QuestionDifficulty.h"
+#include "TcpServer/TcpServer.hpp"
+
 
 //template<class T>
 //concept DerivesQObject = std::is_base_of<QObject, T>::value;
@@ -86,6 +88,10 @@ int main(int argc, char **argv) {
 
     registerQmlTypes();
     QQmlApplicationEngine engine;
+
+	TcpClient tcpServer;
+
+    engine.rootContext()->setContextProperty("server", &tcpServer);
 
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
     engine.load(QUrl(QStringLiteral("qrc:ui/main.qml")));

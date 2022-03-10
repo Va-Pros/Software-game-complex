@@ -5,12 +5,13 @@
 #include <KLocalizedContext>
 #include <QDirIterator>
 #include <QQuickStyle>
+#include <QIcon>
 #include "QuestionCreator/include/QuestionCreatorModel.h"
 #include "Test/include/TypeInQuestion.h"
 #include "QuestionCreator/include/QuestionSaver.h"
 #include "QuestionCreator/include/QuestionThemes.h"
 #include "QuestionCreator/include/QuestionDifficulty.h"
-
+#include "TcpClient/TcpClient.hpp"
 //template<class T>
 //concept DerivesQObject = std::is_base_of<QObject, T>::value;
 
@@ -87,10 +88,12 @@ int main(int argc, char **argv) {
             break;
         }
     }
-
+	app.setWindowIcon(QIcon("../icon.svg"));
     registerQmlTypes();
     QQmlApplicationEngine engine;
 
+	TcpClient client;
+	engine.rootContext()->setContextProperty("client", &client);
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
     engine.load(QUrl(QStringLiteral("qrc:ui/main.qml")));
 
