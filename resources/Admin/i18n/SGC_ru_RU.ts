@@ -103,32 +103,32 @@
     <message>
         <location filename="../../../src/Admin/QuestionCreator/include/QuestionCreatorModel.h" line="21"/>
         <source>Type in</source>
-        <translation>Ввод ответа</translation>
+        <translation>Ввод текста</translation>
     </message>
     <message>
         <location filename="../../../src/Admin/QuestionCreator/include/QuestionCreatorModel.h" line="22"/>
         <source>Single choice</source>
-        <translation>Выбор одного</translation>
+        <translation>Одиночный выбор</translation>
     </message>
     <message>
         <location filename="../../../src/Admin/QuestionCreator/include/QuestionCreatorModel.h" line="23"/>
         <source>Multiple choice</source>
-        <translation>Выбор многих</translation>
+        <translation>Множественный выбор</translation>
     </message>
     <message>
         <location filename="../../../src/Admin/QuestionCreator/include/QuestionCreatorModel.h" line="24"/>
         <source>Match</source>
-        <translation>Соответствие</translation>
+        <translation>Установление соответствий</translation>
     </message>
     <message>
         <location filename="../../../src/Admin/QuestionCreator/include/QuestionCreatorModel.h" line="25"/>
         <source>Dropdown fill</source>
-        <translation>Пропуски, выбор одного</translation>
+        <translation>Заполнение пропусков, одиночный выбор</translation>
     </message>
     <message>
         <location filename="../../../src/Admin/QuestionCreator/include/QuestionCreatorModel.h" line="26"/>
         <source>Type in fill</source>
-        <translation>Пропуски, ввод ответа</translation>
+        <translation>Заполнение пропусков, ввод текста</translation>
     </message>
 </context>
 <context>
