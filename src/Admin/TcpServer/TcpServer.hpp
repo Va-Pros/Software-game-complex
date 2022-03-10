@@ -1,22 +1,25 @@
 #ifndef TCPSERVER_HPP
 #define TCPSERVER_HPP
 
+#include <QHash>
 #include <QObject>
 #include <QTcpServer>
-#include <QHash>
 #include <QTcpSocket>
 
-class TcpClient : public QObject
-{
+class TcpServer : public QObject {
 	Q_OBJECT
+
 public:
-	explicit TcpClient(QObject *parent = nullptr);
+	explicit TcpServer(QObject *parent = nullptr);
 
 signals:
 	void newMessage(const QByteArray &ba);
 
 public slots:
 	void sendMessage(const QString &message);
+	void onStart();//or resumeAccepting?
+	void onStop();//or pauseAccepting?
+	bool isServerAvailable();
 
 private slots:
 	void onNewConnection();
@@ -24,11 +27,14 @@ private slots:
 	void onClientDisconnected();
 	void onNewMessage(const QByteArray &ba);
 
+
 private:
 	QString getClientKey(const QTcpSocket *client) const;
+
 private:
 	QTcpServer _server;
-	QHash<QString, QTcpSocket*> _clients;
+	QHash<QString, QTcpSocket *> _clients;
+	bool _isServerAvailable = false;
 };
 
-#endif // TCPSERVER_HPP
+#endif	// TCPSERVER_HPP

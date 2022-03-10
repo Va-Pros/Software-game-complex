@@ -89,7 +89,7 @@ int main(int argc, char **argv) {
     registerQmlTypes();
     QQmlApplicationEngine engine;
 
-	TcpClient tcpServer;
+	TcpServer tcpServer;
 
     engine.rootContext()->setContextProperty("server", &tcpServer);
 

@@ -1,16 +1,13 @@
 #include "TcpServer.hpp"
 
-TcpClient::TcpClient(QObject *parent) : QObject(parent) {
-	connect(&_server, &QTcpServer::newConnection, this, &TcpClient::onNewConnection);
-	connect(this, &TcpClient::newMessage, this, &TcpClient::onNewMessage);
-	if (_server.listen(QHostAddress::Any, 45000)) {
-		qInfo() << "Listening ...";
-	}
+TcpServer::TcpServer(QObject *parent) : QObject(parent) {
+	connect(&_server, &QTcpServer::newConnection, this, &TcpServer::onNewConnection);
+	connect(this, &TcpServer::newMessage, this, &TcpServer::onNewMessage);
 }
 
-void TcpClient::sendMessage(const QString &message) { emit newMessage("Server: " + message.toUtf8()); }
+void TcpServer::sendMessage(const QString &message) { emit newMessage("Server: " + message.toUtf8()); }
 
-void TcpClient::onNewConnection() {
+void TcpServer::onNewConnection() {
 	const auto client = _server.nextPendingConnection();
 	if (client == nullptr) {
 		return;
@@ -20,11 +17,11 @@ void TcpClient::onNewConnection() {
 
 	_clients.insert(this->getClientKey(client), client);
 
-	connect(client, &QTcpSocket::readyRead, this, &TcpClient::onReadyRead);
-	connect(client, &QTcpSocket::disconnected, this, &TcpClient::onClientDisconnected);
+	connect(client, &QTcpSocket::readyRead, this, &TcpServer::onReadyRead);
+	connect(client, &QTcpSocket::disconnected, this, &TcpServer::onClientDisconnected);
 }
 
-void TcpClient::onReadyRead() {
+void TcpServer::onReadyRead() {
 	const auto client = qobject_cast<QTcpSocket *>(sender());
 
 	if (client == nullptr) {
@@ -36,7 +33,7 @@ void TcpClient::onReadyRead() {
 	emit newMessage(message);
 }
 
-void TcpClient::onClientDisconnected() {
+void TcpServer::onClientDisconnected() {
 	const auto client = qobject_cast<QTcpSocket *>(sender());
 
 	if (client == nullptr) {
@@ -46,7 +43,7 @@ void TcpClient::onClientDisconnected() {
 	_clients.remove(this->getClientKey(client));
 }
 
-void TcpClient::onNewMessage(const QByteArray &ba) {
+void TcpServer::onNewMessage(const QByteArray &ba) {
 	qInfo() << ba;
 	for (const auto &client : qAsConst(_clients)) {
 		client->write(ba);
@@ -54,6 +51,25 @@ void TcpClient::onNewMessage(const QByteArray &ba) {
 	}
 }
 
-QString TcpClient::getClientKey(const QTcpSocket *client) const {
+QString TcpServer::getClientKey(const QTcpSocket *client) const {
 	return client->peerAddress().toString().append(":").append(QString::number(client->peerPort()));
 }
+
+void TcpServer::onStart() {
+	if (_server.listen(QHostAddress::Any, 45000)) {
+		qInfo() << "Listening ...";
+		_isServerAvailable = true;
+	}
+}
+
+void TcpServer::onStop() {
+	qInfo() << "Stop listening";
+	_server.close();
+	for(auto client: qAsConst(_clients)){
+//		qInfo() << this->getClientKey(client).toUtf8();
+		client->deleteLater();
+	}
+	_isServerAvailable = false;
+}
+
+bool TcpServer::isServerAvailable() { return _isServerAvailable; }
