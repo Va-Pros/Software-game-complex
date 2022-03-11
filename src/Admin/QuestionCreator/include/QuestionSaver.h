@@ -7,12 +7,23 @@
 
 #include <QQmlEngine>
 #include <QTimer>
+#include <QVariantList>
 #include "QuestionDifficulty.h"
 
 class QuestionSaver: public QObject {
     Q_OBJECT
 
+
+
+private:
+    DataBase database;
+
 public:
+    explicit QuestionSaver(){
+        database.connectToDataBase();
+    }
+    ~QuestionSaver(){}
+
     Q_INVOKABLE void saveTypeInQuestion(
         const QString& theme,
         const int difficulty,
@@ -25,7 +36,14 @@ public:
         for (auto& answer : answers) {
             qDebug() << "Answer: " << answer;
         }
-
+        QVariantList data;
+        data.append(theme);
+        data.append(difficulty);
+        data.append(questionText);
+        data.append(isActive);
+        data.append("TypeInQuestion"); //todo: shortName
+        data.append(false);
+        database.insertIntoQuestionTable(data);
         QTimer::singleShot(1000, this, [this] { emit questionSaved(); });
     }
 

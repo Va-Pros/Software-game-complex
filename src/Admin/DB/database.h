@@ -14,26 +14,29 @@
 
 class DataBase : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	explicit DataBase(QObject *parent = 0);
-	~DataBase();
-	void connectToDataBase();
+    explicit DataBase(QObject *parent = 0);
+    ~DataBase();
+    /* Методы для непосредственной работы с классом
+     * Подключение к базе данных и вставка записей в таблицу
+     * */
+    void connectToDataBase();
+    bool insertIntoTotalReportTable(const QVariantList &data);
+    bool insertIntoQuestionTable(const QVariantList &data);
 
 private:
-	QSqlDatabase    db;
+    // Сам объект базы данных, с которым будет производиться работа
+    QSqlDatabase    db;
 
 private:
-
-	bool openDataBase();
-	bool restoreDataBase();
-	void closeDataBase();
-	bool createTable();
-
-public slots:
-	bool inserIntoTable(const QVariantList &data);
-	bool inserIntoTable(const QString &name, const QString &platoon);
-	bool removeRecord(const int id);
+    /* Внутренние методы для работы с базой данных
+     * */
+    bool openDataBase();
+    bool restoreDataBase();
+    void closeDataBase();
+    bool createTotalReportTable();
+    bool createQuestionTable();
 };
 
-#endif // DATABASE_H
+#endif // DATABASE\_H

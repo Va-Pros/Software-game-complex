@@ -1,5 +1,5 @@
 #include "DB/database.h"
-#include "DB/listmodel.h"
+//#include "DB/listmodel.h"
 #include "QuestionCreator/include/QuestionCreatorModel.h"
 #include "QuestionCreator/include/QuestionDifficulty.h"
 #include "QuestionCreator/include/QuestionSaver.h"
@@ -95,9 +95,9 @@ int main(int argc, char** argv) {
 
     DataBase database;
     database.connectToDataBase();
-    ListModel* model = new ListModel();
+//    ListModel* model = new ListModel();
 
-    engine.rootContext()->setContextProperty("myModel", model);
+//    engine.rootContext()->setContextProperty("myModel", model);
     engine.rootContext()->setContextProperty("database", &database);
     engine.rootContext()->setContextProperty("server", &tcpServer);
 
