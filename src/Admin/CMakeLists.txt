@@ -64,7 +64,7 @@ add_executable(Admin
         TcpServer/TcpServer.cpp
         TcpServer/TcpServer.hpp
 
-        DB/database.h DB/database.cpp DB/listmodel.cpp DB/listmodel.h)
+        DB/database.h DB/database.cpp )
 
 target_link_libraries(Admin
         Qt5::Widgets Qt5::Quick Qt5::QuickControls2

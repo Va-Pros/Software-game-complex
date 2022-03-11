@@ -10,30 +10,21 @@
 #include <QVariantList>
 #include "QuestionDifficulty.h"
 
-class QuestionSaver: public QObject {
-    Q_OBJECT
+class QuestionSaver : public QObject {
+Q_OBJECT
 
-
-
-private:
-    DataBase database;
 
 public:
-    explicit QuestionSaver(){
-        database.connectToDataBase();
-    }
-    ~QuestionSaver(){}
-
     Q_INVOKABLE void saveTypeInQuestion(
-        const QString& theme,
-        const int difficulty,
-        const bool isActive,
-        const QString& questionText,
-        const QVector<QString>& answers
+            const QString &theme,
+            const int difficulty,
+            const bool isActive,
+            const QString &questionText,
+            const QVector<QString> &answers
     ) {
         qDebug() << "Save type in question. Text: " << questionText;
         qDebug() << "Theme: '" << theme << "'; difficulty: " << difficulty << "; isActive: " << isActive;
-        for (auto& answer : answers) {
+        for (auto &answer: answers) {
             qDebug() << "Answer: " << answer;
         }
         QVariantList data;
@@ -43,17 +34,19 @@ public:
         data.append(isActive);
         data.append("TypeInQuestion"); //todo: shortName
         data.append(false);
-        database.insertIntoQuestionTable(data);
-        QTimer::singleShot(1000, this, [this] { emit questionSaved(); });
+//        database.insertIntoQuestionTable(data);
+        emit newQuestion(data);
+        emit questionSaved();
+//        QTimer::singleShot(1000, this, [this] { emit questionSaved(); });
     }
 
     Q_INVOKABLE void saveSingleChoiceQuestion(
-        const QString& theme,
-        const int difficulty,
-        const bool isActive,
-        const QString& questionText,
-        const QVector<QString>& variants,
-        int rightAnswerIndex
+            const QString &theme,
+            const int difficulty,
+            const bool isActive,
+            const QString &questionText,
+            const QVector<QString> &variants,
+            int rightAnswerIndex
     ) {
         qDebug() << "Save single choice question. Text: " << questionText;
         qDebug() << "Theme: '" << theme << "'; difficulty: " << difficulty << "; isActive: " << isActive;
@@ -65,12 +58,12 @@ public:
     }
 
     Q_INVOKABLE void saveMultipleChoiceQuestion(
-        const QString& theme,
-        const int difficulty,
-        const bool isActive,
-        const QString& questionText,
-        const QVector<QString>& variants,
-        const QVector<int>& rightAnswerIndices
+            const QString &theme,
+            const int difficulty,
+            const bool isActive,
+            const QString &questionText,
+            const QVector<QString> &variants,
+            const QVector<int> &rightAnswerIndices
     ) {
         qDebug() << "Save multiple choice question. Text: " << questionText;
         qDebug() << "Theme: '" << theme << "'; difficulty: " << difficulty << "; isActive: " << isActive;
@@ -80,18 +73,18 @@ public:
     }
 
     Q_INVOKABLE void saveMatchQuestion(
-        const QString& theme,
-        const int difficulty,
-        const bool isActive,
-        const QString& questionText,
-        const QVector<QString>& leftColumn,
-        const QVector<QString>& rightColumn
+            const QString &theme,
+            const int difficulty,
+            const bool isActive,
+            const QString &questionText,
+            const QVector<QString> &leftColumn,
+            const QVector<QString> &rightColumn
     ) {
         qDebug() << "Save match question. Text: " << questionText;
         qDebug() << "Theme: '" << theme << "'; difficulty: " << difficulty << "; isActive: " << isActive;
 
-        const QVector<QString>& smaller = leftColumn.size() <= rightColumn.size() ? leftColumn : rightColumn;
-        const QVector<QString>& bigger = smaller == leftColumn ? rightColumn : leftColumn;
+        const QVector<QString> &smaller = leftColumn.size() <= rightColumn.size() ? leftColumn : rightColumn;
+        const QVector<QString> &bigger = smaller == leftColumn ? rightColumn : leftColumn;
 
         for (int i = 0; i < smaller.size(); i++) {
             qDebug() << "Match: " << smaller[i] << " - " << bigger[i];
@@ -103,12 +96,12 @@ public:
     }
 
     Q_INVOKABLE void saveTypeInFillQuestion(
-        const QString& theme,
-        const int difficulty,
-        const bool isActive,
-        const QString& questionText,
-        const QVector<int>& offsets,
-        const QVector<QVector<QString>>& answers
+            const QString &theme,
+            const int difficulty,
+            const bool isActive,
+            const QString &questionText,
+            const QVector<int> &offsets,
+            const QVector<QVector<QString>> &answers
     ) {
         QString debugString = questionText;
 
@@ -130,13 +123,13 @@ public:
     }
 
     Q_INVOKABLE void saveDropDownFillQuestion(
-        const QString& theme,
-        const int difficulty,
-        const bool isActive,
-        const QString& questionText,
-        const QVector<int>& offsets,
-        const QVector<QVector<QString>>& answers,
-        const QVector<int>& rightAnswerIndices
+            const QString &theme,
+            const int difficulty,
+            const bool isActive,
+            const QString &questionText,
+            const QVector<int> &offsets,
+            const QVector<QVector<QString>> &answers,
+            const QVector<int> &rightAnswerIndices
     ) {
         QString debugString = questionText;
 
@@ -146,7 +139,8 @@ public:
             auto listAnswers = answers[i];
             QString gapAnswersString = "[";
             for (int j = 0; j < listAnswers.size(); ++j) {
-                gapAnswersString += listAnswers[j] + "(" + (j == rightAnswerIndices[i] ? "+" : "-") + ")" + (j == listAnswers.size() - 1 ? "" : ", ");
+                gapAnswersString += listAnswers[j] + "(" + (j == rightAnswerIndices[i] ? "+" : "-") + ")" +
+                                    (j == listAnswers.size() - 1 ? "" : ", ");
             }
             gapAnswersString += "]";
             debugString.insert(offset + fixer, gapAnswersString);
@@ -157,8 +151,7 @@ public:
         qDebug() << "Theme: '" << theme << "'; difficulty: " << difficulty << "; isActive: " << isActive;
     }
 
-    static QuestionSaver* singletonProvider(QQmlEngine* engine, QJSEngine* scriptEngine)
-    {
+    static QuestionSaver* singletonProvider(QQmlEngine* engine, QJSEngine* scriptEngine) {
         Q_UNUSED(engine)
         Q_UNUSED(scriptEngine)
 
@@ -166,7 +159,10 @@ public:
     }
 
 signals:
+
     void questionSaved();
+
+    void newQuestion(QVariantList data);
 
     void saveFailed(QString errorMessage);
 

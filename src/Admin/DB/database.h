@@ -22,6 +22,8 @@ public:
      * Подключение к базе данных и вставка записей в таблицу
      * */
     void connectToDataBase();
+
+public slots:
     bool insertIntoTotalReportTable(const QVariantList &data);
     bool insertIntoQuestionTable(const QVariantList &data);
 
