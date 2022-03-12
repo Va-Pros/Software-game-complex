@@ -177,7 +177,10 @@ Kirigami.Page {
     }
 
     Connections {
-        target: QuestionSaver
+        target: database, QuestionSaver
+        function onNewQuestion(data) {
+            database.insertIntoQuestionTable(data);
+        }
         function onQuestionSaved() {
             showSuccess(qsTr("Saved!"))
         }

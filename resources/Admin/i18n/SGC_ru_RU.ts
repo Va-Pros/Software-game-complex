@@ -101,32 +101,32 @@
 <context>
     <name>QuestionCreatorModel</name>
     <message>
-        <location filename="../../src/Admin/QuestionCreator/include/QuestionCreatorModel.h" line="21"/>
+        <location filename="../../../src/Admin/QuestionCreator/include/QuestionCreatorModel.h" line="21"/>
         <source>Type in</source>
         <translation>Ввод текста</translation>
     </message>
     <message>
-        <location filename="../../src/Admin/QuestionCreator/include/QuestionCreatorModel.h" line="22"/>
+        <location filename="../../../src/Admin/QuestionCreator/include/QuestionCreatorModel.h" line="22"/>
         <source>Single choice</source>
         <translation>Одиночный выбор</translation>
     </message>
     <message>
-        <location filename="../../src/Admin/QuestionCreator/include/QuestionCreatorModel.h" line="23"/>
+        <location filename="../../../src/Admin/QuestionCreator/include/QuestionCreatorModel.h" line="23"/>
         <source>Multiple choice</source>
         <translation>Множественный выбор</translation>
     </message>
     <message>
-        <location filename="../../src/Admin/QuestionCreator/include/QuestionCreatorModel.h" line="24"/>
+        <location filename="../../../src/Admin/QuestionCreator/include/QuestionCreatorModel.h" line="24"/>
         <source>Match</source>
         <translation>Установление соответствий</translation>
     </message>
     <message>
-        <location filename="../../src/Admin/QuestionCreator/include/QuestionCreatorModel.h" line="25"/>
+        <location filename="../../../src/Admin/QuestionCreator/include/QuestionCreatorModel.h" line="25"/>
         <source>Dropdown fill</source>
         <translation>Заполнение пропусков, одиночный выбор</translation>
     </message>
     <message>
-        <location filename="../../src/Admin/QuestionCreator/include/QuestionCreatorModel.h" line="26"/>
+        <location filename="../../../src/Admin/QuestionCreator/include/QuestionCreatorModel.h" line="26"/>
         <source>Type in fill</source>
         <translation>Заполнение пропусков, ввод текста</translation>
     </message>
@@ -192,7 +192,7 @@
 <context>
     <name>QuestionSaver</name>
     <message>
-        <location filename="../../src/Admin/QuestionCreator/include/QuestionSaver.h" line="46"/>
+        <location filename="../../../src/Admin/QuestionCreator/include/QuestionSaver.h" line="46"/>
         <source>I don&apos;t want to save this question!</source>
         <translation>Не хочу сохранять этот вопрос!</translation>
     </message>
@@ -200,17 +200,17 @@
 <context>
     <name>QuestionThemes</name>
     <message>
-        <location filename="../../src/Admin/QuestionCreator/include/QuestionThemes.h" line="21"/>
+        <location filename="../../../src/Admin/QuestionCreator/include/QuestionThemes.h" line="21"/>
         <source>Example1</source>
         <translation>Пример1</translation>
     </message>
     <message>
-        <location filename="../../src/Admin/QuestionCreator/include/QuestionThemes.h" line="22"/>
+        <location filename="../../../src/Admin/QuestionCreator/include/QuestionThemes.h" line="22"/>
         <source>Example2</source>
         <translation>Пример2</translation>
     </message>
     <message>
-        <location filename="../../src/Admin/QuestionCreator/include/QuestionThemes.h" line="23"/>
+        <location filename="../../../src/Admin/QuestionCreator/include/QuestionThemes.h" line="23"/>
         <source>Example3</source>
         <translation>Пример3</translation>
     </message>

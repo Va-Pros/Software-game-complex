@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>i18n/SGC_ru_RU.qm</file>
+        <file>ui/main.qml</file>
+        <file>ui/MainMenu.qml</file>
+        <file>ui/QuestionPage.qml</file>
+    </qresource>
+</RCC>

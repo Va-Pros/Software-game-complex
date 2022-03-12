@@ -24,7 +24,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-set(COMPONENTS Widgets LinguistTools Quick QuickControls2 Qml Network Sql)
+set(COMPONENTS Widgets LinguistTools Quick QuickControls2 Qml Network)
 
 if($ENV{QT_PATH})
     find_package(Qt5 COMPONENTS ${COMPONENTS} REQUIRED
@@ -44,9 +44,9 @@ include(ECMInstallIcons)
 
 find_package(KF5 ${KF_MIN_VERSION} REQUIRED COMPONENTS Kirigami2 I18n CoreAddons IconThemes)
 
-add_executable(Admin
+add_executable(Client
         main.cpp
-        ../../resources/Admin/resources.qrc
+        ../../resources/Client/resources.qrc
         QuestionCreator/include/QuestionTypeListModel.h
         QuestionCreator/include/QuestionTypeItem.h
         QuestionCreator/include/QuestionCreatorModel.h
@@ -61,29 +61,29 @@ add_executable(Admin
         QuestionCreator/include/QuestionThemeItem.h
         QuestionCreator/include/QuestionThemes.h
         QuestionCreator/include/QuestionDifficulty.h
-        TcpServer/TcpServer.cpp
-        TcpServer/TcpServer.hpp
+        TcpClient/TcpClient.cpp
+        TcpClient/TcpClient.hpp
 
-        DB/database.h DB/database.cpp )
-
-target_link_libraries(Admin
-        Qt5::Widgets Qt5::Quick Qt5::QuickControls2
-        KF5::Kirigami2 KF5::I18n KF5::IconThemes
-        Qt5::Network Qt5::Sql
 )
 
-get_filename_component(TRANSLATION_ROOT ../../resources/Admin/i18n ABSOLUTE)
+target_link_libraries(Client
+        Qt5::Widgets Qt5::Quick Qt5::QuickControls2
+        KF5::Kirigami2 KF5::I18n KF5::IconThemes
+        Qt5::Network
+)
+
+get_filename_component(TRANSLATION_ROOT ../../resources/Client/i18n ABSOLUTE)
 set(TS_FILES ${TRANSLATION_ROOT}/SGC_ru_RU.ts)
 
-get_filename_component(UI_PATH ../../resources/Admin/ui ABSOLUTE)
-add_custom_target(AdminTranslationsUpdate
+get_filename_component(UI_PATH ../../resources/Client/ui ABSOLUTE)
+add_custom_target(ClientTranslationsUpdate
         COMMAND ${Qt5_LUPDATE_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR} ${UI_PATH} -recursive -ts ${TS_FILES}
 )
 
-add_custom_target(AdminTranslationsRelease
+add_custom_target(ClientTranslationsRelease
         COMMAND ${Qt5_LRELEASE_EXECUTABLE} ${TS_FILES}
 )
 
-add_custom_target(AdminTranslateAndRun
-        DEPENDS AdminTranslationsUpdate AdminTranslationsRelease
+add_custom_target(ClientTranslateAndRun
+        DEPENDS ClientTranslationsUpdate ClientTranslationsRelease
 )

@@ -39,3 +39,5 @@ cmake-build-debug/
 
 # QT compiled translation file
 *.qm
+
+build/
