@@ -2,26 +2,11 @@
     <qresource prefix="/">
         <file>i18n/SGC_ru_RU.qm</file>
         <file>ui/main.qml</file>
-        <file>ui/MainMenu.qml</file>
         <file>ui/QuestionConstructor.qml</file>
         <file>ui/SituationConstructor.qml</file>
         <file>ui/ResultsViewer.qml</file>
         <file>ui/GameManagement.qml</file>
-        <file>ui/QuestionEditorPage.qml</file>
-        <file>ui/QuestionEditorWidgets/RegularQuestionInput.qml</file>
-        <file>ui/QuestionEditorWidgets/BaseQuestionEditor.qml</file>
-        <file>ui/QuestionEditorWidgets/MultipleColumnsAnswersQuestionEditor.qml</file>
-        <file>ui/QuestionEditorWidgets/MatchQuestionEditor.qml</file>
-        <file>ui/QuestionEditorWidgets/FillQuestionEditor.qml</file>
-        <file>ui/QuestionEditorWidgets/DropDownFillQuestionEditor.qml</file>
-        <file>ui/QuestionEditorWidgets/TypeInFillQuestionEditor.qml</file>
-        <file>ui/QuestionEditorWidgets/OneColumnAnswersQuestionEditor.qml</file>
-        <file>ui/QuestionEditorWidgets/TypeInQuestionEditor.qml</file>
-        <file>ui/QuestionEditorWidgets/SingleChoiceQuestionEditor.qml</file>
-        <file>ui/QuestionEditorWidgets/MultipleChoiceQuestionEditor.qml</file>
-        <file>ui/QuestionEditorWidgets/EditorUtils.js</file>
-        <file>ui/QuestionEditorWidgets/AnswerWidgets/AnswerInput.qml</file>
-        <file>ui/QuestionEditorWidgets/AnswerWidgets/SingleChoiceAnswerInput.qml</file>
-        <file>ui/QuestionEditorWidgets/AnswerWidgets/MultipleChoiceAnswerInput.qml</file>
+        <file>ui/QuestionCreator.qml</file>
+        <file>ui/QuestionEditor.qml</file>
     </qresource>
 </RCC>

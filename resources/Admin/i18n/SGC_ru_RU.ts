@@ -33,9 +33,20 @@
 <context>
     <name>GameManagement</name>
     <message>
-        <location filename="../ui/GameManagement.qml" line="6"/>
-        <location filename="../ui/GameManagement.qml" line="9"/>
+        <location filename="../ui/GameManagement.qml" line="7"/>
+        <location filename="../ui/GameManagement.qml" line="10"/>
         <source>Game management</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/GameManagement.qml" line="24"/>
+        <location filename="../ui/GameManagement.qml" line="31"/>
+        <source>Start Server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/GameManagement.qml" line="28"/>
+        <source>Server Stop</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -174,17 +185,17 @@
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionEditorPage.qml" line="182"/>
+        <location filename="../ui/QuestionEditorPage.qml" line="185"/>
         <source>Saved!</source>
         <translation>Сохранено!</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionEditorPage.qml" line="212"/>
+        <location filename="../ui/QuestionEditorPage.qml" line="215"/>
         <source>Saving..</source>
         <translation>Сохраняется..</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionEditorPage.qml" line="216"/>
+        <location filename="../ui/QuestionEditorPage.qml" line="219"/>
         <source>Unhandled error while saving: %1</source>
         <translation>Необработанная ошибка при сохранении: %1</translation>
     </message>
@@ -192,7 +203,7 @@
 <context>
     <name>QuestionSaver</name>
     <message>
-        <location filename="../../../src/Admin/QuestionCreator/include/QuestionSaver.h" line="46"/>
+        <location filename="../../../src/Admin/QuestionCreator/include/QuestionSaver.h" line="57"/>
         <source>I don&apos;t want to save this question!</source>
         <translation>Не хочу сохранять этот вопрос!</translation>
     </message>
