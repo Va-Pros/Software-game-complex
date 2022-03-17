@@ -9,5 +9,6 @@
         <file>ui/QuestionCreator.qml</file>
         <file>ui/QuestionEditor.qml</file>
         <file>ui/QuestionArea.qml</file>
+        <file>ui/ResultArea.qml</file>
     </qresource>
 </RCC>

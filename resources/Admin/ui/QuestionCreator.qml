@@ -77,7 +77,7 @@ Flickable {
             }
 
         }
-        //Item{}
+
         SwipeView {
             id: questionCreatorSwap
             focus: true

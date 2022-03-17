@@ -39,7 +39,7 @@ Flickable {
                                 contentWidth: Math.max(contentLabel.width, complexityLabel.width, themeLabel.width)
                                 Label {
                                     id: complexityLabel
-                                    wrapMode: Label.WordWrap
+//                                     wrapMode: Label.WordWrap
                                     text: qsTr("Complexity:")
                                 }
                             }
@@ -55,7 +55,7 @@ Flickable {
                                 contentWidth: labelPanel.contentWidth
                                 Label {
                                     id:themeLabel
-                                    wrapMode: Label.WordWrap
+//                                     wrapMode: Label.WordWrap
                                     text: qsTr("Theme:")
                                 }
                             }
@@ -75,7 +75,7 @@ Flickable {
                                 contentWidth: labelPanel.contentWidth
                                 Label {
                                     id: contentLabel
-                                    wrapMode: Label.WordWrap
+//                                     wrapMode: Label.WordWrap
                                     text: qsTr("Content:")
                                 }
                             }
@@ -95,7 +95,7 @@ Flickable {
                 Item {
                     SplitView.minimumWidth: titleRightPanel.width
                     ColumnLayout {
-                        id: resultsrPanel
+                        id: resultsPanel
                         anchors.left : parent.left
                         anchors.right : parent.right
                         spacing: 0
@@ -132,12 +132,12 @@ Flickable {
             //anchors.bottom: parent.bottom
             currentIndex: 0
             onCurrentIndexChanged: {
-                resultsrPanel.index = currentIndex
+                resultsPanel.index = currentIndex
             }
 
             Loader {
                 // index 0
-                id: pageSingleChoice
+                id: pageExample
                 property string title: active? item.title:"..."
                 active: true
                 source: "QuestionArea.qml"
@@ -145,5 +145,4 @@ Flickable {
             }
         }
     }
-
 }
