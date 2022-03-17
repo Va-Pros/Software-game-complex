@@ -96,7 +96,7 @@ Flickable {
                 id: pageSingleChoice
                 property string title: active? item.title:"..."
                 active: true
-                source: "ResultsViewer.qml"
+                source: "QuestionArea.qml"
                 //onLoaded: item.init()
             }
             Loader {
@@ -104,7 +104,7 @@ Flickable {
                 id: pageMultipleChoice
                 property string title: active? item.title:"..."
                 active: true
-                source: "QuestionEditor.qml"
+                source: "QuestionArea.qml"
                 //onLoaded: item.init()
             }
             Loader {
@@ -112,7 +112,7 @@ Flickable {
                 id: pageTypeIn
                 property string title: active? item.title:"..."
                 active: true
-                source: "ResultsViewer.qml"
+                source: "QuestionArea.qml"
                 //onLoaded: item.init()
             }
             Loader {
@@ -120,7 +120,7 @@ Flickable {
                 id: pageMatch
                 property string title: active? item.title:"..."
                 active: true
-                source: "QuestionEditor.qml"
+                source: "QuestionArea.qml"
                 //onLoaded: item.init()
             }
             Loader {
@@ -128,7 +128,7 @@ Flickable {
                 id: pageDropdownFill
                 property string title: active? item.title:"..."
                 active: true
-                source: "ResultsViewer.qml"
+                source: "QuestionArea.qml"
                 //onLoaded: item.init()
             }
             Loader {
@@ -136,7 +136,7 @@ Flickable {
                 id: pageTypeInFill
                 property string title: active? item.title:"..."
                 active: true
-                source: "QuestionEditor.qml"
+                source: "QuestionArea.qml"
                 //onLoaded: item.init()
             }
         }

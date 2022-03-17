@@ -8,5 +8,6 @@
         <file>ui/GameManagement.qml</file>
         <file>ui/QuestionCreator.qml</file>
         <file>ui/QuestionEditor.qml</file>
+        <file>ui/QuestionArea.qml</file>
     </qresource>
 </RCC>
