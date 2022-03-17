@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
             break;
         }
     }
-    app.setWindowIcon(QIcon("../icon.svg"));
+//     app.setWindowIcon(QIcon("qrc:icons/icon.svg"));
     registerQmlTypes();
     QQmlApplicationEngine engine;
 

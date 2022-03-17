@@ -50,10 +50,10 @@ Flickable {
                                 Layout.fillWidth: true
                                 editable: true
                                 model: ListModel {
-                                    id: ttittleModel
+                                    id: titleModel
                                     ListElement { text: qsTr("")}
                                     ListElement { text: qsTr("Any")}
-                                    // themeModel.append({text: theme[idx]})
+                                    // titleModel.append({text: theme[idx]})
                                 }
                             }
                         }
@@ -75,7 +75,7 @@ Flickable {
                                     id: platoonModel
                                     ListElement { text: qsTr("")}
                                     ListElement { text: qsTr("Any")}
-                                    // themeModel.append({text: theme[idx]})
+                                    // platoonModel.append({text: theme[idx]})
                                 }
                             }
                         }
@@ -119,15 +119,17 @@ Flickable {
                             text: qsTr("Results:")
                             font.pixelSize: buttonSearch.height * 0.5
                         }
-        //                 Button {
-        //                     id: buttonSingleChoice
-        //                     Layout.fillWidth: true
-        //                     text: qsTr("Single choice")
-        //                     onClicked: questionCreatorSwap.currentIndex = 1
-        //                     flat: questionCreatorPanel.index != 0
-        //                 }
+                        Repeater {
+                            model: []
+                            Button {
+                                id: buttonSingleChoice
+                                Layout.fillWidth: true
+                                text: modelData
+                                //onClicked: questionCreatorSwap.currentIndex = 1
+                                //flat: questionCreatorPanel.index != 0
+                            }
+                        }
                     }
-
                 }
             }
         }
@@ -138,21 +140,19 @@ Flickable {
             focus: true
             orientation: Qt.Vertical
             anchors.top: parent.bottom
-//             anchors.left: parent.left
-            //anchors.right: parent.right
-            //anchors.bottom: parent.bottom
             currentIndex: 0
             onCurrentIndexChanged: {
                 resultsPanel.index = currentIndex
             }
-
-            Loader {
-                // index 0
-                id: pageExample
-                property string title: active? item.title:"..."
-                active: true
-                source: "ResultArea.qml"
-                //onLoaded: item.init()
+            Repeater {
+                model: []
+                Loader {
+                    id: pageExample
+                    property string title: active? item.title:"..."
+                    active: true
+                    source: "ResultArea.qml"
+                    //onLoaded: item.init()
+                }
             }
         }
     }

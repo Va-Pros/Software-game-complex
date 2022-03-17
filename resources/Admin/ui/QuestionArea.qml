@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls.Material 2.0
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 2.13
-import Felgo 3.0
 
 Item {
     property string title: qsTr("Question area")
@@ -21,6 +20,7 @@ Item {
                 }
             }
             ComboBox {
+                id : themeName
                 textRole: "text"
                 valueRole: "value"
                 Layout.fillWidth: true
@@ -42,77 +42,94 @@ Item {
                     text: qsTr("Complexity:")
                 }
             }
-            RadioButton {
-                text:  qsTr("Easy")
-                checked: true
+            Repeater {
+                //Layout.fillWidth: true
+                //Layout.maximumWidth: Qt.application.screens[0].width * 0.42
+                model: ListModel {
+                    ListElement {
+                        title: qsTr("Easy")
+                        active: true
+                    }
+                    ListElement { title: qsTr("Medium")}
+                    ListElement { title: qsTr("Hard")}
+                }
+                RadioButton {
+                    required property string title
+                    required property bool active
+                    text:title
+                    checked:active
+                }
             }
-            RadioButton {
-                text:  qsTr("Medium")
-            }
-            RadioButton {
-                text:  qsTr("Hard")
+        }
+        Label {
+            id:contentLabel
+            text: qsTr("Content:")
+        }
+        TextArea {
+            Layout.fillWidth: true
+            Layout.minimumHeight: themeName.height * 2
+            placeholderText: qsTr("Enter description")
+        }
+        Repeater {
+            model:1
+            ColumnLayout{
+                Label {
+                    text: qsTr("Answer options:")
+                }
+                Repeater {
+                    model: ListModel {
+                        id: answersList
+                        ListElement { value: qsTr("")}
+                    }
+                    RowLayout {
+                        id: answersId
+                        required property string value
+                        required property int index
+                        TextField{
+                            Layout.fillWidth: true
+                            Layout.maximumWidth: Qt.application.screens[0].width * 0.42 + themePanel.contentWidth
+                            text:value
+                            onEditingFinished:{
+                                answersList.set(index, {value: answersId.text})
+                            }
+                        }
+                        Button {
+                            icon.name: "delete"
+                            visible: index
+                            onClicked: {
+                                answersList.remove(index)
+                            }
+                        }
+                    }
+                }
+                Button {
+                    Layout.fillWidth: true
+                    Layout.maximumWidth: Qt.application.screens[0].width * 0.42 + themePanel.contentWidth
+                    Layout.alignment: Qt.AlignLeft
+                    text: qsTr("Add option")
+                    icon.name: "list-add"
+                    onClicked: {
+                        answersList.append({ value: qsTr("")})
+                    }
+                }
             }
         }
         RowLayout {
-            Pane{
-                contentWidth: themePanel.contentWidth
-                Label {
-                    id:contentLabel
-//                     anchors.top: parent.bottom
-                    text: qsTr("Content:")
-                }
+            Button {
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignLeft
+                text: !true?qsTr("Delete"):qsTr("Clear")
+                icon.name: "delete"
+                onClicked: {}
             }
 
-            Item {
-                id: editorRoot
-
-                // line height and line count of text edit
-                readonly property real lineHeight: (textEdit.implicitHeight - 2 * textEdit.textMargin) / textEdit.lineCount
-                readonly property alias lineCount: textEdit.lineCount
-
-                // ...
-
-                Column {
-                    // start position of line numbers depends on text margin
-                    y: textEdit.textMargin
-                    width: parent.width
-
-                // add line numbers based on line count and height
-                    Repeater {
-                    model: editorRoot.lineCount
-                    delegate: Text {
-                        id: text
-                        width: implicitWidth
-                        height: editorRoot.lineHeight
-                        color: "#666"
-                        font: textEdit.font
-                        text: index + 1
-                    }
-                    }
-                }
-
-                // ...
-
-                AppTextEdit {
-                    id: textEdit
-
-                    property int currentLine: text.substring(0, cursorPosition).split(/\r\n|\r|\n/).length - 1
-                    textMargin: 30
-                    wrapMode: Text.WordWrap
-                    anchors {
-                    fill: parent
-                    topMargin: 2
-                    leftMargin: numbersColumnWidth + 10
-                    }
-                    selectByKeyboard: true
-                    selectByMouse: true
-                    textFormat: Qt.PlainText
-                    verticalAlignment: TextEdit.AlignTop
-                }
-
-                // ...
-                }
+            Button {
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignRight
+                text: qsTr("Save")
+                icon.name: "document-save"
+                onClicked: {}
+            }
         }
-
     }
 }

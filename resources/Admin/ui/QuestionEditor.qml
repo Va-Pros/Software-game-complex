@@ -111,13 +111,16 @@ Flickable {
                             text: qsTr("Results:")
                             font.pixelSize: buttonSearch.height * 0.5
                         }
-        //                 Button {
-        //                     id: buttonSingleChoice
-        //                     Layout.fillWidth: true
-        //                     text: qsTr("Single choice")
-        //                     onClicked: questionCreatorSwap.currentIndex = 1
-        //                     flat: questionCreatorPanel.index != 0
-        //                 }
+                        Repeater {
+                            model: []
+                            Button {
+                                id: buttonSingleChoice
+                                Layout.fillWidth: true
+                                text: modelData
+                                //onClicked: questionCreatorSwap.currentIndex = 1
+                                //flat: questionCreatorPanel.index != 0
+                            }
+                        }
                     }
 
                 }
@@ -137,14 +140,16 @@ Flickable {
             onCurrentIndexChanged: {
                 resultsPanel.index = currentIndex
             }
-
-            Loader {
-                // index 0
-                id: pageExample
-                property string title: active? item.title:"..."
-                active: true
-                source: "QuestionArea.qml"
-                //onLoaded: item.init()
+            Repeater {
+                model: []
+                Loader {
+                    // index 0
+                    id: pageExample
+                    property string title: active? item.title:"..."
+                    active: true
+                    source: "QuestionArea.qml"
+                    //onLoaded: item.init()
+                }
             }
         }
     }

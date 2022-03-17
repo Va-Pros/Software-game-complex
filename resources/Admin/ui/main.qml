@@ -5,8 +5,8 @@ import QtQuick.Controls.Material 2.0
 import QtGraphicalEffects 1.0
 
 ApplicationWindow {
-    width: 640
-    height: 480
+    minimumWidth: 800
+    minimumHeight: 400
     visible: true
     title: qsTr("Admin Panel")
 
@@ -38,38 +38,15 @@ ApplicationWindow {
         onCurrentIndexChanged: {
             mainBar.currentIndex = currentIndex
         }
-
-        Loader {
-            // index 0
-            id: pageGameManagement
-            property string title: active? item.title:"..."
-            active: true
-            source: "GameManagement.qml"
-            //onLoaded: item.init()
-        }
-        Loader {
-            // index 1
-            id: pageQuestionConstructor
-            property string title: active? item.title:"..."
-            active: true
-            source: "QuestionConstructor.qml"
-            //onLoaded: item.init()
-        }
-        Loader {
-            // index 2
-            id: pageSituationConstructor
-            property string title: active? item.title:"..."
-            active: true
-            source: "SituationConstructor.qml"
-            //onLoaded: item.init()
-        }
-        Loader {
-            // index 3
-            id: pageResultsViewer
-            property string title: active? item.title:"..."
-            active: true
-            source: "ResultsViewer.qml"
-            //onLoaded: item.init()
+        Repeater {
+            model: ["GameManagement.qml", "QuestionConstructor.qml", "SituationConstructor.qml", "ResultsViewer.qml"]
+            Loader {
+                id: pageGameManagement
+                property string title: active? item.title:"..."
+                active: true
+                source: modelData
+                //onLoaded: item.init()
+            }
         }
     }
 }
