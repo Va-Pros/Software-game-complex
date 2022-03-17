@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls.Material 2.0
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 2.13
-import QtQuick.Controls 1.4 as OldControls
 
 Flickable {
    id: questionEditor
@@ -43,11 +42,11 @@ Flickable {
                                     text: qsTr("Complexity:")
                                 }
                             }
-                            OldControls.ComboBox {
+                            ComboBox {
                                 Layout.fillWidth: true
                                 id: complexityMosel
                                 editable: false
-                                model: ["Any", "Easy", "Medium", "Hard", "Easy or Medium", "Medium or Hard", "Easy or Hard"]
+                                model: [qsTr("Any"), qsTr("Easy"), qsTr("Medium"), qsTr("Hard"), qsTr("Easy or Medium"), qsTr("Medium or Hard"), qsTr("Easy or Hard")]
                             }
                         }
                         RowLayout{
@@ -59,13 +58,15 @@ Flickable {
                                     text: qsTr("Theme:")
                                 }
                             }
-                            OldControls.ComboBox {
+                            ComboBox {
+                                textRole: "text"
+                                valueRole: "value"
                                 Layout.fillWidth: true
                                 editable: true
                                 model: ListModel {
                                     id: themeModel
-                                    ListElement { text: ""}
-                                    ListElement { text: "Any"}
+                                    ListElement { text: qsTr("")}
+                                    ListElement { text: qsTr("Any")}
                                     // themeModel.append({text: theme[idx]})
                                 }
                             }
@@ -122,7 +123,9 @@ Flickable {
                 }
             }
         }
+
         SwipeView {
+            SplitView.minimumWidth: Math.max(titleRightPanel.width) * 1.8
             id: questionEditorSwap
             focus: true
             orientation: Qt.Vertical
@@ -145,4 +148,5 @@ Flickable {
             }
         }
     }
+
 }

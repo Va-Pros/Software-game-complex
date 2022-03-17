@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls.Material 2.0
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 2.13
-import QtQuick.Controls 1.4 as OldControls
 
 Flickable {
    id: resultsViewer
@@ -45,13 +44,15 @@ Flickable {
                                     text: qsTr("Tittle:")
                                 }
                             }
-                            OldControls.ComboBox {
+                            ComboBox {
+                                textRole: "text"
+                                valueRole: "value"
                                 Layout.fillWidth: true
                                 editable: true
                                 model: ListModel {
                                     id: ttittleModel
-                                    ListElement { text: ""}
-                                    ListElement { text: "Any"}
+                                    ListElement { text: qsTr("")}
+                                    ListElement { text: qsTr("Any")}
                                     // themeModel.append({text: theme[idx]})
                                 }
                             }
@@ -65,13 +66,15 @@ Flickable {
                                     text: qsTr("Platoon:")
                                 }
                             }
-                            OldControls.ComboBox {
+                            ComboBox {
+                                textRole: "text"
+                                valueRole: "value"
                                 Layout.fillWidth: true
                                 editable: true
                                 model: ListModel {
                                     id: platoonModel
-                                    ListElement { text: ""}
-                                    ListElement { text: "Any"}
+                                    ListElement { text: qsTr("")}
+                                    ListElement { text: qsTr("Any")}
                                     // themeModel.append({text: theme[idx]})
                                 }
                             }
@@ -128,7 +131,9 @@ Flickable {
                 }
             }
         }
+
         SwipeView {
+            SplitView.minimumWidth: Math.max(titleRightPanel.width) * 1.6
             id: resultVieverSwap
             focus: true
             orientation: Qt.Vertical
@@ -151,4 +156,5 @@ Flickable {
             }
         }
     }
+
 }

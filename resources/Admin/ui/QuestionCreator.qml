@@ -79,6 +79,7 @@ Flickable {
         }
 
         SwipeView {
+            SplitView.minimumWidth: titleRightPanel.width * 1.6
             id: questionCreatorSwap
             focus: true
             orientation: Qt.Vertical
@@ -141,5 +142,6 @@ Flickable {
             }
         }
     }
+
 
 }
