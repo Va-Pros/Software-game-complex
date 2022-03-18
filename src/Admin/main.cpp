@@ -17,7 +17,7 @@
 #include <QTranslator>
 // template<class T>
 // concept DerivesQObject = std::is_base_of<QObject, T>::value;
-
+/*
 template<typename T>
 int registerVersion1(const char* uri) {
     return qmlRegisterType<T>(uri, 1, 0, T::staticMetaObject.className());
@@ -49,7 +49,7 @@ void registerQmlTypes() {
     //    QuestionThemes::singletonProvider);
 
     //    qmlregister
-}
+}*/
 
 //#define LIST_RESOURCES
 
@@ -88,7 +88,7 @@ int main(int argc, char** argv) {
         }
     }
 //     app.setWindowIcon(QIcon("qrc:icons/icon.svg"));
-    registerQmlTypes();
+//     registerQmlTypes();
     QQmlApplicationEngine engine;
 
     TcpServer tcpServer;

@@ -71,20 +71,32 @@ Item {
             placeholderText: qsTr("Enter description")
         }
         Repeater {
+            //anchors.fill: parent
+            property string title: qsTr("Type in")
             model:1
             ColumnLayout{
                 Label {
                     text: qsTr("Answer options:")
                 }
+                ButtonGroup {
+                    id: singleChoiceGroup
+                }
                 Repeater {
                     model: ListModel {
                         id: answersList
-                        ListElement { value: qsTr("")}
+                        ListElement { value: qsTr(""); correctAnswer: true}
                     }
                     RowLayout {
                         id: answersId
                         required property string value
-                        required property int index
+                        //required property int index
+                        required property bool correctAnswer
+                        RadioButton {
+                            ButtonGroup.group: singleChoiceGroup
+                            checked:correctAnswer
+                            onClicked:answersList.set(index, {correctAnswer: true})
+
+                        }
                         TextField{
                             Layout.fillWidth: true
                             Layout.maximumWidth: Qt.application.screens[0].width * 0.42 + themePanel.contentWidth
@@ -95,7 +107,7 @@ Item {
                         }
                         Button {
                             icon.name: "delete"
-                            visible: index
+                            visible: answersList.count > 1 && !correctAnswer
                             onClicked: {
                                 answersList.remove(index)
                             }
@@ -115,6 +127,7 @@ Item {
             }
         }
         RowLayout {
+            //Layout.alignment:Qt.AlignBottom
             Button {
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignLeft
