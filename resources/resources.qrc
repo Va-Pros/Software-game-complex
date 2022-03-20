@@ -1,6 +1,13 @@
 <RCC>
     <qresource prefix="/">
         <file>i18n/SGC_ru_RU.qm</file>
+        <file>icons/commutator.png</file>
+        <file>icons/computer.png</file>
+        <file>icons/router.png</file>
+        <file>icons/server.png</file>
+        <file>icons/optical.png</file>
+        <file>icons/radio.png</file>
+        <file>icons/wire.png</file>
         <file>ui/main.qml</file>
         <file>ui/MainMenu.qml</file>
         <file>ui/QuestionConstructor.qml</file>
@@ -23,5 +30,12 @@
         <file>ui/QuestionEditorWidgets/AnswerWidgets/AnswerInput.qml</file>
         <file>ui/QuestionEditorWidgets/AnswerWidgets/SingleChoiceAnswerInput.qml</file>
         <file>ui/QuestionEditorWidgets/AnswerWidgets/MultipleChoiceAnswerInput.qml</file>
+        <file>ui/SituationWidgets/CanvasComponent.qml</file>
+        <file>ui/SituationWidgets/NodeComponent.qml</file>
+        <file>ui/SituationWidgets/EdgeComponent.qml</file>
+        <file>ui/SituationWidgets/SelectableElement.qml</file>
+        <file>ui/SituationWidgets/SituationUtils.js</file>
+        <file>ui/SituationWidgets/SituationElement.qml</file>
+        <file>ui/SituationWidgets/DividerElement.qml</file>
     </qresource>
 </RCC>

@@ -44,26 +44,10 @@ include(ECMInstallIcons)
 
 find_package(KF5 ${KF_MIN_VERSION} REQUIRED COMPONENTS Kirigami2 I18n CoreAddons IconThemes)
 
-add_executable(Admin
-        main.cpp
-        ../../resources/resources.qrc
-        QuestionCreator/include/QuestionTypeListModel.h
-        QuestionCreator/include/QuestionTypeItem.h
-        QuestionCreator/include/QuestionCreatorModel.h
-        Test/include/Question.h
-        Test/Question.cpp
-        Test/include/TypeInQuestion.h
-        Test/TypeInQuestion.cpp
-        Test/include/TypeInAnswer.h
-        Test/TypeInAnswer.cpp
-        QuestionCreator/include/QuestionSaver.h
-        QuestionCreator/include/QuestionThemeModel.h
-        QuestionCreator/include/QuestionThemeItem.h
-        QuestionCreator/include/QuestionThemes.h
-        QuestionCreator/include/QuestionDifficulty.h
-        SituationConstructor/SituationModifyHelper.h SituationConstructor/SituationModel.h SituationConstructor/SituationModel.cpp SituationConstructor/SituationNode.h SituationConstructor/SituationNet.h SituationConstructor/SimpleSituationNode.cpp SituationConstructor/SimpleSituationNode.h ../Common/Situation/TestSituation.cpp ../Common/Situation/TestSituation.h)
-
-find_library(COMMON NAMES Common)
+add_library(Common
+        Situation/TestSituation.h
+        Situation/TestSituation.cpp
+        )
 
 target_link_libraries(Admin
         Qt5::Widgets Qt5::Quick Qt5::QuickControls2

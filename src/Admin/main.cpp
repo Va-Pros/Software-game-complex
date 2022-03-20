@@ -5,14 +5,16 @@
 #include <KLocalizedContext>
 #include <QDirIterator>
 #include <QQuickStyle>
+#include <QObject>
 #include "QuestionCreator/include/QuestionCreatorModel.h"
 #include "Test/include/TypeInQuestion.h"
 #include "QuestionCreator/include/QuestionSaver.h"
 #include "QuestionCreator/include/QuestionThemes.h"
 #include "QuestionCreator/include/QuestionDifficulty.h"
+#include "SituationConstructor/SituationModifyHelper.h"
 
-//template<class T>
-//concept DerivesQObject = std::is_base_of<QObject, T>::value;
+template<class T>
+concept DerivesQObject = std::is_base_of<QObject, T>::value;
 
 template<typename T>
 int registerVersion1(const char *uri) {
@@ -41,6 +43,13 @@ void registerQmlTypes() {
     registerVersion1<QuestionDifficulty>(questionCreatorUri);
 
     qmlRegisterSingletonType<QuestionSaver>(questionCreatorUri, 1, 0, "QuestionSaver", QuestionSaver::singletonProvider);
+
+    // SituationConstructor
+    const char* situationConstructorUri = "SituationConstructor";
+
+    qmlRegisterSingletonType<SituationModifyHelper>(situationConstructorUri, 1, 0, "SituationModifyHelper", SituationModifyHelper::singletonProvider);
+    registerVersion1<SituationModel>(situationConstructorUri);
+
 //    qmlRegisterSingletonType<QuestionThemes>(questionCreatorUri, 1, 0, "QuestionThemes", QuestionThemes::singletonProvider);
 
 //    qmlregister
