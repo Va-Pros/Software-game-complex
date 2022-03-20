@@ -4,8 +4,12 @@ import QtQuick.Controls.Material 2.0
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 2.13
 
-Item {
+Pane {
+    id: questionArea
     property string title: qsTr("Question area")
+    property int type: 2
+    property var answers_list: [[qsTr("")]]
+    property var is_correct: [[true]]
     ColumnLayout {
         id: questionAreaPanel
         anchors.left : parent.left
@@ -13,7 +17,7 @@ Item {
         RowLayout{
             Pane{
                 id: themePanel
-                contentWidth: Math.max(themeLabel.width, complexityLabel.width, contentLabel.width)
+                contentWidth: Math.max(themeLabel.width, difficultyLabel.width, contentLabel.width)
                 Label {
                     id:themeLabel
                     text: qsTr("Theme:")
@@ -34,82 +38,88 @@ Item {
             }
         }
         RowLayout {
-            id: complexityRow
+            id: difficultyRow
+            property int activeIdx: 0
             Pane{
                 contentWidth: themePanel.contentWidth
                 Label {
-                    id:complexityLabel
-                    text: qsTr("Complexity:")
+                    id:difficultyLabel
+                    text: qsTr("Difficulty:")
                 }
             }
             Repeater {
                 //Layout.fillWidth: true
                 //Layout.maximumWidth: Qt.application.screens[0].width * 0.42
-                model: ListModel {
-                    ListElement {
-                        title: qsTr("Easy")
-                        active: true
-                    }
-                    ListElement { title: qsTr("Medium")}
-                    ListElement { title: qsTr("Hard")}
-                }
+                model: [qsTr("Easy"),  qsTr("Medium"), qsTr("Hard")]
                 RadioButton {
-                    required property string title
-                    required property bool active
-                    text:title
-                    checked:active
+                    text:modelData
+                    checked: index==difficultyRow.activeIdx
+                    onClicked: difficultyRow.activeIdx=index
                 }
             }
         }
-        Label {
-            id:contentLabel
-            text: qsTr("Content:")
-        }
-        TextArea {
+        Pane {
             Layout.fillWidth: true
-            Layout.minimumHeight: themeName.height * 2
-            placeholderText: qsTr("Enter description")
+            ColumnLayout {
+                anchors.fill: parent
+                Label {
+                    id:contentLabel
+                    text: qsTr("Content:")
+                }
+
+                TextArea {
+                    id:descriptionArea
+                    Layout.fillWidth: true
+                    Layout.minimumHeight: themeName.height * 2
+                    placeholderText: qsTr("Enter description")
+                }
+            }
         }
         Repeater {
             model:1
             ColumnLayout{
-                Label {
-                    text: qsTr("Answer options:")
-                }
-                Repeater {
-                    model: ListModel {
-                        id: answersList
-                        ListElement { value: qsTr("")}
-                    }
-                    RowLayout {
-                        id: answersId
-                        required property string value
-                        required property int index
-                        TextField{
-                            Layout.fillWidth: true
-                            Layout.maximumWidth: Qt.application.screens[0].width * 0.42 + themePanel.contentWidth
-                            text:value
-                            onEditingFinished:{
-                                answersList.set(index, {value: answersId.text})
+                Pane{
+                    Layout.fillWidth: true
+                    ColumnLayout{
+                        anchors.fill: parent
+                        Label {
+                            text: qsTr("Answer options:")
+                        }
+                        Repeater {
+                            id: answersModel
+                            model: answers_list[0].length
+                            RowLayout {
+                                TextField{
+                                    Layout.fillWidth: true
+                                    Layout.maximumWidth: Qt.application.screens[0].width * 0.42 + themePanel.contentWidth
+                                    text:answers_list[0][index]
+                                    onEditingFinished:{
+                                        answers_list[0][index] = text;
+                                    }
+                                }
+                                Button {
+                                    icon.name: "delete"
+                                    visible: answersModel.model > 1
+                                    onClicked: {
+                                        answers_list[0].splice(index, 1);
+                                        is_correct[0].splice(index, 1);
+                                        answersModel.model--;
+                                    }
+                                }
                             }
                         }
                         Button {
-                            icon.name: "delete"
-                            visible: index
+                            Layout.fillWidth: true
+                            Layout.maximumWidth: Qt.application.screens[0].width * 0.42 + themePanel.contentWidth
+                            Layout.alignment: Qt.AlignLeft
+                            text: qsTr("Add option")
+                            icon.name: "list-add"
                             onClicked: {
-                                answersList.remove(index)
+                                answers_list[0].push(qsTr(""));
+                                is_correct[0].push(true);
+                                answersModel.model++;
                             }
                         }
-                    }
-                }
-                Button {
-                    Layout.fillWidth: true
-                    Layout.maximumWidth: Qt.application.screens[0].width * 0.42 + themePanel.contentWidth
-                    Layout.alignment: Qt.AlignLeft
-                    text: qsTr("Add option")
-                    icon.name: "list-add"
-                    onClicked: {
-                        answersList.append({ value: qsTr("")})
                     }
                 }
             }
@@ -128,8 +138,19 @@ Item {
                 Layout.alignment: Qt.AlignRight
                 text: qsTr("Save")
                 icon.name: "document-save"
-                onClicked: {}
+                onClicked: {
+                    console.log(themeName.editText)
+                    console.log(difficultyRow.activeIdx)
+                    console.log(descriptionArea.text)
+                    console.log(questionArea.type)
+                    console.log(answers_list)
+                    console.log(is_correct)
+                    console.log()
+                }
             }
         }
+    }
+    function init(type) {
+        questionArea.type=type;
     }
 }

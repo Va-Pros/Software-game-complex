@@ -16,7 +16,7 @@ Flickable {
         orientation: Qt.Horizontal
 
         Item {
-            SplitView.minimumWidth: titleRightPanel.width
+            SplitView.minimumWidth: titleRightPanel.width + pane.padding * 2
             ColumnLayout {
                 id: questionCreatorPanel
                 anchors.left : parent.left
@@ -26,29 +26,22 @@ Flickable {
                 //onCurrentIndexChanged: {
                     //console.log(currentIndex);
                 //}
-
-                Label {
-                    id: titleRightPanel
-                    font.italic: true
-                    text: qsTr("Choose the type of question:")
-                    font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.5
+                Pane{
+                    id: pane
+                    Label {
+                        id: titleRightPanel
+                        font.italic: true
+                        text: qsTr("Choose the type of question:")
+                        font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.5
+                    }
                 }
                 Repeater {
-                    model: ListModel {
-                        ListElement { index:1; title: qsTr("Single choice")}
-                        ListElement { index:2; title: qsTr("Multiple choice")}
-                        ListElement { index:3; title: qsTr("Type in")}
-                        ListElement { index:4; title: qsTr("Match")}
-                        ListElement { index:5; title: qsTr("Dropdown fill")}
-                        ListElement { index:6; title: qsTr("Type in fill")}
-                    }
+                    model: [qsTr("Single choice"), qsTr("Multiple choice"), qsTr("Type in"), qsTr("Match"), qsTr("Dropdown fill"), qsTr("Type in fill")]
                     Button {
-                        required property string title
-                        required property int index
                         Layout.fillWidth: true
-                        text: title
-                        onClicked: questionCreatorSwap.currentIndex = index
-                        flat: questionCreatorPanel.index != index
+                        text: modelData
+                        onClicked: questionCreatorSwap.currentIndex = index+1
+                        flat: questionCreatorPanel.index != index+1
                     }
                 }
             }
@@ -76,7 +69,7 @@ Flickable {
                     property string title: active? item.title:"..."
                     active: true
                     source: "QuestionArea.qml"
-                    //onLoaded: item.init()
+                    onLoaded: item.init(index)
                 }
             }
         }

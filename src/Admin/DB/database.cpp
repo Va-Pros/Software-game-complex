@@ -2,74 +2,43 @@
 
 DataBase::DataBase(QObject *parent) : QObject(parent) {}
 
-DataBase::~DataBase() {}
+DataBase::~DataBase() = default;
 
-/* Методы для подключения к базе данных
- * */
-void DataBase::connectToDataBase() {
-	/* Перед подключением к базе данных производим проверку на её существование.
-	 * В зависимости от результата производим открытие базы данных или её восстановление
-	 * */
-	if (!QFile("../war.db").exists()) { //todo ???
-		this->restoreDataBase();
-	} else {
-		this->openDataBase();
-	}
-}
+void DataBase::connectToDataBase() { this->openDataBase(); }
 
-/* Методы восстановления базы данных
- * */
-bool DataBase::restoreDataBase() {
-	if (this->openDataBase()) {
-		return (this->createTotalReportTable() && this->createQuestionTable());
-	}
-	qDebug() << "Не удалось восстановить базу данных";
-	return false;
-}
-
-/* Метод для открытия базы данных
- * */
 bool DataBase::openDataBase() {
-	/* База данных открывается по заданному пути
-	 * и имени базы данных, если она существует
-	 * */
-	qDebug() << QSqlDatabase::drivers();
+// 	qDebug() << QSqlDatabase::drivers();
 	db = QSqlDatabase::addDatabase("QPSQL");
 
 	db.setHostName("localhost");
-//	db.setDatabaseName("wardb");
 	db.setUserName("postgres");
-	db.setPassword("zaqwedxs");
+	db.setPassword("123");
 	db.setPort(5432);
-//	db.setConnectOptions();
 
-	if (db.open()) {
-		qDebug() << "opened!";
-		return true;
-	} else {
+	if (!db.open()) {
 		qDebug() << db.lastError();
 		return false;
 	}
-
-	return db.open();
+	QSet<QString> tables;
+	for(auto table: db.tables())
+		tables.insert(table);
+	if (tables.find("question") == tables.end())
+		this->createQuestionTable();
+	if (tables.find("total_report") == tables.end())
+		this->createTotalReportTable();
+	return true;
 }
 
-/* Методы закрытия базы данных
- * */
 void DataBase::closeDataBase() { db.close(); }
 
-/* Метод для создания основной таблицы в базе данных
- * */
 bool DataBase::createTotalReportTable() {
-	/* В данном случае используется формирование сырого SQL-запроса
-	 * с последующим его выполнением.
-	 * */
 	QSqlQuery query;
-	if (!query.exec("CREATE TABLE TotalReport ("
-					"id      INTEGER PRIMARY KEY, "
+	if (!query.exec("CREATE TABLE Total_Report ("
+					"id      SERIAL  PRIMARY KEY, "
 					"name    text    NOT NULL,"
 					"platoon text    NOT NULL"
-					// todo: testReport + gameReport
+					// todo: Test_Report
+					// todo: Game_Report
 					" )")) {
 		qDebug() << "DataBase: error of create TotalReport";
 		qDebug() << query.lastError().text();
@@ -78,22 +47,17 @@ bool DataBase::createTotalReportTable() {
 	return true;
 }
 
-/* Метод для создания таблицы устройств в базе данных
- * */
 bool DataBase::createQuestionTable() {
-	/* В данном случае используется формирование сырого SQL-запроса
-	 * с последующим его выполнением.
-	 * */
 	QSqlQuery query;
-	if (!query.exec("CREATE TABLE QUESTION ("
-					"id           INTEGER PRIMARY KEY,"
+	if (!query.exec("CREATE TABLE Question ("
+					"id           SERIAL      PRIMARY KEY,"
 					"theme        TEXT        NOT NULL,"
 					"difficulty   INTEGER     NOT NULL,"
 					"description  TEXT        NOT NULL,"
 					"model        INTEGER     NOT NULL,"
 					"answers_list text[][]    NOT NULL,"
 					"is_correct   boolean[][] NOT NULL,"
-					"is_deleted   boolean     NOT NULL"
+					"is_deleted   boolean     DEFAULT false"
 					")")) {
 		qDebug() << "DataBase: error of create Question";
 		qDebug() << query.lastError().text();
@@ -102,52 +66,33 @@ bool DataBase::createQuestionTable() {
 	return true;
 }
 
-/* Метод для вставки записи в основную таблицу
- * */
 bool DataBase::insertIntoTotalReportTable(const QVariantList &data) {
-	/* Запрос SQL формируется из QVariantList,
-	 * в который передаются данные для вставки в таблицу.
-	 * */
 	QSqlQuery query;
-	/* В начале SQL запрос формируется с ключами,
-	 * которые потом связываются методом bindValue
-	 * для подстановки данных из QVariantList
-	 * */
-	query.prepare("INSERT INTO TotalReport (name, platoon) "
-				  "VALUES (:Name, :Platoon)");
-	query.bindValue(":Name", data[0].toString());
+	query.prepare("INSERT INTO Total_Report (name , platoon ) "
+				  "VALUES					(:Name, :Platoon) ");
+	query.bindValue(":Name",    data[0].toString());
 	query.bindValue(":Platoon", data[1].toString());
-	// После чего выполняется запросом методом exec()
 	if (!query.exec()) {
-		qDebug() << "error insert into TotalReport";
+		qDebug() << "DataBase: error insert into Tota_lReport";
 		qDebug() << query.lastError().text();
 		return false;
 	}
 	return true;
 }
 
-/* Метод для вставки записи в таблицу устройств
- * */
 bool DataBase::insertIntoQuestionTable(const QVariantList &data) {
-	/* Запрос SQL формируется из QVariantList,
-	 * в который передаются данные для вставки в таблицу.
-	 * */
 	QSqlQuery query;
-	/* В начале SQL запрос формируется с ключами,
-	 * которые потом связываются методом bindValue
-	 * для подстановки данных из QVariantList
-	 * */
-	query.prepare("INSERT INTO Question (theme, difficulty, text, isActive, type, isDeleted )"
-				  "VALUES (:Theme, :Difficulty, :Text, :IsActive, :Type, :IsDeleted )");
-	query.bindValue(":Theme", data[0].toString());
-	query.bindValue(":Difficulty", data[1].toString());
-	query.bindValue(":Text", data[2].toString());
-	query.bindValue(":IsActive", data[3].toString());
-	query.bindValue(":Type", data[4].toString());
-	query.bindValue(":IsDeleted", data[5].toString());
-	// После чего выполняется запросом методом exec()
+	query.prepare("INSERT INTO Question (theme , difficulty , description , model , answers_list , is_correct , is_deleted ) "
+				  "VALUES 				(:Theme, :Difficulty, :Description, :Model, :Answers_list, :Is_correct, :Is_deleted) ");
+	query.bindValue(":Theme",        data[0].toString());
+	query.bindValue(":Difficulty",   data[1].toString());
+	query.bindValue(":Description",  data[2].toString());
+	query.bindValue(":Model",        data[3].toString());
+	query.bindValue(":Answers_list", data[4].toString());
+	query.bindValue(":Is_correct",   data[5].toString());
+	query.bindValue(":Is_deleted",   data[6].toString());
 	if (!query.exec()) {
-		qDebug() << "error insert into Question";
+		qDebug() << "DataBase: error insert into Question";
 		qDebug() << query.lastError().text();
 		return false;
 	}

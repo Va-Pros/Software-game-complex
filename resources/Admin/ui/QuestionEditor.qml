@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls.Material 2.0
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 2.13
+import org.kde.kirigami 2.4 as Kirigami
 
 Flickable {
    id: questionEditor
@@ -15,7 +16,7 @@ Flickable {
         orientation: Qt.Horizontal
 
         Item{
-            SplitView.minimumWidth: Math.max(titleRightPanel.width) * 1.25
+            SplitView.minimumWidth: Math.max(titleRightPanel.width) * 1.25 + pane.padding * 2
             SplitView {
                 anchors.fill: parent
                 orientation: Qt.Vertical
@@ -26,25 +27,28 @@ Flickable {
                         anchors.left : parent.left
                         anchors.right : parent.right
                         spacing: 0
-                        Label {
-                            id: titleRightPanel
-                            font.italic: true
-                            text: qsTr("Search Parameters:")
-                            font.pixelSize: buttonSearch.height * 0.5
+                        Pane{
+                            id: pane
+                            Label {
+                                id: titleRightPanel
+                                font.italic: true
+                                text: qsTr("Search Parameters:")
+                                font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.5
+                            }
                         }
                         RowLayout{
                             Pane{
                                 id: labelPanel
-                                contentWidth: Math.max(contentLabel.width, complexityLabel.width, themeLabel.width)
+                                contentWidth: Math.max(contentLabel.width, difficultyLabel.width, themeLabel.width)
                                 Label {
-                                    id: complexityLabel
+                                    id: difficultyLabel
 //                                     wrapMode: Label.WordWrap
-                                    text: qsTr("Complexity:")
+                                    text: qsTr("Difficulty:")
                                 }
                             }
                             ComboBox {
                                 Layout.fillWidth: true
-                                id: complexityMosel
+                                id: difficultyMosel
                                 editable: false
                                 model: [qsTr("Any"), qsTr("Easy"), qsTr("Medium"), qsTr("Hard"), qsTr("Easy or Medium"), qsTr("Medium or Hard"), qsTr("Easy or Hard")]
                             }
@@ -104,12 +108,13 @@ Flickable {
                         //onCurrentIndexChanged: {
                             //console.log(currentIndex);
                         //}
-
-                        Label {
-                            id: tittleResultsPanel
-                            font.italic: true
-                            text: qsTr("Results:")
-                            font.pixelSize: buttonSearch.height * 0.5
+                        Pane{
+                            Label {
+                                id: tittleResultsPanel
+                                font.italic: true
+                                text: qsTr("Results:")
+                                font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.5
+                            }
                         }
                         Repeater {
                             model: []
@@ -148,7 +153,7 @@ Flickable {
                     property string title: active? item.title:"..."
                     active: true
                     source: "QuestionArea.qml"
-                    //onLoaded: item.init()
+                    onLoaded: item.init(index)
                 }
             }
         }
