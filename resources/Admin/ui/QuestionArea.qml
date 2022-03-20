@@ -92,6 +92,11 @@ Pane {
                             id: answersModel
                             model: answers_list[0].length
                             RowLayout {
+                                CheckBox{
+                                    checked:is_correct[0][index]
+                                    onCheckedChanged: is_correct[0][index]=checked
+                                    visible: questionArea.type==1
+                                }
                                 TextField{
                                     Layout.fillWidth: true
                                     Layout.maximumWidth: Qt.application.screens[0].width * 0.42 + themePanel.contentWidth
