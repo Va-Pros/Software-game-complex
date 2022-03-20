@@ -10,7 +10,7 @@ Flickable {
     property string name: "GameManager"
     property string title: qsTr("Game manager")
 
-     Connections {
+    Connections {
         target: server
     }
 

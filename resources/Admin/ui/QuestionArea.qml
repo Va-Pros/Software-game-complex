@@ -10,6 +10,9 @@ Pane {
     property int type: 2
     property var answers_list: [[qsTr("")]]
     property var is_correct: [[true]]
+    Connections {
+        target: database
+    }
     ColumnLayout {
         id: questionAreaPanel
         anchors.left : parent.left
@@ -139,13 +142,7 @@ Pane {
                 text: qsTr("Save")
                 icon.name: "document-save"
                 onClicked: {
-                    console.log(themeName.editText)
-                    console.log(difficultyRow.activeIdx)
-                    console.log(descriptionArea.text)
-                    console.log(questionArea.type)
-                    console.log(answers_list)
-                    console.log(is_correct)
-                    console.log()
+                    database.insertIntoQuestionTable(themeName.editText, difficultyRow.activeIdx, descriptionArea.text, questionArea.type, answers_list, is_correct);
                 }
             }
         }
