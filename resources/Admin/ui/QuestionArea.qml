@@ -8,9 +8,9 @@ Pane {
     id: questionArea
     property string title: qsTr("Question area")
     property int type: 2
-    property var answers_list: [[qsTr("")]]
-    property var is_correct: [[true]]
-    property var singleChoiceIdx: [0]
+    property var answers_list:[]
+    property var is_correct:[]
+    property var singleChoiceIdx:[]
     Connections {
         target: database
     }
@@ -125,7 +125,7 @@ Pane {
                                 }
                                 Button {
                                     icon.name: "delete"
-                                    visible: answersModel.model > 1 // todo: check is is_correct not empty and contain true element
+                                    visible: answersModel.model > 1&&(type%4!=0||singleChoiceIdx[answerList.topIndex]!=index)&&(type!=3||answerList.topIndex!=1||answers_list[0].length<answers_list[1].length)
                                     onClicked: {
                                         answers_list[answerList.topIndex].splice(index, 1);
                                         is_correct[answerList.topIndex].splice(index, 1);
@@ -144,6 +144,11 @@ Pane {
                                 onClicked: {
                                     answers_list[answerList.topIndex].push(qsTr(""));
                                     is_correct[answerList.topIndex].push((questionArea.type%4)!=0);
+                                    if(questionArea.type==3&&answerList.topIndex==0&&answers_list[0].length>answers_list[1].length){
+                                        answers_list[1].push(qsTr(""));
+                                        is_correct[1].push(true);
+                                        updateModel();
+                                    }
                                     answersModel.model++;
                                 }
                             }
@@ -153,7 +158,7 @@ Pane {
                                 Layout.alignment: Qt.AlignLeft
                                 text: qsTr("Delete list")
                                 icon.name: "delete"
-                                visible:answers_list.length > 1
+                                visible:answers_list.length>1&&type>3
                                 onClicked: {
                                     answers_list.splice(answerList.topIndex, 1);
                                     is_correct.splice(answerList.topIndex, 1);
@@ -194,15 +199,25 @@ Pane {
                 text: qsTr("Save")
                 icon.name: "document-save"
                 onClicked: {
-                    console.log(answers_list)
-                    console.log(is_correct)
-                    console.log()
-                    //database.insertIntoQuestionTable(themeName.editText, difficultyRow.activeIdx, descriptionArea.text, questionArea.type, answers_list, is_correct);
+                    database.insertIntoQuestionTable(themeName.editText, difficultyRow.activeIdx, descriptionArea.text, questionArea.type, answers_list, is_correct);
                 }
             }
         }
     }
+    function updateModel(){
+        listModel.model=0;
+        listModel.model=answers_list.length;
+    }
     function init(type) {
         questionArea.type=type;
+        answers_list=[[qsTr("")]];
+        is_correct= [[true]];
+        singleChoiceIdx= [0];
+        if(type==3){
+            answers_list.push([qsTr("")]);
+            is_correct.push([true]);
+            singleChoiceIdx.push(0);
+        }
+        listModel.model=answers_list.length;
     }
 }
