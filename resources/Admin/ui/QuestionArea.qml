@@ -10,6 +10,7 @@ Pane {
     property int type: 2
     property var answers_list: [[qsTr("")]]
     property var is_correct: [[true]]
+    property var singleChoiceIdx: 0
     Connections {
         target: database
     }
@@ -88,10 +89,23 @@ Pane {
                         Label {
                             text: qsTr("Answer options:")
                         }
+                        ButtonGroup {
+                            id: singleChoiceGroup
+                        }
                         Repeater {
                             id: answersModel
                             model: answers_list[0].length
                             RowLayout {
+                                RadioButton{
+                                    ButtonGroup.group: singleChoiceGroup
+                                    checked:questionArea.type==0&&is_correct[0][index]//||index==singleChoiceIdx
+                                    onCheckedChanged: {
+                                        is_correct[0][singleChoiceIdx]=false;
+                                        is_correct[0][index]=true;
+                                        singleChoiceIdx = index;
+                                    }
+                                    visible: questionArea.type==0
+                                }
                                 CheckBox{
                                     checked:is_correct[0][index]
                                     onCheckedChanged: is_correct[0][index]=checked
@@ -107,7 +121,7 @@ Pane {
                                 }
                                 Button {
                                     icon.name: "delete"
-                                    visible: answersModel.model > 1
+                                    visible: answersModel.model > 1 // todo: check is is_correct not empty and contain true element
                                     onClicked: {
                                         answers_list[0].splice(index, 1);
                                         is_correct[0].splice(index, 1);
@@ -124,7 +138,7 @@ Pane {
                             icon.name: "list-add"
                             onClicked: {
                                 answers_list[0].push(qsTr(""));
-                                is_correct[0].push(true);
+                                is_correct[0].push(questionArea.type!=0);
                                 answersModel.model++;
                             }
                         }
