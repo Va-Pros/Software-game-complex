@@ -13,11 +13,12 @@ Item {
     property int sY: currentData.first.y
     property int eX: currentData.second.x
     property int eY: currentData.second.y
+    property string color: currentData.color
 
     Shape {
 
         ShapePath {
-            strokeColor: "red"
+            strokeColor: color
             strokeWidth: 5
             startX: sX + 64; startY: sY + 64
             PathLine { x: eX + 64; y: eY + 64 }

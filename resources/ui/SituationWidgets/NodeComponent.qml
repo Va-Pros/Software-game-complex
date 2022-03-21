@@ -31,16 +31,8 @@ Item {
 
         acceptedButtons: Qt.LeftButton | Qt.RightButton
 
-        onPositionChanged: function(event) {
-            if (drag.active) {
-                const inCanvas = mapToItem(canvasRectangle, event.x, event.y)
-                currentData["x"] = ensureInBoundsX(inCanvas.x)
-                currentData["y"] = ensureInBoundsY(inCanvas.y)
-//                currentData = currentData
-            }
-        }
         onClicked: {
-
+            console.log("button", mouse.button)
             switch (mouse.button) {
                 case Qt.LeftButton:
                     if (selectedCanvasItem === thisIndex) {
@@ -51,7 +43,8 @@ Item {
                         selectedCanvasItem = thisIndex
                     } else if (itemsToPlace.edge && selectedCanvasItem) {
                         console.log("connecting", selectedCanvasItem, "and", (thisIndex))
-                        canvasModel.push({type: "edge", subtype: itemsToPlace.edge, first: canvasModel[(selectedCanvasItem)], second: canvasModel[(thisIndex)]});
+                        const toAppend = Object.assign({first: canvasModel[selectedCanvasItem], second: canvasModel[thisIndex]}, itemsToPlace.edge)
+                        canvasModel.push(toAppend)
                         selectedCanvasItem = null
                         canvasModelChanged()
                     } else {
@@ -65,7 +58,15 @@ Item {
                     break;
             }
         }
-        onReleased: canvasModelChanged()
+        onReleased: function(event) {
+            if (drag.active) {
+                const inCanvas = mapToItem(canvasRectangle, event.x, event.y)
+                currentData["x"] = inCanvas.x - event.x
+                currentData["y"] = inCanvas.y - event.y
+                console.log("pos:", currentData["x"], currentData["y"])
+                canvasModelChanged()
+            }
+        }
     }
 
     ColorOverlay {

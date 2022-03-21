@@ -20,52 +20,66 @@ Kirigami.Page {
     property bool isMovingNode: false
     property var canvasModel: [{type: "node", subtype: "computer", image: "/icons/computer.png", x: 100, y: 100}]
 
-    onCanvasModelChanged: {
-        console.log("aadsdsd")
-    }
-
     ListModel {
         id: selectionModel
 
         ListElement {
+            type: "category"
+            name: qsTr("Vertex")
+        }
+        ListElement {
             type: "node"
             subtype: "computer"
-            iconSource: "/icons/computer.png"
+            name: qsTr("Computer")
+            image: "/icons/computer.png"
         }
         ListElement {
             type: "node"
             subtype: "router"
-            iconSource: "/icons/router.png"
+            name: qsTr("Router")
+            image: "/icons/router.png"
         }
         ListElement {
             type: "node"
             subtype: "commutator"
-            iconSource: "/icons/commutator.png"
+            name: qsTr("Commutator")
+            image: "/icons/commutator.png"
         }
         ListElement {
             type: "node"
             subtype: "server"
-            iconSource: "/icons/server.png"
+            name: qsTr("Server")
+            image: "/icons/server.png"
         }
         ListElement {
             type: "divider"
         }
         ListElement {
+            type: "category"
+            name: qsTr("Edge")
+        }
+        ListElement {
             type: "edge"
             subtype: "electric"
-            iconSource: "/icons/wire.png"
+            name: qsTr("Electric connection")
+            color: "tomato"
+            image: "/icons/wire.png"
         }
 
         ListElement {
             type: "edge"
             subtype: "radio"
-            iconSource: "/icons/radio.png"
+            color: "darkgray"
+            name: qsTr("Radio connection")
+            image: "/icons/radio.png"
         }
 
         ListElement {
             type: "edge"
             subtype: "optical"
-            iconSource: "/icons/optical.png"
+            color: "skyblue"
+            name: qsTr("Optical connection")
+            image: "/icons/optical.png"
         }
 
         ListElement {
@@ -73,33 +87,43 @@ Kirigami.Page {
         }
 
         ListElement {
+            type: "category"
+            name: qsTr("Protection Tools")
+        }
+
+        ListElement {
             type: "protection"
             subtype: "OS"
-            iconSource: "/icons/wire.png"
+            name: qsTr("Operating System")
+            image: "/icons/os.png"
         }
 
         ListElement {
             type: "protection"
             subtype: "firewall"
-            iconSource: "/icons/wire.png"
+            name: qsTr("Firewall")
+            image: "/icons/firewall.png"
         }
 
         ListElement {
             type: "protection"
             subtype: "trustedBoot"
-            iconSource: "/icons/wire.png"
+            name: qsTr("Trusted Boot")
+            image: "/icons/trustedBoot.png"
         }
 
         ListElement {
             type: "protection"
             subtype: "intrusionDetection"
-            iconSource: "/icons/wire.png"
+            name: qsTr("Intrusion Detection")
+            image: "/icons/intrusionDetection.png"
         }
 
         ListElement {
             type: "protection"
-            subtype: "acessControl"
-            iconSource: "/icons/wire.png"
+            subtype: "accessControl"
+            name: qsTr("Access Control")
+            image: "/icons/accessControl.png"
         }
     }
 
@@ -121,7 +145,11 @@ Kirigami.Page {
                                     setSource("SituationWidgets/DividerElement.qml")
                                     break
                                 }
-                                default: setSource("SituationWidgets/SelectableElement.qml", {type, subtype, iconSource})
+                                case "category": {
+                                    setSource("SituationWidgets/CategoryElement.qml", {name})
+                                    break
+                                }
+                                default: setSource("SituationWidgets/SelectableElement.qml", {itemData: model})
                             }
                         }
                     }
@@ -144,12 +172,22 @@ Kirigami.Page {
     property int dropMinY: canvasRectangle.border.width
     property int dropMaxY: canvasRectangle.height - canvasItemSize - canvasRectangle.border.width
 
+
+
     function ensureInBoundsX(x) {
-        return Math.min(Math.max(x - canvasRectangle.x, dropMinX), dropMaxX)
-    }
+        return Math.min(Math.max(x, dropMinX), dropMaxX)
+    }      
 
     function ensureInBoundsY(y) {
-        return Math.min(Math.max(y - canvasRectangle.y, dropMinY), dropMaxY)
+        return Math.min(Math.max(y, dropMinY), dropMaxY)
+    }
+
+    function positionCenterX(x) {
+        return ensureInBoundsX(x - canvasRectangle.x - canvasItemSize / 2)
+    }
+
+    function positionCenterY(y) {
+        return ensureInBoundsY(y - canvasRectangle.y + canvasItemSize / 2)
     }
 
     Rectangle {
@@ -172,13 +210,13 @@ Kirigami.Page {
             onClicked: function(event){
                 if (!isEmpty(itemsToPlace.node)) {
 
-                    const newItem = ({})
-                    Object.assign(newItem, itemsToPlace.node)
-                    newItem.x = ensureInBoundsX(event.x)
-                    newItem.y = ensureInBoundsY(event.y)
+                    const newItem = Object.assign(({}), itemsToPlace.node)
+                    newItem.x = positionCenterX(event.x)
+                    newItem.y = positionCenterY(event.y)
 
-                    canvasModel.append(newItem);
+                    canvasModel.push(newItem);
                     selectedCanvasItem = canvasModel.count - 1
+                    canvasModelChanged()
                 }
             }
         }

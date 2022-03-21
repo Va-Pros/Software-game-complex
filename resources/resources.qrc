@@ -8,6 +8,11 @@
         <file>icons/optical.png</file>
         <file>icons/radio.png</file>
         <file>icons/wire.png</file>
+        <file>icons/accessControl.png</file>
+        <file>icons/firewall.png</file>
+        <file>icons/intrusionDetection.png</file>
+        <file>icons/os.png</file>
+        <file>icons/trustedBoot.png</file>
         <file>ui/main.qml</file>
         <file>ui/MainMenu.qml</file>
         <file>ui/QuestionConstructor.qml</file>
@@ -35,7 +40,7 @@
         <file>ui/SituationWidgets/EdgeComponent.qml</file>
         <file>ui/SituationWidgets/SelectableElement.qml</file>
         <file>ui/SituationWidgets/SituationUtils.js</file>
-        <file>ui/SituationWidgets/SituationElement.qml</file>
         <file>ui/SituationWidgets/DividerElement.qml</file>
+        <file>ui/SituationWidgets/CategoryElement.qml</file>
     </qresource>
 </RCC>

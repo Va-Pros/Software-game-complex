@@ -1,16 +1,15 @@
-import QtQuick 2.0
+import QtQuick 2.15
+import QtQuick.Layouts 1.15
 
-Rectangle {
-    implicitWidth: 5
-    implicitHeight: 56
-    anchors {
-        topMargin: 20
-        leftMargin: 100
-        rightMargin: 10
-    }
+ColumnLayout {
 
-    color: "black"
-    Component.onCompleted: {
-        console.log("divider")
+    Rectangle {
+        implicitWidth: 5
+        implicitHeight: 64
+
+        Layout.leftMargin: 20
+        Layout.rightMargin: 20
+
+        color: "black"
     }
 }

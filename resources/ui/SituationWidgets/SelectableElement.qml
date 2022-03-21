@@ -5,16 +5,18 @@ import org.kde.kirigami 2.15 as Kirigami
 
 Item {
 
-    required property string type
-    required property string subtype
-    required property string iconSource
+    required property var itemData
+    property string type: itemData.type
+    property string subtype: itemData.subtype
+    property string name: itemData.name
+    property string image: itemData.image
 
-    implicitWidth: computerNode.width
-    implicitHeight: computerNode.height
+    implicitWidth: actualContent.width
+    implicitHeight: actualContent.height
 
     states: [
         State {
-            when: type === "node"
+            when: type !== "edge"
             PropertyChanges {
                 target: computerNode
                 z: nodeMouseArea.drag.active || nodeMouseArea.pressed ? 2 : 1
@@ -29,16 +31,17 @@ Item {
         }
     ]
 
+
+
     Rectangle {
         id: nodeBackground
-        anchors.fill: computerNode
+        anchors.fill: actualContent
         color: "transparent"
         states: [
             State {
-                when:
-                    !isEmpty(itemsToPlace)
-                      && itemsToPlace[type]
-                      && itemsToPlace[type].subtype === subtype
+                when: !isEmpty(itemsToPlace)
+                          && !isEmpty(itemsToPlace[type])
+                          && itemsToPlace[type].subtype === subtype
                 PropertyChanges {
                     target: nodeBackground
                     color: "grey"
@@ -47,47 +50,63 @@ Item {
         ]
     }
 
-    Image {
-        id: computerNode
-        source: iconSource
-        sourceSize.width: 64
-        sourceSize.height: 64
+    ColumnLayout {
+        id: actualContent
 
-        MouseArea {
-            id: nodeMouseArea
-            anchors.fill: parent
-            onReleased: function(event) {
-                if (type !== "node") return;
-                if (dragTarget.dropped) {
-                    const x = Math.min(Math.max(event.x - canvasRectangle.x, dropMinX), dropMaxX)
-                    const y = Math.min(Math.max(event.y - canvasRectangle.y, dropMinY), dropMaxY)
-                    canvasModel.push({type: type, subtype: subtype, image: iconSource, x: x, y: y});
-                    selectedCanvasItem = canvasModel.count - 1
-                    dragTarget.dropped = false
+        Image {
+            id: computerNode
+            source: image
+            sourceSize.width: 32
+            sourceSize.height: 32
+            horizontalAlignment: Image.AlignHCenter
 
-                    console.log("dropping at: ", event.x, event.y, JSON.stringify(canvasModel))
-                    canvasModelChanged()
-//                    onCanvasModelChanged.connect(test)
-//                    onCanvasModelChanged = test
-//                    onCanvasModelChanged()
-//                    for (const a in onCanvasModelChanged) {
-//                        console.log(a)
-//                    }
-                }
-            }
-            onClicked: {
-                if (itemsToPlace[type] && itemsToPlace[type].subtype === subtype) {
-                    delete itemsToPlace[type]
-                } else {
-                    itemsToPlace[type] = ({type, subtype, image: iconSource})
-                }
-                console.log(JSON.stringify(itemsToPlace))
-            }
+            Layout.leftMargin: 5
+            Layout.rightMargin: 5
+            Layout.alignment: Qt.AlignHCenter
         }
 
+        Controls.Label {
+            id: label
+            text: name
+            horizontalAlignment: Text.AlignHCenter
+
+            Layout.fillWidth: true
+            Layout.leftMargin: 5
+            Layout.rightMargin: 5
+        }
     }
 
-    function test() {
-        console.log("aaaaaaaaaaa")
+    MouseArea {
+        id: nodeMouseArea
+        anchors.fill: actualContent
+        onReleased: function(event) {
+            if (type !== "node") return;
+            if (dragTarget.dropped) {
+//                const x = Math.min(Math.max(event.x - canvasRectangle.x, dropMinX), dropMaxX)
+//                const y = Math.min(Math.max(event.y - canvasRectangle.y, dropMinY), dropMaxY)
+
+                const inCanvas = mapToItem(canvasRectangle, event.x, event.y)
+
+                const x = positionCenterX(inCanvas.x)
+                const y = positionCenterY(inCanvas.y)
+
+                const toAppend = Object.assign({x, y}, itemData)
+                canvasModel.push(toAppend);
+                selectedCanvasItem = canvasModel.count - 1
+                dragTarget.dropped = false
+
+                console.log("x:", event.x, event.y)
+
+                canvasModelChanged()
+            }
+        }
+        onClicked: {
+            if (itemsToPlace[type] && itemsToPlace[type].subtype === subtype) {
+                delete itemsToPlace[type]
+            } else {
+                itemsToPlace[type] = itemData
+            }
+            itemsToPlaceChanged()
+        }
     }
 }

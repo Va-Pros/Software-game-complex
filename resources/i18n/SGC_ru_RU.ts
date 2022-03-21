@@ -54,7 +54,7 @@
     <message>
         <location filename="../ui/MainMenu.qml" line="22"/>
         <source>Situation constructor</source>
-        <translation type="unfinished"></translation>
+        <translation>Конструктор обстановок</translation>
     </message>
     <message>
         <location filename="../ui/MainMenu.qml" line="28"/>
@@ -236,10 +236,99 @@
 <context>
     <name>SituationConstructor</name>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="6"/>
-        <location filename="../ui/SituationConstructor.qml" line="9"/>
+        <location filename="../ui/SituationConstructor.qml" line="12"/>
         <source>Situation constructor</source>
-        <translation type="unfinished"></translation>
+        <translation>Конструктор обстановок</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="32"/>
+        <source>Vertex</source>
+        <translation>Компоненты</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="37"/>
+        <source>Computer</source>
+        <translation>Компьютер</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="43"/>
+        <source>Router</source>
+        <translation>Роутер</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="49"/>
+        <source>Commutator</source>
+        <translation>Коммутатор</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="55"/>
+        <source>Server</source>
+        <translation>Сервер</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="63"/>
+        <source>Edge</source>
+        <translation>Связи</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="68"/>
+        <source>Electric connection</source>
+        <translation>Электросвязь</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="75"/>
+        <source>Radio connection</source>
+        <translation>Радиосвязь</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="82"/>
+        <source>Optical connection</source>
+        <translation>Оптоволокно</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="92"/>
+        <source>Protection Tools</source>
+        <translation>СЗУ</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="98"/>
+        <source>Operating System</source>
+        <translation>Операционная система</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="105"/>
+        <source>Firewall</source>
+        <translation>Межсетевой экран</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="112"/>
+        <source>Trusted Boot</source>
+        <translation>Доверенная загрузка</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="119"/>
+        <source>Intrusion Detection</source>
+        <translation>Обнаружение вторжений</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="126"/>
+        <source>Access Control</source>
+        <translation>Разграничение доступа</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="264"/>
+        <source>Special Files</source>
+        <translation>Спец. файлы</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="276"/>
+        <source>Import map</source>
+        <translation>Загрузить</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="283"/>
+        <source>Save map</source>
+        <translation>Сохранить</translation>
     </message>
 </context>
 <context>
@@ -247,7 +336,7 @@
     <message>
         <location filename="../ui/main.qml" line="8"/>
         <source>Admin Panel</source>
-        <translation>Панель адмминистратора</translation>
+        <translation>Панель администратора</translation>
     </message>
 </context>
 </TS>
