@@ -209,6 +209,12 @@ Pane {
         listModel.model=answers_list.length;
     }
     function init(type) {
+        //setting default values
+        themeModel.append({text: qsTr("123")});
+        themeName.currentIndex=1;
+        difficultyRow.activeIdx=2;
+        descriptionArea.text=qsTr("somesomesome");
+
         questionArea.type=type;
         answers_list=[[qsTr("")]];
         is_correct= [[true]];
@@ -218,6 +224,6 @@ Pane {
             is_correct.push([true]);
             singleChoiceIdx.push(0);
         }
-        listModel.model=answers_list.length;
+        updateModel();
     }
 }
