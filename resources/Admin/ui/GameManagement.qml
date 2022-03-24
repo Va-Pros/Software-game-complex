@@ -204,7 +204,7 @@ Flickable {
                         }
                     }
                     RowLayout{
-                        Label{ text: qsTr("\tGame time:")}
+                        Label{ text: qsTr("Game time:")}
                         TextField {
                             Layout.fillWidth: true
                             validator:IntValidator {

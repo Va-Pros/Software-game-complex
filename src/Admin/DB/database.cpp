@@ -56,16 +56,27 @@ bool DataBase::createQuestionTable() {
     }
     return true;
 }
+template<class T>
+int max_length(const QList<QList<T>>& list_list) {
+    int _max = 0, tmp;
+    for (const auto& list: list_list) {
+        tmp = list.length();
+        if (tmp > _max)
+            _max = tmp;
+    }
+    return _max;
+}
+// может замакросить?
 QString qListToQString(const QList<QList<QString>>& list_list) {
     QString str = "";
+    int n = max_length(list_list);
     for (auto list = list_list.begin(); list != list_list.end(); list++) {
         if (list != list_list.begin())
             str += ", ";
         QString sub_str = "";
-        for (auto val = list->begin(); val != list->end(); val++) {
-            if (val != list->begin())
-                sub_str += ", ";
-            sub_str += "\"" + *val + "\"";
+        for (int i = 0; i < n; i++) {
+            if (i)sub_str += ", ";
+            sub_str += "\"" + ((i < list->length()) ? ((*list)[i]) : ("")) + "\"";
         }
         str += "{" + sub_str + "}";
     }
@@ -73,14 +84,14 @@ QString qListToQString(const QList<QList<QString>>& list_list) {
 }
 QString qListToQString(const QList<QList<bool>>& list_list) {
     QString str = "";
+    int n = max_length(list_list);
     for (auto list = list_list.begin(); list != list_list.end(); list++) {
         if (list != list_list.begin())
             str += ", ";
         QString sub_str = "";
-        for (auto val = list->begin(); val != list->end(); val++) {
-            if (val != list->begin())
-                sub_str += ", ";
-            sub_str += ((*val) ? "true" : "false");
+        for (int i = 0; i < n; i++) {
+            if (i)sub_str += ", ";
+            sub_str += ((i < list->length() && (*list)[i]) ? "true" : "false");
         }
         str += "{" + sub_str + "}";
     }
@@ -99,8 +110,8 @@ bool DataBase::insertIntoTotalReportTable(const QVariantList& data) {
     }
     return true;
 }
-bool DataBase::insertIntoQuestionTable(const QString& theme, const int difficulty, const QString& description,
-                                       const int model, const QList<QList<QString>>& answers_list,
+bool DataBase::insertIntoQuestionTable(const QString& theme, int difficulty, const QString& description,
+                                       int model, const QList<QList<QString>>& answers_list,
                                        const QList<QList<bool>>& is_correct) {
     QSqlQuery query;
     query.prepare("INSERT INTO Question (theme, difficulty, description, model, answers_list, is_correct)"
@@ -118,4 +129,22 @@ bool DataBase::insertIntoQuestionTable(const QString& theme, const int difficult
     }
     qDebug() << "ok";
     return true;
+}
+QList<QVariant> DataBase::selectAllFromQuestionTable(const QString& theme, const QString& description,
+                                                     int difficulty) {
+    QSqlQuery query;
+    query.prepare("select  id, theme, difficulty, description, model, unnest(answers_list), unnest(is_correct), "
+                  "array_length(answers_list,2) from question where is_deleted = false AND theme LIKE \'%" + theme +
+                  "%\';");// AND difficulty = \'%" + char(difficulty + '0') + "%\';");
+//    query.bindValue(":Theme", theme);
+    qDebug() << query.exec();
+    QVariantList table;
+    while (query.next()) {
+        QVariantList row;
+        for (int i = 0; i < 8; i++)
+            row.append(query.value(i).toString());
+        table.append(row);
+//        break;
+    }
+    return table;
 }

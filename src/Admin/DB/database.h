@@ -17,9 +17,12 @@ public:
     void connectToDataBase();
 public slots:
     static bool insertIntoTotalReportTable(const QVariantList& data);
-    static bool
-    insertIntoQuestionTable(const QString& theme, const int difficulty, const QString& description, const int model,
-                            const QList<QList<QString>>& answers_list, const QList<QList<bool>>& is_correct);
+    static bool insertIntoQuestionTable(const QString& theme, int difficulty,
+                                        const QString& description, int model,
+                                        const QList<QList<QString>>& answers_list,
+                                  const QList<QList<bool>>& is_correct);
+    static QList<QVariant> selectAllFromQuestionTable(const QString& theme, const QString& description,
+                                                      int difficulty);
 private:
     QSqlDatabase db;
 private:

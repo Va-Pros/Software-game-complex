@@ -10,7 +10,9 @@ Flickable {
 
     property string name: "questionEditor"
     property string title: qsTr("Question editor")
-
+    Connections {
+        target: database
+    }
     SplitView {
         anchors.fill: parent
         orientation: Qt.Horizontal
@@ -63,6 +65,7 @@ Flickable {
                                 }
                             }
                             ComboBox {
+                                id: themeName
                                 textRole: "text"
                                 valueRole: "value"
                                 Layout.fillWidth: true
@@ -70,7 +73,10 @@ Flickable {
                                 model: ListModel {
                                     id: themeModel
                                     ListElement { text: qsTr("")}
-                                    ListElement { text: qsTr("Any")}
+                                    ListElement { text: qsTr("theme3")}
+                                    ListElement { text: qsTr("theme")}
+                                    ListElement { text: qsTr("theme1")}
+                                    ListElement { text: qsTr("theme2")}
                                     // themeModel.append({text: theme[idx]})
                                 }
                             }
@@ -93,6 +99,36 @@ Flickable {
                             id: buttonSearch
                             Layout.fillWidth: true
                             text: qsTr("Search")
+                            onClicked: {
+                                var ans = database.selectAllFromQuestionTable(themeName.editText, contentField.text, difficultyMosel.activeIdx);
+                                var ans2=ans.reduce((rows, key, index) => (index % 8 == 0 ? rows.push([key]) : rows[rows.length-1].push(key)) && rows, []);
+                                var ans3=[[]], k=0;
+                                for(var i=0;i<ans2.length;i++){
+                                    if(!i||ans3[ans3.length-1][0]!=ans2[i][0]){
+                                        if(i)
+                                            for(var j=5;j<7;j++)
+                                                ans3[k][j]=ans3[k][j].reduce((rows, key, index) => (index % ans3[k][7] == 0 ? rows.push([key]) : rows[rows.length-1].push(key)) && rows, []);
+                                        ans3.push([]);
+                                        k++;
+                                        for(var j=0;j<8;j++){
+                                            if(j==5||j==6)
+                                                ans3[k].push([]);
+                                            else
+                                                ans3[k].push(ans2[i][j]);
+                                        }
+                                    }
+                                    for(var j=5;j<7;j++)
+                                        ans3[k][j].push(ans2[i][j]);
+                                }
+                                ans3.push([]);
+                                //console.log(124, ans3);
+                                var results = [];
+                                for(var i=1;i<ans3.length-1;i++)
+                                    results.push(`${ans3[i][1]}:${ans3[i][3]}`);
+                                resultsModel.model = results;
+                                resultPage.model = ans3;
+                                questionEditorSwap.length = ans3.length-2;
+                            }
                         }
                     }
 
@@ -117,13 +153,14 @@ Flickable {
                             }
                         }
                         Repeater {
+                            id: resultsModel
                             model: []
                             Button {
                                 id: buttonSingleChoice
                                 Layout.fillWidth: true
                                 text: modelData
-                                //onClicked: questionCreatorSwap.currentIndex = 1
-                                //flat: questionCreatorPanel.index != 0
+                                onClicked: questionEditorSwap.currentIndex = index + 2
+                                flat: questionEditorSwap.currentIndex != index + 2
                             }
                         }
                     }
@@ -135,6 +172,7 @@ Flickable {
         SwipeView {
             SplitView.minimumWidth: Math.max(titleRightPanel.width) * 1.8
             id: questionEditorSwap
+            property int length: 0
             focus: true
             orientation: Qt.Vertical
             anchors.top: parent.bottom
@@ -143,9 +181,15 @@ Flickable {
             //anchors.bottom: parent.bottom
             currentIndex: 0
             onCurrentIndexChanged: {
-                resultsPanel.index = currentIndex
+                if(length){
+                    if(currentIndex==0)currentIndex=length;
+                    if(currentIndex==length+2)currentIndex=1;
+                    resultsPanel.index = currentIndex
+//                     console.log(currentIndex);
+                }
             }
             Repeater {
+                id: resultPage
                 model: []
                 Loader {
                     // index 0
@@ -153,7 +197,7 @@ Flickable {
                     property string title: active? item.title:"..."
                     active: true
                     source: "QuestionArea.qml"
-                    onLoaded: item.init(index)
+                    onLoaded: item.initFromArray(modelData)
                 }
             }
         }

@@ -7,6 +7,7 @@ import QtQuick.Controls 2.13
 Pane {
     id: questionArea
     property string title: qsTr("Question area")
+    property int id: -1
     property int type: 2
     property var answers_list:[]
     property var is_correct:[]
@@ -210,10 +211,10 @@ Pane {
     }
     function init(type) {
         //setting default values
-        themeModel.append({text: qsTr("123")});
-        themeName.currentIndex=1;
-        difficultyRow.activeIdx=2;
-        descriptionArea.text=qsTr("somesomesome");
+        //themeModel.append({text: qsTr("123")});
+        //themeName.currentIndex=1;
+        //difficultyRow.activeIdx=2;
+        //descriptionArea.text=qsTr("somesomesome");
 
         questionArea.type=type;
         answers_list=[[qsTr("")]];
@@ -224,6 +225,20 @@ Pane {
             is_correct.push([true]);
             singleChoiceIdx.push(0);
         }
+        updateModel();
+    }
+    function initFromArray(data){
+        if(!data.length)return false;
+        //console.log(data);
+        id = data[0]-0;
+        themeName.editText = qsTr(data[1]);
+        difficultyRow.activeIdx = data[2]-0;
+        descriptionArea.text = qsTr(data[3]);
+        questionArea.type=data[4]-0;
+        answers_list=data[5];
+        is_correct=data[6];
+        //TODO:singleChoiceIdx= [0];
+
         updateModel();
     }
 }
