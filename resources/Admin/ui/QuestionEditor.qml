@@ -102,6 +102,7 @@ Flickable {
                             onClicked: {
                                 var ans = database.selectAllFromQuestionTable(themeName.editText, contentField.text, difficultyMosel.activeIdx);
                                 var ans2=ans.reduce((rows, key, index) => (index % 8 == 0 ? rows.push([key]) : rows[rows.length-1].push(key)) && rows, []);
+                                ans2.push([-1]);
                                 var ans3=[[]], k=0;
                                 for(var i=0;i<ans2.length;i++){
                                     if(!i||ans3[ans3.length-1][0]!=ans2[i][0]){
@@ -110,6 +111,7 @@ Flickable {
                                                 ans3[k][j]=ans3[k][j].reduce((rows, key, index) => (index % ans3[k][7] == 0 ? rows.push([key]) : rows[rows.length-1].push(key)) && rows, []);
                                         ans3.push([]);
                                         k++;
+                                        if(ans2[i][0]<1)break;
                                         for(var j=0;j<8;j++){
                                             if(j==5||j==6)
                                                 ans3[k].push([]);
@@ -120,7 +122,6 @@ Flickable {
                                     for(var j=5;j<7;j++)
                                         ans3[k][j].push(ans2[i][j]);
                                 }
-                                ans3.push([]);
                                 //console.log(124, ans3);
                                 var results = [];
                                 for(var i=1;i<ans3.length-1;i++)
@@ -182,7 +183,7 @@ Flickable {
             currentIndex: 0
             onCurrentIndexChanged: {
                 if(length){
-                    if(currentIndex==0)currentIndex=length;
+                    if(currentIndex==0)currentIndex=length+1;
                     if(currentIndex==length+2)currentIndex=1;
                     resultsPanel.index = currentIndex
 //                     console.log(currentIndex);
