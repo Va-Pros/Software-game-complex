@@ -52,7 +52,7 @@ Flickable {
                                 Layout.fillWidth: true
                                 id: difficultyMosel
                                 editable: false
-                                model: [qsTr("Any"), qsTr("Easy"), qsTr("Medium"), qsTr("Hard"), qsTr("Easy or Medium"), qsTr("Medium or Hard"), qsTr("Easy or Hard")]
+                                model: [qsTr("Any"), qsTr("Easy"), qsTr("Medium"), qsTr("Hard")]
                             }
                         }
                         RowLayout{
@@ -73,10 +73,6 @@ Flickable {
                                 model: ListModel {
                                     id: themeModel
                                     ListElement { text: qsTr("")}
-                                    ListElement { text: qsTr("theme3")}
-                                    ListElement { text: qsTr("theme")}
-                                    ListElement { text: qsTr("theme1")}
-                                    ListElement { text: qsTr("theme2")}
                                     // themeModel.append({text: theme[idx]})
                                 }
                             }
@@ -100,7 +96,7 @@ Flickable {
                             Layout.fillWidth: true
                             text: qsTr("Search")
                             onClicked: {
-                                var ans = database.selectAllFromQuestionTable(themeName.editText, contentField.text, difficultyMosel.activeIdx);
+                                var ans = database.selectAllFromQuestionTable(themeName.editText, contentField.text, difficultyMosel.currentIndex);
                                 var ans2=ans.reduce((rows, key, index) => (index % 8 == 0 ? rows.push([key]) : rows[rows.length-1].push(key)) && rows, []);
                                 ans2.push([-1]);
                                 var ans3=[[]], k=0;

@@ -76,7 +76,7 @@ QString qListToQString(const QList<QList<QString>>& list_list) {
         QString sub_str = "";
         for (int i = 0; i < n; i++) {
             if (i)sub_str += ", ";
-            sub_str +=  ((i < list->length()) ? ("\"" + (*list)[i] + "\"") : ("null"));
+            sub_str += ((i < list->length()) ? ("\"" + (*list)[i] + "\"") : ("null"));
         }
         str += "{" + sub_str + "}";
     }
@@ -111,15 +111,16 @@ bool DataBase::insertIntoTotalReportTable(const QVariantList& data) {
     return true;
 }
 bool DataBase::insertORUpdateIntoQuestionTable(int id, const QString& theme, int difficulty, const QString& description,
-                                       int model, const QList<QList<QString>>& answers_list,
-                                       const QList<QList<bool>>& is_correct, bool is_deleted=false) {
+                                               int model, const QList<QList<QString>>& answers_list,
+                                               const QList<QList<bool>>& is_correct, bool is_deleted = false) {
     QSqlQuery query;
-    if(id==-1)
+    if (id == -1)
         query.prepare("INSERT INTO Question (theme, difficulty, description, model, answers_list, is_correct)"
-                  "VALUES(:Theme, :Difficulty, :Description, :Model, :Answers_list, :Is_correct)");
+                      "VALUES(:Theme, :Difficulty, :Description, :Model, :Answers_list, :Is_correct)");
     else
-        query.prepare("update Question set (theme, difficulty, description, model, answers_list, is_correct, is_deleted)"
-                      "=(:Theme, :Difficulty, :Description, :Model, :Answers_list, :Is_correct, :Is_deleted) where id=:Id");
+        query.prepare(
+                "update Question set (theme, difficulty, description, model, answers_list, is_correct, is_deleted)"
+                "=(:Theme, :Difficulty, :Description, :Model, :Answers_list, :Is_correct, :Is_deleted) where id=:Id");
     query.bindValue(":Theme", theme);
     query.bindValue(":Difficulty", difficulty);
     query.bindValue(":Description", description);
@@ -140,7 +141,10 @@ QList<QVariant> DataBase::selectAllFromQuestionTable(const QString& theme, const
     QSqlQuery query;
     query.prepare("select  id, theme, difficulty, description, model, unnest(answers_list), unnest(is_correct), "
                   "array_length(answers_list,2) from question where is_deleted = false AND theme LIKE \'%" + theme +
-                  "%\';");
+                  "%\' AND description LIKE \'%" + description + "%\' AND (difficulty = :Difficulty OR :Is_Any);");
+    query.bindValue(":Difficulty", difficulty - 1);
+    query.bindValue(":Is_Any", difficulty == 0);
+    qDebug() << query.executedQuery();
     if (!query.exec()) {
         qDebug() << "DataBase: error insert into Question";
         qDebug() << query.lastError().text();
