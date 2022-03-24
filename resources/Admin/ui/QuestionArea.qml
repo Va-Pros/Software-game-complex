@@ -103,11 +103,18 @@ Pane {
                             RowLayout {
                                 RadioButton{
                                     ButtonGroup.group: singleChoiceGroup
-                                    checked:(questionArea.type%4)==0&&is_correct[answerList.topIndex][index]
+                                    checked:singleChoiceIdx[answerList.topIndex] == index
                                     onCheckedChanged: {
-                                        is_correct[answerList.topIndex][singleChoiceIdx[answerList.topIndex]]=false;
-                                        is_correct[answerList.topIndex][index]=true;
-                                        singleChoiceIdx[answerList.topIndex] = index;
+                                        if(singleChoiceIdx[answerList.topIndex] != index){
+                                            is_correct[answerList.topIndex][singleChoiceIdx[answerList.topIndex]]=false;
+                                            is_correct[answerList.topIndex][index]=true;
+                                            singleChoiceIdx[answerList.topIndex] = index;
+                                            console.log(112, id, singleChoiceIdx);
+                                            //updateLocalModel(answersModel.model, answers_list[answerList.topIndex].length);
+                                            updateModel();
+                                            //answersModel.model++;
+                                            //answersModel.model--;
+                                        }
                                     }
                                     visible: (questionArea.type%4)==0
                                 }
@@ -125,8 +132,10 @@ Pane {
                                     }
                                 }
                                 Button {
+                                    id: del_ans
                                     icon.name: "delete"
-                                    visible: answersModel.model > 1&&(type%4!=0||singleChoiceIdx[answerList.topIndex]!=index)&&(type!=3||answerList.topIndex!=1||answers_list[0].length<answers_list[1].length)
+                                    visible: answersModel.model > 1&&singleChoiceIdx[answerList.topIndex]!=index&&
+                                                    (type!=3||answerList.topIndex!=1||answers_list[0].length<answers_list[1].length)
                                     onClicked: {
                                         answers_list[answerList.topIndex].splice(index, 1);
                                         is_correct[answerList.topIndex].splice(index, 1);
@@ -180,7 +189,7 @@ Pane {
                 onClicked: {
                     answers_list.push([qsTr("")]);
                     is_correct.push([true]);
-                    singleChoiceIdx.push([0]);
+                    singleChoiceIdx.push(type%4==0?0:-1);
                     listModel.model++;
                 }
             }
@@ -206,8 +215,10 @@ Pane {
         }
     }
     function updateModel(){
+        console.log(218);
         listModel.model=0;
         listModel.model=answers_list.length;
+        console.log(221);
     }
     function init(type) {
         //setting default values
@@ -219,11 +230,11 @@ Pane {
         questionArea.type=type;
         answers_list=[[qsTr("")]];
         is_correct= [[true]];
-        singleChoiceIdx= [0];
+        singleChoiceIdx= [type%4==0?0:-1];
         if(type==3){
             answers_list.push([qsTr("")]);
             is_correct.push([true]);
-            singleChoiceIdx.push(0);
+            singleChoiceIdx.push(type%4==0?0:-1);
         }
         updateModel();
     }
@@ -237,8 +248,13 @@ Pane {
         questionArea.type=data[4]-0;
         answers_list=data[5];
         is_correct=data[6];
-        //TODO:singleChoiceIdx= [0];
-
+        for(var i=0;i<is_correct.length;i++)
+            for(var j=0;j<is_correct[i].length;j++)
+                if(is_correct[i][j]||type%4!=0){
+                    singleChoiceIdx.push(type%4==0?j:-1);
+                    break;
+                }
+        console.log(is_correct, singleChoiceIdx);
         updateModel();
     }
 }

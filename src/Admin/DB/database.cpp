@@ -76,7 +76,7 @@ QString qListToQString(const QList<QList<QString>>& list_list) {
         QString sub_str = "";
         for (int i = 0; i < n; i++) {
             if (i)sub_str += ", ";
-            sub_str += "\"" + ((i < list->length()) ? ((*list)[i]) : ("")) + "\"";
+            sub_str +=  ((i < list->length()) ? ("\"" + (*list)[i] + "\"") : ("null"));
         }
         str += "{" + sub_str + "}";
     }
@@ -142,7 +142,7 @@ QList<QVariant> DataBase::selectAllFromQuestionTable(const QString& theme, const
     while (query.next()) {
         QVariantList row;
         for (int i = 0; i < 8; i++)
-            row.append(query.value(i).toString());
+            row.append(query.value(i));
         table.append(row);
 //        break;
     }

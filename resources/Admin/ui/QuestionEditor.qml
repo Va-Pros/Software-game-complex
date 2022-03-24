@@ -119,8 +119,9 @@ Flickable {
                                                 ans3[k].push(ans2[i][j]);
                                         }
                                     }
-                                    for(var j=5;j<7;j++)
-                                        ans3[k][j].push(ans2[i][j]);
+                                    if(ans2[i][5])
+                                        for(var j=5;j<7;j++)
+                                            ans3[k][j].push(ans2[i][j]);
                                 }
                                 //console.log(124, ans3);
                                 var results = [];
