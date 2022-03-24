@@ -110,24 +110,29 @@ bool DataBase::insertIntoTotalReportTable(const QVariantList& data) {
     }
     return true;
 }
-bool DataBase::insertIntoQuestionTable(const QString& theme, int difficulty, const QString& description,
+bool DataBase::insertORUpdateIntoQuestionTable(int id, const QString& theme, int difficulty, const QString& description,
                                        int model, const QList<QList<QString>>& answers_list,
-                                       const QList<QList<bool>>& is_correct) {
+                                       const QList<QList<bool>>& is_correct, bool is_deleted=false) {
     QSqlQuery query;
-    query.prepare("INSERT INTO Question (theme, difficulty, description, model, answers_list, is_correct)"
+    if(id==-1)
+        query.prepare("INSERT INTO Question (theme, difficulty, description, model, answers_list, is_correct)"
                   "VALUES(:Theme, :Difficulty, :Description, :Model, :Answers_list, :Is_correct)");
+    else
+        query.prepare("update Question set (theme, difficulty, description, model, answers_list, is_correct, is_deleted)"
+                      "=(:Theme, :Difficulty, :Description, :Model, :Answers_list, :Is_correct, :Is_deleted) where id=:Id");
     query.bindValue(":Theme", theme);
     query.bindValue(":Difficulty", difficulty);
     query.bindValue(":Description", description);
     query.bindValue(":Model", model);
     query.bindValue(":Answers_list", qListToQString(answers_list));
     query.bindValue(":Is_correct", qListToQString(is_correct));
+    query.bindValue(":Is_deleted", is_deleted);
+    query.bindValue(":Id", id);
     if (!query.exec()) {
         qDebug() << "DataBase: error insert into Question";
         qDebug() << query.lastError().text();
         return false;
     }
-    qDebug() << "ok";
     return true;
 }
 QList<QVariant> DataBase::selectAllFromQuestionTable(const QString& theme, const QString& description,
@@ -135,9 +140,12 @@ QList<QVariant> DataBase::selectAllFromQuestionTable(const QString& theme, const
     QSqlQuery query;
     query.prepare("select  id, theme, difficulty, description, model, unnest(answers_list), unnest(is_correct), "
                   "array_length(answers_list,2) from question where is_deleted = false AND theme LIKE \'%" + theme +
-                  "%\';");// AND difficulty = \'%" + char(difficulty + '0') + "%\';");
-//    query.bindValue(":Theme", theme);
-    qDebug() << query.exec();
+                  "%\';");
+    if (!query.exec()) {
+        qDebug() << "DataBase: error insert into Question";
+        qDebug() << query.lastError().text();
+        return {};
+    }
     QVariantList table;
     while (query.next()) {
         QVariantList row;

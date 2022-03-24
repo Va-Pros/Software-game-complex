@@ -8,6 +8,7 @@ Pane {
     id: questionArea
     property string title: qsTr("Question area")
     property int id: -1
+    property bool is_deleted: false
     property int type: 2
     property var answers_list:[]
     property var is_correct:[]
@@ -198,9 +199,14 @@ Pane {
             Button {
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignLeft
-                text: !true?qsTr("Delete"):qsTr("Clear")
+                text: id>0?(is_deleted?qsTr("Restore"):qsTr("Delete")):qsTr("Clear")
                 icon.name: "delete"
-                onClicked: {}
+                onClicked: {
+                    is_deleted=!is_deleted;
+                    updateDB();
+                    if(id<0)
+                        init(questionArea.type);
+                }
             }
 
             Button {
@@ -209,26 +215,27 @@ Pane {
                 text: qsTr("Save")
                 icon.name: "document-save"
                 onClicked: {
-                    database.insertIntoQuestionTable(themeName.editText, difficultyRow.activeIdx, descriptionArea.text, questionArea.type, answers_list, is_correct);
+                    updateDB();
+                    if(id<0)
+                        init(questionArea.type);
                 }
             }
         }
     }
+    function updateDB(){
+        database.insertORUpdateIntoQuestionTable(id, themeName.editText, difficultyRow.activeIdx, descriptionArea.text, questionArea.type, answers_list, is_correct, is_deleted);
+    }
     function updateModel(){
-        console.log(218);
         listModel.model=0;
         listModel.model=answers_list.length;
-        console.log(221);
     }
     function init(type) {
-        //setting default values
         //themeModel.append({text: qsTr("123")});
-        //themeName.currentIndex=1;
-        //difficultyRow.activeIdx=2;
-        //descriptionArea.text=qsTr("somesomesome");
-
+        themeName.editText=qsTr("");
+        descriptionArea.text=qsTr("");
         questionArea.type=type;
         answers_list=[[qsTr("")]];
+        difficultyRow.activeIdx=0;
         is_correct= [[true]];
         singleChoiceIdx= [type%4==0?0:-1];
         if(type==3){
@@ -254,7 +261,6 @@ Pane {
                     singleChoiceIdx.push(type%4==0?j:-1);
                     break;
                 }
-        console.log(is_correct, singleChoiceIdx);
         updateModel();
     }
 }
