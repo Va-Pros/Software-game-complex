@@ -80,6 +80,27 @@ Item {
         id: nodeMouseArea
         anchors.fill: actualContent
         onReleased: function(event) {
+            if (type === "protection") {
+                const inCanvas = mapToItem(canvasRectangle, event.x, event.y)
+
+                const x = inCanvas.x
+                const y = inCanvas.y
+
+                for (const item of canvasModel) {
+                    if (item.type !== "node") continue
+
+                    if (item.x <= x && x <= item.x + canvasItemSize && item.y <= y && y <= item.y + canvasItemSize) {
+                        item.protection = item.protection || ([]);
+                        const toAppend = Object.assign(({}), itemData)
+                        item.protection.push(toAppend);
+                        canvasModelChanged()
+                        break
+                    }
+                }
+
+
+                return;
+            }
             if (type !== "node") return;
             if (dragTarget.dropped) {
 //                const x = Math.min(Math.max(event.x - canvasRectangle.x, dropMinX), dropMaxX)

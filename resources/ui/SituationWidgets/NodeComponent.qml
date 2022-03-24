@@ -10,31 +10,81 @@ Item {
     property var currentData: canvasModel[(index)]
     property var thisIndex: index
 
-    Image {
-        id: canvasItem
-        source: Qt.resolvedUrl(currentData.image.toString())
-        sourceSize.width: canvasItemSize
-        sourceSize.height: canvasItemSize
+    Item {
+        id: visiblePart
+        implicitWidth: canvasItemSize
+        implicitHeight: canvasItemSize
         x: currentData.x
         y: currentData.y
 
+        Image {
+            id: canvasItem
+            source: Qt.resolvedUrl(currentData.image.toString())
+            sourceSize.width: canvasItemSize
+            sourceSize.height: canvasItemSize
+
+        }
+
+        ColorOverlay {
+            id: canvasItemOverlay
+            anchors.fill: canvasItem
+            source: canvasItem
+            color: "transparent"
+            states: [
+                State {
+                    when: componentArea.drag.active
+                    PropertyChanges {
+                        target: canvasItemOverlay
+                        color: "gold"
+                    }
+                },
+                State {
+                    when: selectedCanvasItem === index
+                    PropertyChanges {
+                        target: canvasItemOverlay
+                        color: "orange"
+                    }
+                }
+            ]
+        }
+
+        Image {
+            id: protectionToolsIcon
+            source: Qt.resolvedUrl("/icons/protectionLogo.png")
+            visible: !isEmpty(currentData.protection) && currentData.protection.length > 0
+            sourceSize.width: 24
+            sourceSize.height: 24
+            z: 10
+            x: canvasItemSize - sourceSize.width
+            Controls.ToolTip.text: isEmpty(currentData.protection) ? "" : currentData.protection.reduce((acc, p) => acc + p.name + "; ", "")
+            Controls.ToolTip.visible: visible && componentArea.containsMouse
+        }
     }
 
     MouseArea {
         id: componentArea
-        anchors.fill: canvasItem
-        drag.target: canvasItem
+        anchors.fill: visiblePart
+        drag.target: visiblePart
         drag.minimumX: dropMinX
         drag.maximumX: dropMaxX
         drag.minimumY: dropMinY
         drag.maximumY: dropMaxY
 
         acceptedButtons: Qt.LeftButton | Qt.RightButton
+        hoverEnabled: true
 
         onClicked: {
             console.log("button", mouse.button)
             switch (mouse.button) {
                 case Qt.LeftButton:
+
+                    if (itemsToPlace.protection) {
+                        currentData.protection = currentData.protection || ([]);
+                        currentData.protection.push(itemsToPlace.protection);
+                        canvasModelChanged()
+                        return;
+                    }
+
                     if (selectedCanvasItem === thisIndex) {
                         console.log("drop")
                         selectedCanvasItem = null
@@ -67,29 +117,6 @@ Item {
                 canvasModelChanged()
             }
         }
-    }
-
-    ColorOverlay {
-        id: canvasItemOverlay
-        anchors.fill: canvasItem
-        source: canvasItem
-        color: "transparent"
-        states: [
-            State {
-                when: componentArea.drag.active
-                PropertyChanges {
-                    target: canvasItemOverlay
-                    color: "gold"
-                }
-            },
-            State {
-                when: selectedCanvasItem === index
-                PropertyChanges {
-                    target: canvasItemOverlay
-                    color: "orange"
-                }
-            }
-        ]
     }
 
     Controls.Menu {

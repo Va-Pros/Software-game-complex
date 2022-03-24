@@ -13,6 +13,7 @@
         <file>icons/intrusionDetection.png</file>
         <file>icons/os.png</file>
         <file>icons/trustedBoot.png</file>
+        <file>icons/protectionLogo.png</file>
         <file>ui/main.qml</file>
         <file>ui/MainMenu.qml</file>
         <file>ui/QuestionConstructor.qml</file>

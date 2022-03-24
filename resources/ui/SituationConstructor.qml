@@ -18,7 +18,7 @@ Kirigami.Page {
     property var selectedCanvasItem: -1
 
     property bool isMovingNode: false
-    property var canvasModel: [{type: "node", subtype: "computer", image: "/icons/computer.png", x: 100, y: 100}]
+    property var canvasModel: [{type: "node", subtype: "computer", image: "/icons/computer.png", x: 100, y: 100, protection: []}]
 
     ListModel {
         id: selectionModel
