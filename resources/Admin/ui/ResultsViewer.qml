@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls.Material 2.0
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 2.13
-import QtQuick.Controls 1.4 as OldControls
+import org.kde.kirigami 2.4 as Kirigami
 
 Flickable {
    id: resultsViewer
@@ -16,7 +16,7 @@ Flickable {
         orientation: Qt.Horizontal
 
         Item{
-            SplitView.minimumWidth: Math.max(titleRightPanel.width) * 1.25
+            SplitView.minimumWidth: Math.max(titleRightPanel.width) * 1.25 + pane.padding * 2
             SplitView {
                 anchors.fill: parent
                 orientation: Qt.Vertical
@@ -27,11 +27,14 @@ Flickable {
                         anchors.left : parent.left
                         anchors.right : parent.right
                         spacing: 0
-                        Label {
-                            id: titleRightPanel
-                            font.italic: true
-                            text: qsTr("Search Parameters:")
-                            font.pixelSize: buttonSearch.height * 0.5
+                        Pane{
+                            id: pane
+                            Label {
+                                id: titleRightPanel
+                                font.italic: true
+                                text: qsTr("Search Parameters:")
+                                font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.5
+                            }
                         }
                         //todo: date
                         //RowLayout{}
@@ -45,14 +48,16 @@ Flickable {
                                     text: qsTr("Tittle:")
                                 }
                             }
-                            OldControls.ComboBox {
+                            ComboBox {
+                                textRole: "text"
+                                valueRole: "value"
                                 Layout.fillWidth: true
                                 editable: true
                                 model: ListModel {
-                                    id: ttittleModel
-                                    ListElement { text: ""}
-                                    ListElement { text: "Any"}
-                                    // themeModel.append({text: theme[idx]})
+                                    id: titleModel
+                                    ListElement { text: qsTr("")}
+                                    ListElement { text: qsTr("Any")}
+                                    // titleModel.append({text: theme[idx]})
                                 }
                             }
                         }
@@ -65,14 +70,16 @@ Flickable {
                                     text: qsTr("Platoon:")
                                 }
                             }
-                            OldControls.ComboBox {
+                            ComboBox {
+                                textRole: "text"
+                                valueRole: "value"
                                 Layout.fillWidth: true
                                 editable: true
                                 model: ListModel {
                                     id: platoonModel
-                                    ListElement { text: ""}
-                                    ListElement { text: "Any"}
-                                    // themeModel.append({text: theme[idx]})
+                                    ListElement { text: qsTr("")}
+                                    ListElement { text: qsTr("Any")}
+                                    // platoonModel.append({text: theme[idx]})
                                 }
                             }
                         }
@@ -109,46 +116,50 @@ Flickable {
                         //onCurrentIndexChanged: {
                             //console.log(currentIndex);
                         //}
-
-                        Label {
-                            id: tittleResultsPanel
-                            font.italic: true
-                            text: qsTr("Results:")
-                            font.pixelSize: buttonSearch.height * 0.5
+                        Pane{
+                            Label {
+                                id: tittleResultsPanel
+                                font.italic: true
+                                text: qsTr("Results:")
+                                font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.5
+                            }
                         }
-        //                 Button {
-        //                     id: buttonSingleChoice
-        //                     Layout.fillWidth: true
-        //                     text: qsTr("Single choice")
-        //                     onClicked: questionCreatorSwap.currentIndex = 1
-        //                     flat: questionCreatorPanel.index != 0
-        //                 }
+                        Repeater {
+                            model: []
+                            Button {
+                                id: buttonSingleChoice
+                                Layout.fillWidth: true
+                                text: modelData
+                                //onClicked: questionCreatorSwap.currentIndex = 1
+                                //flat: questionCreatorPanel.index != 0
+                            }
+                        }
                     }
-
                 }
             }
         }
+
         SwipeView {
+            SplitView.minimumWidth: Math.max(titleRightPanel.width) * 1.6
             id: resultVieverSwap
             focus: true
             orientation: Qt.Vertical
             anchors.top: parent.bottom
-//             anchors.left: parent.left
-            //anchors.right: parent.right
-            //anchors.bottom: parent.bottom
             currentIndex: 0
             onCurrentIndexChanged: {
                 resultsPanel.index = currentIndex
             }
-
-            Loader {
-                // index 0
-                id: pageExample
-                property string title: active? item.title:"..."
-                active: true
-                source: "ResultArea.qml"
-                //onLoaded: item.init()
+            Repeater {
+                model: []
+                Loader {
+                    id: pageExample
+                    property string title: active? item.title:"..."
+                    active: true
+                    source: "ResultArea.qml"
+                    //onLoaded: item.init()
+                }
             }
         }
     }
+
 }

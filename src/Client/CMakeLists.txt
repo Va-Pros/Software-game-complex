@@ -47,20 +47,6 @@ find_package(KF5 ${KF_MIN_VERSION} REQUIRED COMPONENTS Kirigami2 I18n CoreAddons
 add_executable(Client
         main.cpp
         ../../resources/Client/resources.qrc
-        QuestionCreator/include/QuestionTypeListModel.h
-        QuestionCreator/include/QuestionTypeItem.h
-        QuestionCreator/include/QuestionCreatorModel.h
-        Test/include/Question.h
-        Test/Question.cpp
-        Test/include/TypeInQuestion.h
-        Test/TypeInQuestion.cpp
-        Test/include/TypeInAnswer.h
-        Test/TypeInAnswer.cpp
-        QuestionCreator/include/QuestionSaver.h
-        QuestionCreator/include/QuestionThemeModel.h
-        QuestionCreator/include/QuestionThemeItem.h
-        QuestionCreator/include/QuestionThemes.h
-        QuestionCreator/include/QuestionDifficulty.h
         TcpClient/TcpClient.cpp
         TcpClient/TcpClient.hpp
 

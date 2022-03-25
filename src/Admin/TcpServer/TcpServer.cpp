@@ -1,4 +1,5 @@
 #include "TcpServer.hpp"
+#include "../DB/database.h"
 
 TcpServer::TcpServer(QObject* parent) : QObject(parent) {
     connect(&_server, &QTcpServer::newConnection, this, &TcpServer::onNewConnection);
@@ -41,7 +42,7 @@ void TcpServer::onReadyRead() {
             QVariantList row;
             row.append(data[1]);
             row.append(data[2]);
-//            database.insertIntoTotalReportTable(row);
+            DataBase::insertIntoTotalReportTable(row);
         }
     }
 

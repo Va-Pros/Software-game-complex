@@ -1,44 +1,35 @@
 #ifndef DATABASE_H
 #define DATABASE_H
-
-#include <QObject>
-#include <QSql>
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QSqlDatabase>
-#include <QFile>
 #include <QDate>
 #include <QDebug>
+#include <QFile>
+#include <QObject>
+#include <QSql>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlQuery>
 
-
-
-class DataBase : public QObject
-{
-    Q_OBJECT
+class DataBase : public QObject {
+Q_OBJECT
 public:
-    explicit DataBase(QObject *parent = 0);
-    ~DataBase();
-    /* Методы для непосредственной работы с классом
-     * Подключение к базе данных и вставка записей в таблицу
-     * */
+    explicit DataBase(QObject* parent = 0);
+    ~DataBase() override;
     void connectToDataBase();
-
 public slots:
-    bool insertIntoTotalReportTable(const QVariantList &data);
-    bool insertIntoQuestionTable(const QVariantList &data);
-
+    static bool insertIntoTotalReportTable(const QVariantList& data);
+    static bool insertORUpdateIntoQuestionTable(int id, const QString& theme, int difficulty,
+                                        const QString& description, int model,
+                                        const QList<QList<QString>>& answers_list,
+                                  const QList<QList<bool>>& is_correct, bool is_deleted);
+    static QList<QVariant> selectAllFromQuestionTable(const QString& theme, const QString& description,
+                                                      int difficulty);
 private:
-    // Сам объект базы данных, с которым будет производиться работа
-    QSqlDatabase    db;
-
+    QSqlDatabase db;
 private:
-    /* Внутренние методы для работы с базой данных
-     * */
     bool openDataBase();
-    bool restoreDataBase();
     void closeDataBase();
-    bool createTotalReportTable();
-    bool createQuestionTable();
+    static bool createTotalReportTable();
+    static bool createQuestionTable();
 };
 
-#endif // DATABASE\_H
+#endif    // DATABASE_H

@@ -39,22 +39,15 @@ Flickable {
         onCurrentIndexChanged: {
             questionBar.currentIndex = currentIndex
         }
-
-        Loader {
-            // index 0
-            id: pageQuestionCreator
-            property string title: active? item.title:"..."
-            active: true
-            source: "QuestionCreator.qml"
-            //onLoaded: item.init()
-        }
-        Loader {
-            // index 1
-            id: pageQuestionEditor
-            property string title: active? item.title:"..."
-            active: true
-            source: "QuestionEditor.qml"
-            //onLoaded: item.init()
+        Repeater {
+            model: ["QuestionCreator.qml", "QuestionEditor.qml"]
+            Loader {
+                id: pageQuestionCreator
+                property string title: active? item.title:"..."
+                active: true
+                source: modelData
+                //onLoaded: item.init()
+            }
         }
     }
 

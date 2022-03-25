@@ -36,24 +36,19 @@ ApplicationWindow {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        // property string title: active ? item.title: "..."
-        active: true
-        source: "GameManagement.qml"
-        //onLoaded: item.init()
-    }
-
-    function getFileNameByIndex(idx) {
-        switch (idx) {
-            case 0: return "GameManagement.qml"
-
-            case 1: return "QuestionConstructor.qml"
-
-            case 2: return "SituationConstructor.qml"
-
-            case 3: return "ResultsViewer.qml"
-
-            default: return null
+        currentIndex: mainBar.currentIndex
+        onCurrentIndexChanged: {
+            mainBar.currentIndex = currentIndex
+        }
+        Repeater {
+            model: ["GameManagement.qml", "QuestionConstructor.qml", "SituationConstructor.qml", "ResultsViewer.qml"]
+            Loader {
+                id: pageGameManagement
+                property string title: active? item.title:"..."
+                active: true
+                source: modelData
+                //onLoaded: item.init()
+            }
         }
     }
-
 }

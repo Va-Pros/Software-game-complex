@@ -1,12 +1,10 @@
 import QtQuick 2.15
-import QtQuick.Controls 2.15 as Controls
+import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import org.kde.kirigami 2.15 as Kirigami
-import QuestionCreator 1.0
 
 
 
-Kirigami.Page {
+Page {
     id: mainMenuPage
     title: qsTr("Main menu")
 
@@ -20,10 +18,10 @@ Kirigami.Page {
 
         RowLayout {
             Layout.fillWidth: true
-            Controls.Label {
+            Label {
                 text: qsTr("ip:")
             }
-            Controls.TextField {
+            TextField {
                 id: ipField
                 Layout.fillWidth: true
                 placeholderText: qsTr("127.0.0.1")
@@ -33,7 +31,7 @@ Kirigami.Page {
                 }
                 //visible: themeAction.text === newThemeAction.text
             }
-            Controls.Button {
+            Button {
             id: buttonConnect
             Layout.fillWidth: true
             text: qsTr("check connection")
@@ -47,10 +45,10 @@ Kirigami.Page {
         }
         RowLayout {
             Layout.fillWidth: true
-                Controls.Label {
+                Label {
                 text: qsTr("name:")
             }
-            Controls.TextField {
+            TextField {
                 id: nameField
                 Layout.fillWidth: true
                 placeholderText: qsTr("Семенов Максим Алексеевич")
@@ -60,10 +58,10 @@ Kirigami.Page {
         }
         RowLayout {
             Layout.fillWidth: true
-                Controls.Label {
+                Label {
                 text: qsTr("platoon:")
             }
-            Controls.TextField {
+            TextField {
                 id: platoonField
                 Layout.fillWidth: true
                 placeholderText: qsTr("Самый лучший в мире!")
@@ -72,37 +70,37 @@ Kirigami.Page {
             }
         }
 
-        Controls.Button {
+        Button {
             id: startButton
             Layout.fillWidth: true
             text: qsTr("Start Test")
             onClicked: {
                 if (client.isConnected()) {
                     client.sendMessage("0;" + nameField.text + ";" + platoonField.text)
-                    applicationWindow().pageStack.push("qrc:ui/QuestionPage.qml")
+                    load_page("QuestionPage")
                 }
             }
         }
 
     }
-
-    Controls.StackView.onActivated: {
+/*
+    StackView.onActivated: {
         console.log("onActivated");
     }
 
-    Controls.StackView.onActivating: {
+    StackView.onActivating: {
         console.log("onActivating");
     }
 
-    Controls.StackView.onDeactivated: {
+    StackView.onDeactivated: {
         console.log("onDeactivated");
     }
 
-    Controls.StackView.onDeactivating: {
+    StackView.onDeactivating: {
         console.log("deactivating");
     }
 
-    Controls.StackView.onRemoved: {
+    StackView.onRemoved: {
         console.log("removed");
-    }
+    }*/
 }
