@@ -19,7 +19,7 @@ ApplicationWindow {
         anchors.right: parent.right
         currentIndex: 0
         onCurrentIndexChanged: {
-            sectionLoader.source = getFileNameByIndex(currentIndex)
+            mainSwap.currentIndex = currentIndex
         }
         Repeater {
             model: ["Game management", "Question constructor", "Situation constructor", "Results viewer"]
@@ -30,25 +30,26 @@ ApplicationWindow {
         }
     }
 
-    Loader {
-        id: sectionLoader
-        anchors.top: mainBar.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        currentIndex: mainBar.currentIndex
-        onCurrentIndexChanged: {
-            mainBar.currentIndex = currentIndex
-        }
-        Repeater {
-            model: ["GameManagement.qml", "QuestionConstructor.qml", "SituationConstructor.qml", "ResultsViewer.qml"]
-            Loader {
-                id: pageGameManagement
-                property string title: active? item.title:"..."
-                active: true
-                source: modelData
-                //onLoaded: item.init()
-            }
-        }
+    SwipeView {
+        id: mainSwap
+         focus: true
+         anchors.top: mainBar.bottom
+         anchors.left: parent.left
+         anchors.right: parent.right
+         anchors.bottom: parent.bottom
+         currentIndex: mainBar.currentIndex
+         onCurrentIndexChanged: {
+             mainBar.currentIndex = currentIndex
+         }
+         Repeater {
+             model: ["GameManagement.qml", "QuestionConstructor.qml", "SituationConstructor.qml", "ResultsViewer.qml"]
+             Loader {
+                 id: pageGameManagement
+//                 property string title: active? item.title:"..."
+                 active: true
+                 source: modelData
+                 //onLoaded: item.init()
+             }
+         }
     }
 }
