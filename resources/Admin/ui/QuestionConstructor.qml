@@ -1,31 +1,61 @@
-import QtQuick 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Controls 2.15 as Controls
-import org.kde.kirigami 2.15 as Kirigami
-import QuestionCreator 1.0
+import QtQuick 2.6
+import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.0
+import QtQuick.Controls.Material 2.0
+import QtGraphicalEffects 1.0
 
-Kirigami.ScrollablePage {
-    title: qsTr("Question constructor")
-    Layout.leftMargin: 40
+Flickable {
+    id: flickable
 
-    QuestionCreatorModel {
-        id: pageModel
-    }
+    property string name: "QuestionConstructor"
+    property string title: qsTr("Question constructor")
 
-    ListView {
-        anchors.left : parent.left
-        anchors.right : parent.right
-        anchors.margins: 20
-
-        model: pageModel.getTypeListModel()
-        delegate: Controls.Button {
-            required property string title
-            required property string ui
-            anchors.left : parent.left
-            anchors.right : parent.right
-
-            text: title
-            onClicked: applicationWindow().pageStack.push("qrc:ui/QuestionEditorPage.qml", {questionType: title, widgetPath: ui})
+    TabBar {
+        id: questionBar
+        anchors.left: parent.left
+        anchors.right: parent.right
+        currentIndex: 0
+        onCurrentIndexChanged: {
+            questionSwap.currentIndex = currentIndex
+        }
+        Repeater {
+            model: ["Question creator", "Question editor"]
+            TabButton {
+                text: modelData
+                width: undefined
+            }
         }
     }
+
+    SwipeView {
+        id: questionSwap
+        focus: true
+        // anchors.fill: parent
+        anchors.top: questionBar.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        currentIndex: questionBar.currentIndex
+        onCurrentIndexChanged: {
+            questionBar.currentIndex = currentIndex
+        }
+
+        Loader {
+            // index 0
+            id: pageQuestionCreator
+            property string title: active? item.title:"..."
+            active: true
+            source: "QuestionCreator.qml"
+            //onLoaded: item.init()
+        }
+        Loader {
+            // index 1
+            id: pageQuestionEditor
+            property string title: active? item.title:"..."
+            active: true
+            source: "QuestionEditor.qml"
+            //onLoaded: item.init()
+        }
+    }
+
 }

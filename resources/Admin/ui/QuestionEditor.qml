@@ -6,10 +6,10 @@ import QtQuick.Controls 2.13
 import QtQuick.Controls 1.4 as OldControls
 
 Flickable {
-   id: resultsViewer
+   id: questionEditor
 
-    property string name: "resultsViewer"
-    property string title: qsTr("Results viewer")
+    property string name: "questionEditor"
+    property string title: qsTr("Question editor")
 
     SplitView {
         anchors.fill: parent
@@ -21,9 +21,9 @@ Flickable {
                 anchors.fill: parent
                 orientation: Qt.Vertical
                 Item {
-                   SplitView.minimumHeight: resultsSearchPanel.height
+                   SplitView.minimumHeight: questionEditorPanel.height
                     ColumnLayout {
-                        id: resultsSearchPanel
+                        id: questionEditorPanel
                         anchors.left : parent.left
                         anchors.right : parent.right
                         spacing: 0
@@ -33,23 +33,37 @@ Flickable {
                             text: qsTr("Search Parameters:")
                             font.pixelSize: buttonSearch.height * 0.5
                         }
-                        //todo: date
-                        //RowLayout{}
                         RowLayout{
                             Pane{
                                 id: labelPanel
-                                contentWidth: Math.max(tittleLabel.width, platoonLabel.width, nameLabel.width)
+                                contentWidth: Math.max(contentLabel.width, complexityLabel.width, themeLabel.width)
                                 Label {
-                                    id:tittleLabel
+                                    id: complexityLabel
 //                                     wrapMode: Label.WordWrap
-                                    text: qsTr("Tittle:")
+                                    text: qsTr("Complexity:")
+                                }
+                            }
+                            OldControls.ComboBox {
+                                Layout.fillWidth: true
+                                id: complexityMosel
+                                editable: false
+                                model: ["Any", "Easy", "Medium", "Hard", "Easy or Medium", "Medium or Hard", "Easy or Hard"]
+                            }
+                        }
+                        RowLayout{
+                            Pane{
+                                contentWidth: labelPanel.contentWidth
+                                Label {
+                                    id:themeLabel
+//                                     wrapMode: Label.WordWrap
+                                    text: qsTr("Theme:")
                                 }
                             }
                             OldControls.ComboBox {
                                 Layout.fillWidth: true
                                 editable: true
                                 model: ListModel {
-                                    id: ttittleModel
+                                    id: themeModel
                                     ListElement { text: ""}
                                     ListElement { text: "Any"}
                                     // themeModel.append({text: theme[idx]})
@@ -60,33 +74,13 @@ Flickable {
                             Pane{
                                 contentWidth: labelPanel.contentWidth
                                 Label {
-                                    id:platoonLabel
+                                    id: contentLabel
 //                                     wrapMode: Label.WordWrap
-                                    text: qsTr("Platoon:")
-                                }
-                            }
-                            OldControls.ComboBox {
-                                Layout.fillWidth: true
-                                editable: true
-                                model: ListModel {
-                                    id: platoonModel
-                                    ListElement { text: ""}
-                                    ListElement { text: "Any"}
-                                    // themeModel.append({text: theme[idx]})
-                                }
-                            }
-                        }
-                        RowLayout{
-                            Pane{
-                                contentWidth: labelPanel.contentWidth
-                                Label {
-                                    id: nameLabel
-//                                     wrapMode: Label.WordWrap
-                                    text: qsTr("Name:")
+                                    text: qsTr("Content:")
                                 }
                             }
                             TextField {
-                                id: nameField
+                                id: contentField
                                 Layout.fillWidth: true
                             }
                         }
@@ -129,7 +123,7 @@ Flickable {
             }
         }
         SwipeView {
-            id: resultVieverSwap
+            id: questionEditorSwap
             focus: true
             orientation: Qt.Vertical
             anchors.top: parent.bottom
@@ -146,7 +140,7 @@ Flickable {
                 id: pageExample
                 property string title: active? item.title:"..."
                 active: true
-                source: "ResultArea.qml"
+                source: "QuestionArea.qml"
                 //onLoaded: item.init()
             }
         }
