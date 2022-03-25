@@ -102,7 +102,7 @@ bool DataBase::insertIntoTotalReportTable(const QVariantList& data) {
     query.prepare("INSERT INTO Total_Report (name , platoon ) "
                   "VALUES					(:Name, :Platoon) ");
     query.bindValue(":Name", data[0].toString());
-    query.bindValue(":Platoon", data[1].toString());
+    query.bindValue(":Platoon", data[1].toInt());
     if (!query.exec()) {
         qDebug() << "DataBase: error insert into Total_Report";
         qDebug() << query.lastError().text();

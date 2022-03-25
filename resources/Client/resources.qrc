@@ -4,5 +4,6 @@
         <file>ui/main.qml</file>
         <file>ui/MainMenu.qml</file>
         <file>ui/QuestionPage.qml</file>
+        <file>ui/QuestionArea.qml</file>
     </qresource>
 </RCC>

@@ -1,11 +1,21 @@
-import QtQuick.Controls 2.15 as Controls
-import org.kde.kirigami 2.15 as Kirigami
+import QtQuick 2.9
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 
-Kirigami.ApplicationWindow {
+ApplicationWindow {
     width: 640
     height: 480
     visible: true
     title: qsTr("Client Panel")
 
-    pageStack.initialPage: Qt.resolvedUrl("MainMenu.qml")
+    StackView {
+        anchors.fill: parent
+
+        id: mystackview
+        initialItem:Qt.resolvedUrl("MainMenu.qml")
+    }
+
+    function load_page(pageName) {
+        mystackview.push(`qrc:ui/${pageName}.qml`);
+    }
 }
