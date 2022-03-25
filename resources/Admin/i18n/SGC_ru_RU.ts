@@ -4,48 +4,43 @@
 <context>
     <name>AnswerInput</name>
     <message>
-        <location filename="../ui/QuestionEditorWidgets/AnswerWidgets/AnswerInput.qml" line="33"/>
         <source>Variant</source>
-        <translation>Вариант ответа</translation>
+        <translation type="vanished">Вариант ответа</translation>
     </message>
 </context>
 <context>
     <name>BaseQuestionEditor</name>
     <message>
-        <location filename="../ui/QuestionEditorWidgets/BaseQuestionEditor.qml" line="52"/>
         <source>Answer</source>
-        <translation>Ответ</translation>
+        <translation type="vanished">Ответ</translation>
     </message>
 </context>
 <context>
     <name>FillQuestionEditor</name>
     <message>
-        <location filename="../ui/QuestionEditorWidgets/FillQuestionEditor.qml" line="10"/>
         <source>Input {txt} to spicify fill position. i&apos;th entering of {txt} in text will use i&apos;th variants list</source>
-        <translation>Введите {txt}, чтобы указать позицию для вставки. Число позиций в тексте должно соответствовать числу списков</translation>
+        <translation type="vanished">Введите {txt}, чтобы указать позицию для вставки. Число позиций в тексте должно соответствовать числу списков</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionEditorWidgets/FillQuestionEditor.qml" line="34"/>
         <source>Text gap count: %1; answer list count: %2</source>
-        <translation>Позиций в тексте: %1; число списков: %2</translation>
+        <translation type="vanished">Позиций в тексте: %1; число списков: %2</translation>
     </message>
 </context>
 <context>
     <name>GameManagement</name>
     <message>
-        <location filename="../ui/GameManagement.qml" line="7"/>
-        <location filename="../ui/GameManagement.qml" line="10"/>
-        <source>Game management</source>
+        <location filename="../ui/GameManagement.qml" line="11"/>
+        <source>Game manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/GameManagement.qml" line="24"/>
-        <location filename="../ui/GameManagement.qml" line="31"/>
+        <location filename="../ui/GameManagement.qml" line="22"/>
+        <location filename="../ui/GameManagement.qml" line="29"/>
         <source>Start Server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/GameManagement.qml" line="28"/>
+        <location filename="../ui/GameManagement.qml" line="26"/>
         <source>Server Stop</source>
         <translation type="unfinished"></translation>
     </message>
@@ -53,60 +48,87 @@
 <context>
     <name>MainMenu</name>
     <message>
-        <location filename="../ui/MainMenu.qml" line="8"/>
-        <source>Main menu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/MainMenu.qml" line="16"/>
         <source>Question constructor</source>
-        <translation>Конструктор вопросов</translation>
-    </message>
-    <message>
-        <location filename="../ui/MainMenu.qml" line="22"/>
-        <source>Situation constructor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/MainMenu.qml" line="28"/>
-        <source>Results viewer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/MainMenu.qml" line="34"/>
-        <source>Game management</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Конструктор вопросов</translation>
     </message>
 </context>
 <context>
     <name>MultipleColumnsAnswersQuestionEditor</name>
     <message>
-        <location filename="../ui/QuestionEditorWidgets/MultipleColumnsAnswersQuestionEditor.qml" line="59"/>
         <source>Answer list %1</source>
-        <translation>Список %1</translation>
+        <translation type="vanished">Список %1</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionEditorWidgets/MultipleColumnsAnswersQuestionEditor.qml" line="67"/>
         <source>Add answer variant</source>
-        <translation>Добавить вариант ответа</translation>
+        <translation type="vanished">Добавить вариант ответа</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionEditorWidgets/MultipleColumnsAnswersQuestionEditor.qml" line="72"/>
         <source>Remove list</source>
-        <translation>Удалить список</translation>
+        <translation type="vanished">Удалить список</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionEditorWidgets/MultipleColumnsAnswersQuestionEditor.qml" line="89"/>
         <source>Add list</source>
-        <translation>Добавить список</translation>
+        <translation type="vanished">Добавить список</translation>
+    </message>
+</context>
+<context>
+    <name>QuestionArea</name>
+    <message>
+        <location filename="../ui/QuestionArea.qml" line="8"/>
+        <location filename="../ui/QuestionArea.qml" line="11"/>
+        <source>Question area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QuestionConstructor</name>
     <message>
-        <location filename="../ui/QuestionConstructor.qml" line="8"/>
+        <location filename="../ui/QuestionConstructor.qml" line="11"/>
         <source>Question constructor</source>
         <translation>Конструктор вопросов</translation>
+    </message>
+</context>
+<context>
+    <name>QuestionCreator</name>
+    <message>
+        <location filename="../ui/QuestionCreator.qml" line="11"/>
+        <source>Question creator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/QuestionCreator.qml" line="32"/>
+        <source>Choose the type of question:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/QuestionCreator.qml" line="38"/>
+        <source>Single choice</source>
+        <translation type="unfinished">Одиночный выбор</translation>
+    </message>
+    <message>
+        <location filename="../ui/QuestionCreator.qml" line="45"/>
+        <source>Multiple choice</source>
+        <translation type="unfinished">Множественный выбор</translation>
+    </message>
+    <message>
+        <location filename="../ui/QuestionCreator.qml" line="52"/>
+        <source>Type in</source>
+        <translation type="unfinished">Ввод текста</translation>
+    </message>
+    <message>
+        <location filename="../ui/QuestionCreator.qml" line="59"/>
+        <source>Match</source>
+        <translation type="unfinished">Установление соответствий</translation>
+    </message>
+    <message>
+        <location filename="../ui/QuestionCreator.qml" line="66"/>
+        <source>Dropdown fill</source>
+        <translation type="unfinished">Заполнение пропусков, одиночный выбор</translation>
+    </message>
+    <message>
+        <location filename="../ui/QuestionCreator.qml" line="73"/>
+        <source>Type in fill</source>
+        <translation type="unfinished">Заполнение пропусков, ввод текста</translation>
     </message>
 </context>
 <context>
@@ -143,61 +165,88 @@
     </message>
 </context>
 <context>
+    <name>QuestionEditor</name>
+    <message>
+        <location filename="../ui/QuestionEditor.qml" line="12"/>
+        <source>Question editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/QuestionEditor.qml" line="33"/>
+        <source>Search Parameters:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/QuestionEditor.qml" line="43"/>
+        <source>Complexity:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/QuestionEditor.qml" line="59"/>
+        <source>Theme:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/QuestionEditor.qml" line="79"/>
+        <source>Content:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/QuestionEditor.qml" line="90"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/QuestionEditor.qml" line="110"/>
+        <source>Results:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QuestionEditorPage</name>
     <message>
-        <location filename="../ui/QuestionEditorPage.qml" line="68"/>
         <source>New theme</source>
-        <translation>Новая тема</translation>
+        <translation type="vanished">Новая тема</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionEditorPage.qml" line="80"/>
         <source>Theme name</source>
-        <translation>Название темы</translation>
+        <translation type="vanished">Название темы</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionEditorPage.qml" line="129"/>
         <source>Easy</source>
-        <translation>Лёгкий</translation>
+        <translation type="vanished">Лёгкий</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionEditorPage.qml" line="136"/>
         <source>Medium</source>
-        <translation>Средний</translation>
+        <translation type="vanished">Средний</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionEditorPage.qml" line="142"/>
         <source>Hard</source>
-        <translation>Тяжёлый</translation>
+        <translation type="vanished">Тяжёлый</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionEditorPage.qml" line="153"/>
         <source>Active</source>
-        <translation>Активный</translation>
+        <translation type="vanished">Активный</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionEditorPage.qml" line="153"/>
         <source>Inactive</source>
-        <translation>Неактивный</translation>
+        <translation type="vanished">Неактивный</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionEditorPage.qml" line="168"/>
         <source>Save</source>
-        <translation>Сохранить</translation>
+        <translation type="vanished">Сохранить</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionEditorPage.qml" line="185"/>
         <source>Saved!</source>
-        <translation>Сохранено!</translation>
+        <translation type="vanished">Сохранено!</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionEditorPage.qml" line="215"/>
         <source>Saving..</source>
-        <translation>Сохраняется..</translation>
+        <translation type="vanished">Сохраняется..</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionEditorPage.qml" line="219"/>
         <source>Unhandled error while saving: %1</source>
-        <translation>Необработанная ошибка при сохранении: %1</translation>
+        <translation type="vanished">Необработанная ошибка при сохранении: %1</translation>
     </message>
 </context>
 <context>
@@ -229,18 +278,54 @@
 <context>
     <name>RegularQuestionInput</name>
     <message>
-        <location filename="../ui/QuestionEditorWidgets/RegularQuestionInput.qml" line="12"/>
-        <location filename="../ui/QuestionEditorWidgets/RegularQuestionInput.qml" line="19"/>
         <source>Question text</source>
-        <translation>Текст вопроса</translation>
+        <translation type="vanished">Текст вопроса</translation>
+    </message>
+</context>
+<context>
+    <name>ResultArea</name>
+    <message>
+        <location filename="../ui/ResultArea.qml" line="8"/>
+        <location filename="../ui/ResultArea.qml" line="11"/>
+        <source>Result area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ResultsViewer</name>
     <message>
-        <location filename="../ui/ResultsViewer.qml" line="6"/>
-        <location filename="../ui/ResultsViewer.qml" line="9"/>
+        <location filename="../ui/ResultsViewer.qml" line="12"/>
         <source>Results viewer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="33"/>
+        <source>Search Parameters:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="45"/>
+        <source>Tittle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="65"/>
+        <source>Platoon:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="85"/>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="96"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="116"/>
+        <source>Results:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -256,7 +341,7 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../ui/main.qml" line="8"/>
+        <location filename="../ui/main.qml" line="11"/>
         <source>Admin Panel</source>
         <translation>Панель адмминистратора</translation>
     </message>

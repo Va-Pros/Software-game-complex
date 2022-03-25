@@ -1,12 +1,15 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
 import QtGraphicalEffects 1.0
+import QtQuick.Window 2.2
 
 ApplicationWindow {
-    minimumWidth: 800
-    minimumHeight: 400
+    width: Screen.desktopAvailableWidth
+    height: Screen.desktopAvailableHeight
+    minimumWidth: 1024
+    minimumHeight: 512
     visible: true
     title: qsTr("Admin Panel")
 
@@ -16,7 +19,7 @@ ApplicationWindow {
         anchors.right: parent.right
         currentIndex: 0
         onCurrentIndexChanged: {
-            mainSwap.currentIndex = currentIndex
+            sectionLoader.source = getFileNameByIndex(currentIndex)
         }
         Repeater {
             model: ["Game management", "Question constructor", "Situation constructor", "Results viewer"]
@@ -27,9 +30,8 @@ ApplicationWindow {
         }
     }
 
-    SwipeView {
-        id: mainSwap
-        focus: true
+    Loader {
+        id: sectionLoader
         anchors.top: mainBar.bottom
         anchors.left: parent.left
         anchors.right: parent.right

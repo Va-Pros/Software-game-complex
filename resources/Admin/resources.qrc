@@ -10,5 +10,9 @@
         <file>ui/QuestionEditor.qml</file>
         <file>ui/QuestionArea.qml</file>
         <file>ui/ResultArea.qml</file>
+        <file>ui/NumberOfCorrectAnswers.qml</file>
+        <file>ui/Theme.qml</file>
+        <file>ui/Tag.qml</file>
+        <file>ui/ThemeTextField.qml</file>
     </qresource>
 </RCC>
