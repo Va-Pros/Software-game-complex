@@ -22,7 +22,7 @@ ApplicationWindow {
             mainSwap.currentIndex = currentIndex
         }
         Repeater {
-            model: ["Game management", "Question constructor", "Situation constructor", "Results viewer"]
+            model: [qsTr("Game management"), qsTr("Question constructor"), qsTr("Situation constructor"), qsTr("Results viewer")]
             TabButton {
                 text: modelData
                 width: undefined
@@ -38,6 +38,7 @@ ApplicationWindow {
          anchors.right: parent.right
          anchors.bottom: parent.bottom
          currentIndex: mainBar.currentIndex
+         interactive: false
          onCurrentIndexChanged: {
              mainBar.currentIndex = currentIndex
          }

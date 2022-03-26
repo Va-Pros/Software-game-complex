@@ -69,9 +69,9 @@ Page {
         height: 30
         model: ListModel {
             id: modelThemes
-            ListElement { text: "Theme 1" }
-            ListElement { text: "Theme 2" }
-            ListElement { text: "Theme 3" }
+            ListElement { text: qsTr("Theme 1") }
+            ListElement { text: qsTr("Theme 2") }
+            ListElement { text: qsTr("Theme 3") }
         }
         onActivated: {
             gridView.model.append({ text: currentValue });
@@ -297,9 +297,9 @@ Page {
         height: 30
         model: ListModel {
             id: modelDifficulty
-            ListElement { text: "Easy" }
-            ListElement { text: "Medium" }
-            ListElement { text: "Hard" }
+            ListElement { text: qsTr("Easy") }
+            ListElement { text: qsTr("Medium") }
+            ListElement { text: qsTr("Hard") }
         }
         onActivated: {
             console.log("Choose ", currentValue)

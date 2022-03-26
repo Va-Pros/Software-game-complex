@@ -93,7 +93,7 @@ Pane {
                         property int topIndex:index
                         anchors.fill: parent
                         Label {
-                            text: qsTr(`Answer options${answers_list.length>1?` {${answerList.topIndex}}`:""}:`)
+                            text: qsTr('Answer options${answers_list.length>1?` {${answerList.topIndex}}`:""}:')
                         }
                         ButtonGroup {
                             id: singleChoiceGroup

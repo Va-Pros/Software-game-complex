@@ -32,7 +32,7 @@ Flickable {
                                 id: titleRightPanel
                                 font.italic: true
                                 text: qsTr("Search Parameters:")
-                                font.pixelSize: 20 * 1.5
+                                font.pixelSize: 10 * 1.5
                             }
                         }
                         //todo: date
@@ -120,7 +120,7 @@ Flickable {
                                 id: tittleResultsPanel
                                 font.italic: true
                                 text: qsTr("Results:")
-                                font.pixelSize: 20 * 1.5
+                                font.pixelSize: 10 * 1.5
                             }
                         }
                         Repeater {
