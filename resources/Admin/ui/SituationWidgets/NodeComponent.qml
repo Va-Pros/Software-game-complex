@@ -18,7 +18,7 @@ Item {
 
         Image {
             id: canvasItem
-            source: Qt.resolvedUrl(currentData.image.toString())
+            source: Qt.resolvedUrl(images[currentData.subtype])
             sourceSize.width: canvasItemSize
             sourceSize.height: canvasItemSize
 
@@ -55,7 +55,7 @@ Item {
             sourceSize.height: 24
             z: 10
             x: canvasItemSize - sourceSize.width
-            Controls.ToolTip.text: isEmpty(currentData.protection) ? "" : currentData.protection.reduce((acc, p) => acc + p.name + "; ", "")
+            Controls.ToolTip.text: isEmpty(currentData.protection) ? "" : currentData.protection.reduce((acc, p) => acc + names[p.subtype] + "; ", "")
             Controls.ToolTip.visible: visible && componentArea.containsMouse
         }
     }

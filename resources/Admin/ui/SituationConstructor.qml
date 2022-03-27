@@ -12,157 +12,121 @@ Controls.Page {
 
     property bool isFileImporting: true
     property string mapPath: ""
-    property var itemsToPlace: ({})
-    property var selectedCanvasItem: -1
+    property var itemsToPlace
+    property var selectedCanvasItem
 
     property bool isMovingNode: false
-    property var canvasModel: [{type: "node", subtype: "computer", image: "/icons/computer.png", x: 100, y: 100, protection: []}]
+    property var canvasModel
 
-    ListModel {
-        id: selectionModel
+    property int id
+    property string name
+    property int difficulty
 
-        ListElement {
-            type: "category"
-            name: qsTr("Vertex")
-        }
-        ListElement {
-            type: "node"
-            subtype: "computer"
-            name: qsTr("Computer")
-            image: "/icons/computer.png"
-        }
-        ListElement {
-            type: "node"
-            subtype: "router"
-            name: qsTr("Router")
-            image: "/icons/router.png"
-        }
-        ListElement {
-            type: "node"
-            subtype: "commutator"
-            name: qsTr("Commutator")
-            image: "/icons/commutator.png"
-        }
-        ListElement {
-            type: "node"
-            subtype: "server"
-            name: qsTr("Server")
-            image: "/icons/server.png"
-        }
-        ListElement {
+    anchors.leftMargin: 120
+
+    property var foundModels: []
+
+    property var names: ({
+                             computer:           qsTr("Computer"),
+                             router:             qsTr("Router"),
+                             commutator:         qsTr("Commutator"),
+                             server:             qsTr("Server"),
+                             electric:           qsTr("Electric connection"),
+                             radio:              qsTr("Radio connection"),
+                             optical:            qsTr("Optical connection"),
+                             os:                 qsTr("Operating System"),
+                             firewall:           qsTr("Firewall"),
+                             trustedBoot:        qsTr("Trusted Boot"),
+                             intrusionDetection: qsTr("Intrusion Detection"),
+                             accessControl:      qsTr("Access Control"),
+                         })
+
+    property var images: ({
+                              computer:           "/icons/computer.png",
+                              router:             "/icons/router.png",
+                              commutator:         "/icons/commutator.png",
+                              server:             "/icons/server.png",
+                              electric:           "/icons/wire.png",
+                              radio:              "/icons/radio.png",
+                              optical:            "/icons/optical.png",
+                              os:                 "/icons/os.png",
+                              firewall:           "/icons/firewall.png",
+                              trustedBoot:        "/icons/trustedBoot.png",
+                              intrusionDetection: "/icons/intrusionDetection.png",
+                              accessControl:      "/icons/accessControl.png",
+                          })
+
+    property var colors: ({
+                              electric:           "tomato",
+                              radio:              "darkgray",
+                              optical:            "skyblue",
+                          })
+
+    property var selectionModel: [
+        {type: "category", name: qsTr("Vertex")},
+        {
+            type: "node",
+            subtype: "computer",
+        },
+        {
+            type: "node",
+            subtype: "router",
+        },
+        {
+            type: "node",
+            subtype: "commutator",
+        },
+        {
+            type: "node",
+            subtype: "server",
+        },
+        {
             type: "divider"
-        }
-        ListElement {
-            type: "category"
-            name: qsTr("Edge")
-        }
-        ListElement {
-            type: "edge"
-            subtype: "electric"
-            name: qsTr("Electric connection")
-            color: "tomato"
-            image: "/icons/wire.png"
-        }
-
-        ListElement {
-            type: "edge"
-            subtype: "radio"
-            color: "darkgray"
-            name: qsTr("Radio connection")
-            image: "/icons/radio.png"
-        }
-
-        ListElement {
-            type: "edge"
-            subtype: "optical"
-            color: "skyblue"
-            name: qsTr("Optical connection")
-            image: "/icons/optical.png"
-        }
-
-        ListElement {
+        },
+        {
+            type: "category",
+            name: qsTr("Edge"),
+        },
+        {
+            type: "edge",
+            subtype: "electric",
+        },
+        {
+            type: "edge",
+            subtype: "radio",
+        },
+        {
+            type: "edge",
+            subtype: "optical",
+        },
+        {
             type: "divider"
-        }
-
-        ListElement {
-            type: "category"
-            name: qsTr("Protection Tools")
-        }
-
-        ListElement {
-            type: "protection"
-            subtype: "OS"
-            name: qsTr("Operating System")
-            image: "/icons/os.png"
-        }
-
-        ListElement {
-            type: "protection"
-            subtype: "firewall"
-            name: qsTr("Firewall")
-            image: "/icons/firewall.png"
-        }
-
-        ListElement {
-            type: "protection"
-            subtype: "trustedBoot"
-            name: qsTr("Trusted Boot")
-            image: "/icons/trustedBoot.png"
-        }
-
-        ListElement {
-            type: "protection"
-            subtype: "intrusionDetection"
-            name: qsTr("Intrusion Detection")
-            image: "/icons/intrusionDetection.png"
-        }
-
-        ListElement {
-            type: "protection"
-            subtype: "accessControl"
-            name: qsTr("Access Control")
-            image: "/icons/accessControl.png"
-        }
-    }
-
-    Controls.ScrollView {
-        id: componentsRow
-        Controls.ScrollBar.horizontal.policy: Controls.ScrollBar.AlwaysOn
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        anchors.left: parent.left
-        anchors.right: parent.right
-        RowLayout {
-            Repeater {
-                model: selectionModel
-                delegate: Component {
-                    Loader {
-                        Component.onCompleted: {
-                            switch (type) {
-                                case "divider": {
-                                    setSource("SituationWidgets/DividerElement.qml")
-                                    break
-                                }
-                                case "category": {
-                                    setSource("SituationWidgets/CategoryElement.qml", {name})
-                                    break
-                                }
-                                default: setSource("SituationWidgets/SelectableElement.qml", {itemData: model})
-                            }
-                        }
-                    }
-                }
-            }
-
-//            MouseArea {
-//                anchors.fill: parent
-//                onWheel: {
-//                    if (wheel.angleDelta.y > 0) Controls.ScrollBar.horizontal.decrease()
-//                    else Controls.ScrollBar.horizontal.increase()
-//                }
-//            }
-        }
-    }
+        },
+        {
+            type: "category",
+            name: qsTr("Protection Tools"),
+        },
+        {
+            type: "protection",
+            subtype: "os",
+        },
+        {
+            type: "protection",
+            subtype: "firewall",
+        },
+        {
+            type: "protection",
+            subtype: "trustedBoot",
+        },
+        {
+            type: "protection",
+            subtype: "intrusionDetection",
+        },
+        {
+            type: "protection",
+            subtype: "accessControl",
+        },
+    ]
 
     property int canvasItemSize: 96
     property int dropMinX: canvasRectangle.border.width
@@ -174,127 +138,302 @@ Controls.Page {
 
     function ensureInBoundsX(x) {
         return Math.min(Math.max(x, dropMinX), dropMaxX)
-    }      
+    }
 
     function ensureInBoundsY(y) {
         return Math.min(Math.max(y, dropMinY), dropMaxY)
     }
 
     function positionCenterX(x) {
-        return ensureInBoundsX(x - canvasRectangle.x - canvasItemSize / 2)
+//        return ensureInBoundsX(x - canvasRectangle.x - canvasItemSize / 2)
+        return ensureInBoundsX(x - canvasItemSize / 2)
     }
 
     function positionCenterY(y) {
-        return ensureInBoundsY(y - canvasRectangle.y + canvasItemSize / 2)
+        return ensureInBoundsY(y - canvasItemSize / 2)
     }
 
-    Rectangle {
-        id: canvasRectangle
-
-        anchors {
-            top: componentsRow.bottom
-            topMargin: 20
-            left: parent.left
-            right:  parent.right
-            bottom:  bottomRow.top
-            bottomMargin: 20
-        }
-
-        border.color: "black"
-        border.width: 5
-        MouseArea {
-            id: canvasItemArea
-            anchors.fill: parent
-            onClicked: function(event){
-                if (!isEmpty(itemsToPlace.node)) {
-
-                    const newItem = Object.assign(({}), itemsToPlace.node)
-                    newItem.x = positionCenterX(event.x)
-                    newItem.y = positionCenterY(event.y)
-
-                    canvasModel.push(newItem);
-                    selectedCanvasItem = canvasModel.count - 1
-                    canvasModelChanged()
-                }
-            }
-        }
-        DropArea {
-            id: dragTarget
-            anchors.fill: parent
-
-            property bool dropped: false
-
-            onDropped: function (event) {
-                console.log("dropped", event.accepted)
-
-
-                dropped = true
-            }
-
-            onExited: {
-                dropped = false;
-            }
-        }
-
-        SW.CanvasComponent {
-            id: canvasComponent
-        }
-
-        Repeater {
-            model: canvasModel
-            delegate: canvasComponent
-        }
-
-        states: [
-            State {
-                when: dragTarget.containsDrag
-                PropertyChanges {
-                    target: canvasRectangle
-                    color: "grey"
-                }
-            }
-        ]
-    }
-
-
-    RowLayout {
-        id: bottomRow
-        anchors.bottom: parent.bottom
+    Item {
+        anchors.margins: 16
         anchors.left: parent.left
         anchors.right: parent.right
-        Layout.alignment: Qt.AlignRight
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
 
-        FileDialog {
-            id: fileDialog
-            title: "Please choose a file"
-            folder: shortcuts.home
-            nameFilters: [ qsTr("Special Files") + " (*.mlbin)"]
-            onAccepted: {
-                if (isFileImporting) {
-                    SituationModifyHelper.importSituationModel(fileDialog.fileUrl);
-                } else {
-                    doSave(fileDialog.fileUrl)
+
+        Controls.TextField {
+            id: situationName
+            text: name
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: parent.top
+        }
+
+        RowLayout {
+            id: difficultyRow
+            anchors.top: situationName.bottom
+            anchors.topMargin: 8
+
+            Controls.Label {
+                id:difficultyLabel
+                text: qsTr("Difficulty:")
+            }
+            Repeater {
+                id: difficultyRepeater
+                model: [qsTr("Easy"),  qsTr("Medium"), qsTr("Hard")]
+                Controls.RadioButton {
+                    text: modelData
+                    checked: index === difficulty
+                    onCheckedChanged:{
+                        if (checked) {
+                            difficulty = index
+                        }
+                    }
                 }
             }
         }
 
-        Controls.Button {
-            Layout.alignment: Qt.AlignRight
-            text: qsTr("Import map")
-            icon.name: "document-import"
-            onClicked: openFileDialog(true)
+        Controls.ScrollView {
+            id: componentsRow
+            Controls.ScrollBar.horizontal.policy: Controls.ScrollBar.AlwaysOn
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: difficultyRow.bottom
+            anchors.topMargin: 8
+            RowLayout {
+                Repeater {
+                    model: selectionModel
+                    delegate: Component {
+                        Loader {
+                            Component.onCompleted: {
+                                const currentItem = selectionModel[index]
+                                switch (currentItem.type) {
+                                case "divider": {
+                                    setSource("SituationWidgets/DividerElement.qml")
+                                    break
+                                }
+                                case "category": {
+                                    setSource("SituationWidgets/CategoryElement.qml", {itemData: currentItem})
+                                    break
+                                }
+                                default: setSource("SituationWidgets/SelectableElement.qml", {itemData: currentItem})
+                                }
+                            }
+                        }
+                    }
+                }
+
+                //            MouseArea {
+                //                anchors.fill: parent
+                //                onWheel: {
+                //                    if (wheel.angleDelta.y > 0) Controls.ScrollBar.horizontal.decrease()
+                //                    else Controls.ScrollBar.horizontal.increase()
+                //                }
+                //            }
+            }
         }
 
-        Controls.Button {
-            Layout.alignment: Qt.AlignRight
-            text: qsTr("Save map")
-            icon.name: "document-save"
-            onClicked: save()
+
+        Item {
+            id: contentPanel
+
+            anchors {
+                top: componentsRow.bottom
+                topMargin: 20
+                left: parent.left
+                right:  parent.right
+                bottom:  bottomRow.top
+                bottomMargin: 20
+            }
+
+            Controls.Label {
+                id: savedSituationsLabel
+                text: qsTr("Saved situations:")
+                font.pixelSize: 24
+                anchors {
+                    top: contentPanel.top
+                    left: contentPanel.left
+                }
+            }
+
+            ListView {
+                id: savedSituationList
+                anchors {
+                    top: savedSituationsLabel.bottom
+                    bottom: contentPanel.bottom
+                    left: contentPanel.left
+                }
+                width: contentItem.childrenRect.width
+                clip: true
+
+                model: foundModels
+                delegate: Component {
+                    Item {
+                        id: delegateRoot
+                        width: 200
+                        height: savedItemContent.height
+
+
+                        Rectangle {
+                            id: selectionRect
+                            anchors.fill: delegateRoot
+                            anchors.rightMargin: 16
+                            color: "transparent"
+                            states: [
+                                State {
+                                    when: {
+                                        console.log("id", modelData.id, "vs", id)
+                                        return modelData.id === id
+                                    }
+                                    PropertyChanges {
+                                        target: selectionRect
+                                        color: "grey"
+                                    }
+                                }
+                            ]
+                        }
+                        ColumnLayout {
+                            id: savedItemContent
+                            Layout.margins: 20
+                            //                implicitWidth: 100
+                            Controls.Label {
+                                text: qsTr("Id: %1").arg(modelData.id)
+                            }
+                            Controls.Label {
+                                text: qsTr("Name: %1").arg(modelData.name)
+                            }
+                            Controls.Label {
+                                text: qsTr("Difficulty: %1").arg(difficultyRepeater.model[modelData.difficulty])
+                            }
+                        }
+
+                        MouseArea {
+                            anchors.fill: delegateRoot
+                            onClicked: {
+                                loadModel(modelData)
+                            }
+                        }
+                    }
+                }
+            }
+
+            Rectangle {
+                id: canvasRectangle
+
+                //        anchors {
+                //            top: componentsRow.bottom
+                //            topMargin: 20
+                //            left: savedSituationList.right
+                //            right:  parent.right
+                //            bottom:  bottomRow.top
+                //            bottomMargin: 20
+                //        }
+
+                anchors {
+                    top: contentPanel.top
+                    bottom: contentPanel.bottom
+                    right: contentPanel.right
+
+                    left: savedSituationList.right
+                }
+
+                border.color: "black"
+                border.width: 5
+                MouseArea {
+                    id: canvasItemArea
+                    anchors.fill: parent
+                    onClicked: function(event){
+                        if (!isEmpty(itemsToPlace.node)) {
+
+                            const newItem = Object.assign(({}), itemsToPlace.node)
+                            newItem.x = positionCenterX(event.x)
+                            newItem.y = positionCenterY(event.y)
+
+                            canvasModel.push(newItem);
+                            selectedCanvasItem = canvasModel.count - 1
+                            canvasModelChanged()
+                        }
+                    }
+                }
+                DropArea {
+                    id: dragTarget
+                    anchors.fill: parent
+
+                    property bool dropped: false
+
+                    onDropped: function (event) {
+                        console.log("dropped", event.accepted)
+
+
+                        dropped = true
+                    }
+
+                    onExited: {
+                        dropped = false;
+                    }
+                }
+
+                SW.CanvasComponent {
+                    id: canvasComponent
+                }
+
+                Repeater {
+                    model: canvasModel
+                    delegate: canvasComponent
+                }
+
+                states: [
+                    State {
+                        when: dragTarget.containsDrag
+                        PropertyChanges {
+                            target: canvasRectangle
+                            color: "grey"
+                        }
+                    }
+                ]
+            }
+
         }
 
-        Controls.Action {
-            shortcut: StandardKey.Save
-            onTriggered: save()
+        RowLayout {
+            id: bottomRow
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            Layout.alignment: Qt.AlignRight
+
+            Controls.Button {
+                Layout.alignment: Qt.AlignRight
+                text: id === -1 ? qsTr("Reset") : qsTr("New")
+                icon.name: id === -1 ? "edit-reset" : "document-new"
+                onClicked: reset()
+            }
+
+            Controls.Button {
+                Layout.alignment: Qt.AlignRight
+                text: qsTr("Delete")
+                icon.name: "delete"
+                visible: id !== -1
+                onClicked: {
+                    if (database.deleteSituation(id)) {
+                        id = -1
+                        loadSavedModels()
+                    }
+                }
+            }
+
+            Controls.Button {
+                Layout.alignment: Qt.AlignRight
+                text: qsTr("Save map")
+                icon.name: "document-save"
+                onClicked: save()
+            }
+
+            Controls.Action {
+                shortcut: StandardKey.Save
+                onTriggered: save()
+            }
         }
     }
 
@@ -307,26 +446,59 @@ Controls.Page {
         return !obj || (Object.keys(obj).length === 0 && Object.getPrototypeOf(obj) === Object.prototype)
     }
 
-    function openFileDialog(isImporting) {
-        isFileImporting = isImporting
-        fileDialog.selectExisting = isImporting;
-        if (mapPath) {
-            fileDialog.folder = mapPath.substring(0, mapPath.lastIndexOf('/'))
-        }
-        fileDialog.open();
+    function modelSaveSortCompare(first, second) {
+        if (first.type === "node" && second.type !== "node") return -1
+        if (second.type === "node" && first.type !== "node") return 1
+
+        return 0
+    }
+
+    function partCopy(copyFrom, keys) {
+        return keys
+        .filter(key => key in copyFrom) // line can be removed to make it inclusive
+        .reduce((result, key) => (result[key] = copyFrom[key], result), {});
     }
 
     function save() {
-        if (mapPath) { // imported map
-            doSave(mapPath)
-        } else {
-            openFileDialog(false)
-        }
-    }
+        const modelToSave = []
+        const proceedingArray = canvasModel.slice().sort(modelSaveSortCompare)
+        for (let i = 0; i < proceedingArray.length; ++i) {
+            const element = proceedingArray[i]
+            console.log("elem", i, element.subtype)
+            switch (element.type) {
+            case "node": {
+                element.id = i
+                const toSave = partCopy(element, ["id", "x", "y", "type", "subtype"])
+                if (element.protection && element.protection.length > 0) {
+                    toSave.protection = element.protection.map(protection => partCopy(protection, ["type", "subtype"]))
+                }
+                modelToSave.push(toSave)
+                break;
+            }
+            case "edge": {
 
-    function doSave(path) {
-        const model = situationComponent.createObject(null, {name: "test", someData: 7})
-        SituationModifyHelper.saveSituationModel(model, path);
+                const copy = partCopy(element, ["type", "subtype"])
+                copy.firstId = element.first.id
+                copy.secondId = element.second.id
+                delete copy.first
+                delete copy.second
+
+                modelToSave.push(copy)
+                break;
+            }
+            default: {
+                throw "Unknown type '" + element.type + "'"
+            }
+            }
+        }
+        const dataToSave = JSON.stringify(modelToSave)
+        console.log("dataToSave:", id, situationName.text, dataToSave)
+        const insertId = database.insertORUpdateIntoSituationTable(id, situationName.text, difficulty, dataToSave)
+        if (id == -1) {
+            id = insertId
+        }
+
+        loadSavedModels()
     }
 
     Connections {
@@ -338,6 +510,62 @@ Controls.Page {
             mapPath = path
             console.log("imported:", situationModel.name, "__", situationModel.someData)
         }
+    }
+
+    function restoreProtection(protection) {
+
+    }
+
+    function restoreNode(node) {
+        if (node.protection) {
+            for (const protect of node.protection) {
+                restoreProtection(protect)
+            }
+        }
+    }
+
+    function restoreEdge(edge, nodeGetter) {
+        edge.first = nodeGetter(edge.firstId)
+        edge.second = nodeGetter(edge.secondId)
+    }
+
+    function loadModel(model) {
+        id = model.id
+        name = model.name
+        difficulty = model.difficulty
+        const parsed = JSON.parse(model.data)
+        for (const item of parsed) {
+            switch(item.type) {
+            case "node": {
+                restoreNode(item)
+                break;
+            }
+            case "edge": {
+                restoreEdge(item, nodeId => parsed.find(testItem => testItem.id === nodeId))
+                break;
+            }
+            default: throw "Unknown type '" + item.type + "'"
+            }
+        }
+        canvasModel = parsed
+    }
+
+    function loadSavedModels() {
+        foundModels = database.listAllSituations()
+    }
+
+    function reset() {
+        id = -1
+        name = qsTr("New situation")
+        difficulty = 0
+        canvasModel = [{type: "node", subtype: "computer", image: "/icons/computer.png", x: 100, y: 100, protection: []}]
+        selectedCanvasItem = -1
+        itemsToPlace = ({})
+    }
+
+    Component.onCompleted: {
+        reset()
+        loadSavedModels()
     }
 
 }

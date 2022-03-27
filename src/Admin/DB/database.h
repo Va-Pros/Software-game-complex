@@ -15,6 +15,13 @@ public:
     explicit DataBase(QObject* parent = 0);
     ~DataBase() override;
     void connectToDataBase();
+
+    Q_INVOKABLE qlonglong insertORUpdateIntoSituationTable(qlonglong id, const QString& name, int difficulty, const QString& data);
+
+    Q_INVOKABLE QList<QVariant> listAllSituations();
+
+    Q_INVOKABLE bool deleteSituation(qlonglong id);
+
 public slots:
     static bool insertIntoTotalReportTable(const QVariantList& data);
     static bool insertORUpdateIntoQuestionTable(int id, const QString& theme, int difficulty,
@@ -30,6 +37,7 @@ private:
     void closeDataBase();
     static bool createTotalReportTable();
     static bool createQuestionTable();
+    bool createSituationTable();
 };
 
 #endif    // DATABASE_H

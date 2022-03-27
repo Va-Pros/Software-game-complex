@@ -7,8 +7,6 @@ Item {
     required property var itemData
     property string type: itemData.type
     property string subtype: itemData.subtype
-    property string name: itemData.name
-    property string image: itemData.image
 
     implicitWidth: actualContent.width
     implicitHeight: actualContent.height
@@ -54,7 +52,7 @@ Item {
 
         Image {
             id: computerNode
-            source: image
+            source: images[subtype]
             sourceSize.width: 32
             sourceSize.height: 32
             horizontalAlignment: Image.AlignHCenter
@@ -66,7 +64,7 @@ Item {
 
         Controls.Label {
             id: label
-            text: name
+            text: names[subtype]
             horizontalAlignment: Text.AlignHCenter
 
             Layout.fillWidth: true
@@ -128,5 +126,9 @@ Item {
             }
             itemsToPlaceChanged()
         }
+    }
+
+    Component.onCompleted: {
+        console.log("aa", JSON.stringify(Object.keys(itemData)))
     }
 }
