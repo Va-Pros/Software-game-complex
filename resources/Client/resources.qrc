@@ -4,7 +4,8 @@
         <file>ui/main.qml</file>
         <file>ui/MainMenu.qml</file>
         <file>ui/QuestionPage.qml</file>
-        <file>ui/QuestionArea.qml</file>
+        <file>ui/FillInArea.qml</file>
+        <file>ui/MatchArea.qml</file>
         <file>ui/GamePage.qml</file>
     </qresource>
 </RCC>

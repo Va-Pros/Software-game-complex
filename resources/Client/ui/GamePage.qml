@@ -5,6 +5,6 @@ import org.kde.kirigami 2.4 as Kirigami
 
 Page {
     id: gamePage
-    property string title: qsTr("Game page")
+    title: qsTr("Game page")
 
 }
