@@ -12,7 +12,7 @@ public:
 
 
 signals:
-	void newMessage(const QByteArray &ba);
+	void newMessage(const QString &ba);
 
 public slots:
 	void connectToServer(const QString &ip, const QString &port);

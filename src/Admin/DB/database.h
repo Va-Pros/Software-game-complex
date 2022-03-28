@@ -23,6 +23,7 @@ public slots:
                                   const QList<QList<bool>>& is_correct, bool is_deleted);
     static QList<QVariant> selectAllFromQuestionTable(const QString& theme, const QString& description,
                                                       int difficulty);
+    static QList<QVariant> generateTest(const QList<QString>& theme, const QList<QList<int>>& count);
 private:
     QSqlDatabase db;
 private:
