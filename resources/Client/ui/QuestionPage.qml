@@ -1,18 +1,25 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import org.kde.kirigami 2.4 as Kirigami
 
 Page {
     title: qsTr("Question Page")
 
-    Label {
-        text: qsTr("Question Page")
-    }
+
+    property int time: 15 * 60 //seconds
+//    property var questions: [{text: "U gay?", type: "single", varinats: ["Da", "No"]}, {text: "U gay 2?", type: "input"}, {text: "U gay3?", type: "multiple", varinats: ["Da", "Yes"]}]
+
+    property var questions: [{text: "U gay?", type: "single", varinats: ["Da", "No"]}]
+
+    property int currentQuestionIndex: 0
+
     Connections {
         target: client
         function onNewMessage(message) {
-            var data = message.split(';').splice(1);
+            console.log("newMessage:", message)
+            var data = message.split(';')
+            if (data[0] !== "0") return
+            data = data.splice(1);
             var data2=data.reduce((rows, key, index) => (index % 7 == 0 ? rows.push([key]) : rows[rows.length-1].push(key)) && rows, []);
             var qu3=[[]], k=0;
             for(var i=0;i<data2.length;i++){
@@ -39,6 +46,83 @@ Page {
             //console.log(qu3);
         }
     }
+
+//    Item {
+
+
+
+//    }
+
+//    Timer {
+//    }
+
+//    Label {
+//        id: counterLabel
+//        text: qsTr("№%1 of %2").arg(currentQuestionIndex + 1).arg(questions.length)
+//        anchors.left: parent.left
+//        anchors.right: parent.right
+//        anchors.top: parent.top
+//    }
+
+//    Item {
+//        id: testMainArea
+
+//        anchors.left: parent.left
+//        anchors.right: parent.right
+//        anchors.top: counterLabel.bottom
+//        anchors.bottom: buttonsRow.top
+
+//        Rectangle {
+//            anchors.fill: testMainArea
+//            border.color: "black"
+//            color: "transparent"
+//        }
+
+//        ColumnLayout {
+//            Text {
+//                id: questionText
+//                text: questions[currentQuestionIndex].text
+//            }
+//        }
+
+//    }
+
+//    RowLayout {
+//        id: buttonsRow
+//        anchors.right: parent.right
+//        anchors.bottom: parent.bottom
+//        Button {
+//            id: previousQuestionButton
+//            text: qsTr("Previous")
+//            visible: currentQuestionIndex > 0
+//            onClicked: currentQuestionIndex--
+//        }
+
+//        Button {
+//            id: nextQuestionButton
+//            text: currentQuestionIndex === questions.length - 1 ? qsTr("Finish") : qsTr("Next")
+//            onClicked: {
+//                if (currentQuestionIndex === questions.length - 1) {
+//                    finish()
+//                } else {
+//                    currentQuestionIndex++
+//                }
+//            }
+//        }
+//    }
+
+
+//    function finish() {
+//        //TODO
+
+//        load_page("SituationGameViewer", getGameProperties());
+//    }
+
+//    function getGameProperties() {
+//        return {canvasModel: [{type: "node", subtype: "router", x: 150, y: 50, protection: []}]}
+//    }
+
+
     SplitView {
         anchors.fill: parent
         orientation: Qt.Horizontal
@@ -60,6 +144,7 @@ Page {
                         text: `Finish test`
                         onClicked: {
                             console.log("hi, Arti!");
+                            //client.sendMessage("666;")
                             load_page("GamePage");
                         }
                     }
@@ -69,7 +154,7 @@ Page {
                         id: tittleResultsPanel
                         font.italic: true
                         text: qsTr("Questions:")
-                        font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.5
+                        font.pixelSize: 16
                     }
                 }
                 Repeater {

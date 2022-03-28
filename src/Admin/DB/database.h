@@ -20,6 +20,8 @@ public:
 
     Q_INVOKABLE QList<QVariant> listAllSituations();
 
+    Q_INVOKABLE static QMap<QString, QVariant> getAnySituation();
+
     Q_INVOKABLE bool deleteSituation(qlonglong id);
 
 public slots:

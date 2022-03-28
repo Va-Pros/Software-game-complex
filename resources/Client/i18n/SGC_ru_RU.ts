@@ -4,72 +4,251 @@
 <context>
     <name>AnswerInput</name>
     <message>
+        <location filename="../ui/QuestionWidgets/AnswerWidgets/AnswerInput.qml" line="33"/>
         <source>Variant</source>
-        <translation type="vanished">Вариант ответа</translation>
+        <translation>Вариант ответа</translation>
     </message>
 </context>
 <context>
     <name>BaseQuestionEditor</name>
     <message>
+        <location filename="../ui/QuestionWidgets/BaseQuestionEditor.qml" line="52"/>
         <source>Answer</source>
-        <translation type="vanished">Ответ</translation>
+        <translation>Ответ</translation>
+    </message>
+</context>
+<context>
+    <name>ExamFinishedPage</name>
+    <message>
+        <location filename="../ui/ExamFinishedPage.qml" line="6"/>
+        <location filename="../ui/ExamFinishedPage.qml" line="16"/>
+        <source>Exam finished</source>
+        <translation>Экзамен завершён</translation>
+    </message>
+    <message>
+        <location filename="../ui/ExamFinishedPage.qml" line="25"/>
+        <source>Test mark:</source>
+        <translation>Оценка за тест:</translation>
+    </message>
+    <message>
+        <location filename="../ui/ExamFinishedPage.qml" line="39"/>
+        <source>Game mark:</source>
+        <translation>Оценка за игру:</translation>
+    </message>
+    <message>
+        <location filename="../ui/ExamFinishedPage.qml" line="52"/>
+        <source>Return to home</source>
+        <translation>Домой</translation>
+    </message>
+    <message>
+        <location filename="../ui/ExamFinishedPage.qml" line="58"/>
+        <source>Exit</source>
+        <translation>Выход</translation>
+    </message>
+</context>
+<context>
+    <name>FillInArea</name>
+    <message>
+        <location filename="../ui/FillInArea.qml" line="7"/>
+        <source>Question area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/FillInArea.qml" line="15"/>
+        <source>Search Parameters:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/FillInArea.qml" line="24"/>
+        <source>Type ans</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/FillInArea.qml" line="31"/>
+        <source>Prev</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/FillInArea.qml" line="41"/>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>FillQuestionEditor</name>
     <message>
+        <location filename="../ui/QuestionWidgets/FillQuestionEditor.qml" line="10"/>
         <source>Input {txt} to spicify fill position. i&apos;th entering of {txt} in text will use i&apos;th variants list</source>
-        <translation type="vanished">Введите {txt}, чтобы указать позицию для вставки. Число позиций в тексте должно соответствовать числу списков</translation>
+        <translation>Введите {txt}, чтобы указать позицию для вставки. Число позиций в тексте должно соответствовать числу списков</translation>
     </message>
     <message>
+        <location filename="../ui/QuestionWidgets/FillQuestionEditor.qml" line="34"/>
         <source>Text gap count: %1; answer list count: %2</source>
-        <translation type="vanished">Позиций в тексте: %1; число списков: %2</translation>
+        <translation>Позиций в тексте: %1; число списков: %2</translation>
+    </message>
+</context>
+<context>
+    <name>GamePage</name>
+    <message>
+        <location filename="../ui/GamePage.qml" line="10"/>
+        <source>Situation constructor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="29"/>
+        <source>Computer</source>
+        <translation>Компьютер</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="30"/>
+        <source>Router</source>
+        <translation>Роутер</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="31"/>
+        <source>Commutator</source>
+        <translation>Коммутатор</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="32"/>
+        <source>Server</source>
+        <translation>Сервер</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="33"/>
+        <source>Electric connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="34"/>
+        <source>Radio connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="35"/>
+        <source>Optical connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="36"/>
+        <source>Operating System</source>
+        <translation>Операционная система</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="37"/>
+        <source>Firewall</source>
+        <translation>Межсетевой экран</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="38"/>
+        <source>Trusted Boot</source>
+        <translation>Доверенная звгрузка</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="39"/>
+        <source>Intrusion Detection</source>
+        <translation>Система обнаружения вторжений</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="40"/>
+        <source>Access Control</source>
+        <translation>Средства разграничения доступа</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="67"/>
+        <source>Protection Tools</source>
+        <translation>Средства защиты информации</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="203"/>
+        <source>Saved situations:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="252"/>
+        <source>Id: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="255"/>
+        <source>Name: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="258"/>
+        <source>Difficulty: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="358"/>
+        <source>Reset</source>
+        <translation>Сбросить</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="358"/>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="365"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="378"/>
+        <source>Finish</source>
+        <translation>Завершить</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="501"/>
+        <source>New situation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainMenu</name>
     <message>
-        <location filename="../ui/MainMenu.qml" line="11"/>
+        <location filename="../ui/MainMenu.qml" line="9"/>
         <source>Main menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="24"/>
+        <location filename="../ui/MainMenu.qml" line="22"/>
         <source>ip:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="29"/>
+        <location filename="../ui/MainMenu.qml" line="28"/>
         <source>127.0.0.1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="39"/>
+        <location filename="../ui/MainMenu.qml" line="38"/>
         <source>check connection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="51"/>
+        <location filename="../ui/MainMenu.qml" line="50"/>
         <source>name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="56"/>
+        <location filename="../ui/MainMenu.qml" line="55"/>
         <source>Семенов Максим Алексеевич</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="64"/>
+        <location filename="../ui/MainMenu.qml" line="63"/>
         <source>platoon:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="69"/>
+        <location filename="../ui/MainMenu.qml" line="68"/>
         <source>Самый лучший в мире!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="78"/>
+        <location filename="../ui/MainMenu.qml" line="77"/>
         <source>Start Test</source>
         <translation type="unfinished"></translation>
     </message>
@@ -79,62 +258,84 @@
     </message>
 </context>
 <context>
+    <name>MatchArea</name>
+    <message>
+        <location filename="../ui/MatchArea.qml" line="7"/>
+        <source>Question area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/MatchArea.qml" line="16"/>
+        <source>Search Parameters:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/MatchArea.qml" line="43"/>
+        <source>Prev</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/MatchArea.qml" line="53"/>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MultipleColumnsAnswersQuestionEditor</name>
     <message>
+        <location filename="../ui/QuestionWidgets/MultipleColumnsAnswersQuestionEditor.qml" line="59"/>
         <source>Answer list %1</source>
-        <translation type="vanished">Список %1</translation>
+        <translation>Список %1</translation>
     </message>
     <message>
+        <location filename="../ui/QuestionWidgets/MultipleColumnsAnswersQuestionEditor.qml" line="67"/>
         <source>Add answer variant</source>
-        <translation type="vanished">Добавить вариант ответа</translation>
+        <translation>Добавить вариант ответа</translation>
     </message>
     <message>
+        <location filename="../ui/QuestionWidgets/MultipleColumnsAnswersQuestionEditor.qml" line="72"/>
         <source>Remove list</source>
-        <translation type="vanished">Удалить список</translation>
+        <translation>Удалить список</translation>
     </message>
     <message>
+        <location filename="../ui/QuestionWidgets/MultipleColumnsAnswersQuestionEditor.qml" line="89"/>
         <source>Add list</source>
-        <translation type="vanished">Добавить список</translation>
+        <translation>Добавить список</translation>
     </message>
 </context>
 <context>
     <name>QuestionConstructor</name>
     <message>
+        <location filename="../ui/QuestionConstructor.qml" line="8"/>
         <source>Question constructor</source>
-        <translation type="vanished">Конструктор вопросов</translation>
+        <translation>Конструктор вопросов</translation>
     </message>
 </context>
 <context>
     <name>QuestionCreatorModel</name>
     <message>
-        <location filename="../../../src/Client/QuestionCreator/include/QuestionCreatorModel.h" line="21"/>
         <source>Type in</source>
-        <translation>Ввод ответа</translation>
+        <translation type="vanished">Ввод ответа</translation>
     </message>
     <message>
-        <location filename="../../../src/Client/QuestionCreator/include/QuestionCreatorModel.h" line="22"/>
         <source>Single choice</source>
-        <translation>Выбор одного</translation>
+        <translation type="vanished">Выбор одного</translation>
     </message>
     <message>
-        <location filename="../../../src/Client/QuestionCreator/include/QuestionCreatorModel.h" line="23"/>
         <source>Multiple choice</source>
-        <translation>Выбор многих</translation>
+        <translation type="vanished">Выбор многих</translation>
     </message>
     <message>
-        <location filename="../../../src/Client/QuestionCreator/include/QuestionCreatorModel.h" line="24"/>
         <source>Match</source>
-        <translation>Соответствие</translation>
+        <translation type="vanished">Соответствие</translation>
     </message>
     <message>
-        <location filename="../../../src/Client/QuestionCreator/include/QuestionCreatorModel.h" line="25"/>
         <source>Dropdown fill</source>
-        <translation>Пропуски, выбор одного</translation>
+        <translation type="vanished">Пропуски, выбор одного</translation>
     </message>
     <message>
-        <location filename="../../../src/Client/QuestionCreator/include/QuestionCreatorModel.h" line="26"/>
         <source>Type in fill</source>
-        <translation>Пропуски, ввод ответа</translation>
+        <translation type="vanished">Пропуски, ввод ответа</translation>
     </message>
 </context>
 <context>
@@ -187,63 +388,45 @@
 <context>
     <name>QuestionPage</name>
     <message>
-        <location filename="../ui/QuestionPage.qml" line="7"/>
-        <location filename="../ui/QuestionPage.qml" line="10"/>
+        <location filename="../ui/QuestionPage.qml" line="6"/>
         <source>Question Page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/QuestionPage.qml" line="24"/>
-        <source>Какого цвета форма в РФ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/QuestionPage.qml" line="29"/>
-        <source>Введите ответ</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/QuestionPage.qml" line="36"/>
-        <source>Назад</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/QuestionPage.qml" line="46"/>
-        <source>Дальше</source>
+        <location filename="../ui/QuestionPage.qml" line="156"/>
+        <source>Questions:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QuestionSaver</name>
     <message>
-        <location filename="../../../src/Client/QuestionCreator/include/QuestionSaver.h" line="46"/>
         <source>I don&apos;t want to save this question!</source>
-        <translation>Не хочу сохранять этот вопрос!</translation>
+        <translation type="vanished">Не хочу сохранять этот вопрос!</translation>
     </message>
 </context>
 <context>
     <name>QuestionThemes</name>
     <message>
-        <location filename="../../../src/Client/QuestionCreator/include/QuestionThemes.h" line="21"/>
         <source>Example1</source>
-        <translation>Пример1</translation>
+        <translation type="vanished">Пример1</translation>
     </message>
     <message>
-        <location filename="../../../src/Client/QuestionCreator/include/QuestionThemes.h" line="22"/>
         <source>Example2</source>
-        <translation>Пример2</translation>
+        <translation type="vanished">Пример2</translation>
     </message>
     <message>
-        <location filename="../../../src/Client/QuestionCreator/include/QuestionThemes.h" line="23"/>
         <source>Example3</source>
-        <translation>Пример3</translation>
+        <translation type="vanished">Пример3</translation>
     </message>
 </context>
 <context>
     <name>RegularQuestionInput</name>
     <message>
+        <location filename="../ui/QuestionWidgets/RegularQuestionInput.qml" line="12"/>
+        <location filename="../ui/QuestionWidgets/RegularQuestionInput.qml" line="19"/>
         <source>Question text</source>
-        <translation type="vanished">Текст вопроса</translation>
+        <translation>Текст вопроса</translation>
     </message>
 </context>
 <context>
@@ -253,7 +436,7 @@
         <translation type="vanished">Панель адмминистратора</translation>
     </message>
     <message>
-        <location filename="../ui/main.qml" line="8"/>
+        <location filename="../ui/main.qml" line="9"/>
         <source>Client Panel</source>
         <translation type="unfinished"></translation>
     </message>

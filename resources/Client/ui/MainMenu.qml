@@ -24,6 +24,7 @@ Page {
             TextField {
                 id: ipField
                 Layout.fillWidth: true
+                text: "127.0.0.1"
                 placeholderText: qsTr("127.0.0.1")
                 onAccepted: buttonConnect.clicked()
                 validator: RegExpValidator {

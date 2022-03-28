@@ -1,6 +1,9 @@
 #include "TcpServer.hpp"
 #include "../DB/database.h"
 #include<string>
+#include <QJsonDocument>
+#include <QJsonObject>
+
 TcpServer::TcpServer(QObject* parent) : QObject(parent) {
     connect(&_server, &QTcpServer::newConnection, this, &TcpServer::onNewConnection);
     connect(this, &TcpServer::newMessage, this, &TcpServer::onNewMessage);
@@ -18,10 +21,13 @@ void TcpServer::onNewConnection() {
     connect(client, &QTcpSocket::disconnected, this, &TcpServer::onClientDisconnected);
 }
 void TcpServer::onReadyRead() {
+    qDebug() << "onReadyRead_1";
     const auto client = qobject_cast<QTcpSocket*>(sender());
     if (client == nullptr) {
+        qDebug() << "onReadyRead_2";
         return;
     }
+    qDebug() << "onReadyRead_3";
     QByteArray request = client->readAll();
     QList<QByteArray> data = request.split(';');
     QByteArray back_message;
@@ -36,7 +42,16 @@ void TcpServer::onReadyRead() {
             for (const auto& q: questions)
                 back_message += ";" + q.toString().toUtf8();
         } else if (data[0] == "1") {}
+        else if (data[0] == "666") {
+            auto situation = DataBase::getAnySituation();
+            QJsonObject obj;
+            obj["id"] = QJsonValue(situation["id"].toLongLong());
+            obj["data"] = QJsonValue(situation["data"].toString());
+            back_message = "666;" + QJsonDocument(obj).toJson();
+        }
     }
+
+    qDebug() << "onReadyRead; " << back_message;
     emit newMessage(back_message);
 }
 void TcpServer::onClientDisconnected() {

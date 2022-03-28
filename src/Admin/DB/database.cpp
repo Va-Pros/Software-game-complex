@@ -290,3 +290,23 @@ bool DataBase::deleteSituation(qlonglong id) {
     }
     return true;
 }
+
+QMap<QString, QVariant> DataBase::getAnySituation() {
+    QSqlQuery query;
+    query.prepare("select * from situation limit 1");
+
+    if (!query.exec()) {
+        qDebug() << "DataBase: error insert into Question";
+        qDebug() << query.lastError().text();
+        return {};
+    }
+
+    while (query.next()) {
+        QMap<QString, QVariant> map;
+        for (int i = 0; i < query.record().count(); i++) {
+            map[query.record().fieldName(i)] = query.value(i);
+        }
+        return map;
+    }
+    return {};
+}
