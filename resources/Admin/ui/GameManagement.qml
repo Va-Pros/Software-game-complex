@@ -3,6 +3,8 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls.Material 2.0
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 2.15
+import QtQuick.Dialogs 1.1
+//import CheckableTheme 1.0
 import "qrc:/ui"
 
 Page {
@@ -180,6 +182,10 @@ Page {
         label: qsTr("%")
     }
 
+    function checkInput() {
+        return checkTitle() & checkNumberOfCorrectAnswers() & checkTestTime() & checkGameTime() & checkThemes();
+    }
+
     function checkTitle() {
         if (isEmpty(titleTextField.text)) {
             titleTextField.borderColor = "red"
@@ -322,6 +328,21 @@ Page {
         label: qsTr("min")
     }
 
+    MessageDialog {
+        id: alertNotValidInput
+        title: qsTr("Invalid input")
+        text: qsTr("Incorrect data in red cells")
+        Component.onCompleted: visible = false
+    }
+
+//    CheckableTheme {
+//        id: theme1
+//        title: "THEME1"
+//        numberOfEasyQuestions: 3
+//        numberOfMediumQuestions: 4
+//        numberOfHardQuestions: 5
+//    }
+
     Button {
         id: serverAvaliable
         anchors.horizontalCenter: parent.horizontalCenter
@@ -329,18 +350,21 @@ Page {
         anchors.topMargin: 20
         text: qsTr("Start Server")
         onClicked: {
-            checkTitle()
-            checkNumberOfCorrectAnswers();
-            checkTestTime();
-            checkGameTime();
-            checkThemes();
-            if (!server.isServerAvailable()) {
-                server.onStart()
-                serverAvaliable.text = qsTr("Server Stop")
+            if (!checkInput()) {
+                alertNotValidInput.open()
             } else {
-                server.onStop()
-                serverAvaliable.text = qsTr("Start Server")
+                sessionSettings.setSettings(titleTextField.text, titleTextField.text, satisfactory.text, good.text,
+                                            excellent.text, testTime.text, chooseDifficultyBox.currentIndex, gameTime.text);
+                if (!server.isServerAvailable()) {
+                    server.onStart()
+                    serverAvaliable.text = qsTr("Server Stop")
+                } else {
+                    server.onStop()
+                    serverAvaliable.text = qsTr("Start Server")
+                }
             }
+
+
         }
     }
 }

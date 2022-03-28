@@ -52,7 +52,7 @@ add_executable(Admin
 
         DB/database.h DB/database.cpp
 
-        SituationConstructor/SituationModifyHelper.h SituationConstructor/SituationModel.h SituationConstructor/SituationModel.cpp SituationConstructor/SituationNode.h SituationConstructor/SituationNet.h SituationConstructor/SimpleSituationNode.cpp SituationConstructor/SimpleSituationNode.h ../Common/Situation/TestSituation.cpp ../Common/Situation/TestSituation.h)
+        SituationConstructor/SituationModifyHelper.h SituationConstructor/SituationModel.h SituationConstructor/SituationModel.cpp SituationConstructor/SituationNode.h SituationConstructor/SituationNet.h SituationConstructor/SimpleSituationNode.cpp SituationConstructor/SimpleSituationNode.h ../Common/Situation/TestSituation.cpp ../Common/Situation/TestSituation.h GameManagement/backendLayer.cpp GameManagement/backendLayer.h ../../include/utils/enums.h)
 
 target_link_libraries(Admin
         Qt5::Widgets Qt5::Quick Qt5::QuickControls2
