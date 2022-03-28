@@ -36,7 +36,7 @@ Page {
             resultsModel.model = k
             resultPage.model = qu3;
             questionEditorSwap.length=k;
-            console.log(qu3);
+            //console.log(qu3);
         }
     }
     SplitView {
@@ -111,10 +111,11 @@ Page {
                     id: pageExample
                     property string title: active? item.title:"..."
                     active: true
-                    source: "QuestionArea.qml"
+                    source: (modelData[4] == 3) ?  "MatchArea.qml" : "FillInArea.qml"
                     onLoaded: item.init(modelData)
                 }
             }
         }
     }
 }
+

@@ -191,8 +191,8 @@ QList<QVariant> DataBase::generateTest(const QList<QString>& theme, const QList<
                   "array_length(answers_list,2) FROM Question WHERE id IN (" + id_list + ") AND model NOT IN (2,5))"
                   "UNION (SELECT  id, theme, difficulty, description, model, NULL, 0 FROM Question WHERE id IN "
                   "(" + id_list + ") AND model IN (2,5)) ORDER BY id;");
-//    qDebug() << query.executedQuery();
     if (!query.exec()) {
+        qDebug() << query.executedQuery();
         qDebug() << "DataBase: generateTest (row)";
         qDebug() << query.lastError().text();
         return {};

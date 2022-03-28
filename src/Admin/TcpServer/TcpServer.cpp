@@ -32,7 +32,7 @@ void TcpServer::onReadyRead() {
             row.append(data[2]);
             DataBase::insertIntoTotalReportTable(row);
             back_message = "0";
-            QList<QVariant> questions = DataBase::generateTest({"theme"}, {{1, 5, 3}});
+            QList<QVariant> questions = DataBase::generateTest({""}, {{100, 100, 100}});
             for (const auto& q: questions)
                 back_message += ";" + q.toString().toUtf8();
         } else if (data[0] == "1") {}

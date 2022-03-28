@@ -3,8 +3,9 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import org.kde.kirigami 2.4 as Kirigami
 Pane {
-    id: questionArea
+    id: matchArea
     property string title: qsTr("Question area")
+    property var variants: []
     ColumnLayout {
         id: questionAreaPanel
         anchors.left : parent.left
@@ -18,11 +19,22 @@ Pane {
         Label {
             id: area
         }
-        TextField {
-            id: answerField
-            Layout.fillWidth: true
-            placeholderText: qsTr("Type ans")
-            onAccepted: startButton.clicked()
+
+        Repeater {
+            id: ansField
+            model: []
+
+            RowLayout{
+                Label {
+                    text: modelData
+                }
+                ComboBox {
+                    Layout.fillWidth: true
+                    id: ansCombo
+                    editable: false
+                    model: matchArea.variants
+                }
+            }
         }
         RowLayout{
              Button {
@@ -49,7 +61,10 @@ Pane {
     }
 
     function init(data) {
-        titleQuestionArea.text=`${data[1]} (${data[2]}, ${data[4]})`;
+        console.log(data);
+        ansField.model = data[5][0];
+        matchArea.variants = data[5][1];
+        titleQuestionArea.text=`${data[1]}  (+${1+Number(data[2])} point(s))`;
         area.text = `${data[3]}\n${data[5]}`;
     }
 }
