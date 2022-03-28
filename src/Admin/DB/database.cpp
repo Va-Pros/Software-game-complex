@@ -162,17 +162,61 @@ bool DataBase::insertORUpdateIntoQuestionTable(int id, const QString& theme, int
     }
     return true;
 }
+QList<QVariant> DataBase::generateTest(const QList<QString>& theme, const QList<QList<int>>& count) {
+    QSet<QString> ids;
+    QSqlQuery query;
+    for (int i = 0; i < theme.length(); i++) {
+        query.prepare("select  id from question where is_deleted = false AND theme LIKE \'%" +
+                      theme[i] + "%\' AND difficulty = :Difficulty ORDER BY random()  LIMIT :Count ;");
+        for (int j = 0; j < 3; j++) {
+            query.bindValue(":Difficulty", j);
+            query.bindValue(":Count", count[i][j]);
+            if (!query.exec()) {
+                qDebug() << "DataBase: generateTest (id)";
+                qDebug() << query.lastError().text();
+                return {};
+            }
+            while (query.next()) {
+                ids.insert(query.value(i).toString());
+            }
+        }
+    }
+    QString id_list = "";
+    for (auto i = ids.begin(); i != ids.end(); i++) {
+        if (i != ids.begin())
+            id_list += ",";
+        id_list += *i;
+    }
+    query.prepare("(SELECT  id, theme, difficulty, description, model, unnest(answers_list), "
+                  "array_length(answers_list,2) FROM Question WHERE id IN (" + id_list + ") AND model NOT IN (2,5))"
+                  "UNION (SELECT  id, theme, difficulty, description, model, NULL, 0 FROM Question WHERE id IN "
+                  "(" + id_list + ") AND model IN (2,5)) ORDER BY id;");
+//    qDebug() << query.executedQuery();
+    if (!query.exec()) {
+        qDebug() << "DataBase: generateTest (row)";
+        qDebug() << query.lastError().text();
+        return {};
+    }
+    QVariantList table;
+    while (query.next()) {
+        QVariantList row;
+        for (int i = 0; i < 7; i++)
+            row.append(query.value(i));
+        table.append(row);
+    }
+    return table;
+}
 QList<QVariant> DataBase::selectAllFromQuestionTable(const QString& theme, const QString& description,
                                                      int difficulty) {
     QSqlQuery query;
-    query.prepare("select  id, theme, difficulty, description, model, unnest(answers_list), unnest(is_correct), "
-                  "array_length(answers_list,2) from question where is_deleted = false AND theme LIKE \'%" + theme +
+    query.prepare("SELECT  id, theme, difficulty, description, model, unnest(answers_list), unnest(is_correct), "
+                  "array_length(answers_list,2) FROM Question WHERE is_deleted = false AND theme LIKE \'%" + theme +
                   "%\' AND description LIKE \'%" + description + "%\' AND (difficulty = :Difficulty OR :Is_Any);");
     query.bindValue(":Difficulty", difficulty - 1);
     query.bindValue(":Is_Any", difficulty == 0);
-    qDebug() << query.executedQuery();
+//    qDebug() << query.executedQuery();
     if (!query.exec()) {
-        qDebug() << "DataBase: error insert into Question";
+        qDebug() << "DataBase: selectAllFromQuestionTable";
         qDebug() << query.lastError().text();
         return {};
     }

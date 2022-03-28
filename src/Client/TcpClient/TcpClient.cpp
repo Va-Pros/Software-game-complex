@@ -23,7 +23,8 @@ void TcpClient::onConnected() {
 
 void TcpClient::onReadyRead() {
 	const auto message = _socket.readAll();
-	emit newMessage(message);
+//     qInfo() << message;
+    emit newMessage(message);
 }
 
 void TcpClient::onErrorOccurred(QAbstractSocket::SocketError error) { qWarning() << "Error:" << error; }
