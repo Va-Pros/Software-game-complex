@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls.Material 2.0
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 2.13
-import org.kde.kirigami 2.4 as Kirigami
 
 Flickable {
     id: questionCreator
@@ -32,7 +31,7 @@ Flickable {
                         id: titleRightPanel
                         font.italic: true
                         text: qsTr("Choose the type of question:")
-                        font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.5
+                        font.pixelSize: 20 * 1.5
                     }
                 }
                 Repeater {

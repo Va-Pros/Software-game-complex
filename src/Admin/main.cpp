@@ -8,7 +8,29 @@
 #include <QQmlContext>
 #include <QQuickStyle>
 #include <QTranslator>
+#include "SituationConstructor/SituationModifyHelper.h"
+
 //#define LIST_RESOURCES
+
+template<typename T>
+int registerVersion1(const char *uri) {
+	return qmlRegisterType<T>(uri, 1, 0, T::staticMetaObject.className());
+}
+
+
+// TODO use plugins for each subsystem
+void registerQmlTypes() {
+
+	// SituationConstructor
+	const char* situationConstructorUri = "SituationConstructor";
+
+	qmlRegisterSingletonType<SituationModifyHelper>(situationConstructorUri, 1, 0, "SituationModifyHelper", SituationModifyHelper::singletonProvider);
+	registerVersion1<SituationModel>(situationConstructorUri);
+
+	//    qmlRegisterSingletonType<QuestionThemes>(questionCreatorUri, 1, 0, "QuestionThemes", QuestionThemes::singletonProvider);
+
+	//    qmlregister
+}
 
 int main(int argc, char** argv) {
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
@@ -17,6 +39,9 @@ int main(int argc, char** argv) {
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);
 #endif
     QApplication app(argc, argv);
+	app.setOrganizationName("Some Company");
+	app.setOrganizationDomain("somecompany.com");
+	app.setApplicationName("Amazing Application");
 #ifdef Q_OS_WIN
     QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
     QApplication::setStyle(QStringLiteral("breeze"));
@@ -38,6 +63,8 @@ int main(int argc, char** argv) {
         }
     }
 //     app.setWindowIcon(QIcon("qrc:icons/icon.svg"));
+
+	registerQmlTypes();
     QQmlApplicationEngine engine;
     TcpServer tcpServer;
     DataBase database;

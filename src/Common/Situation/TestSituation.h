@@ -1,0 +1,12 @@
+//
+// Created by arti1208 on 11.03.2022.
+//
+
+#ifndef SOFTWARE_GAME_COMPLEX_TESTSITUATION_H
+#define SOFTWARE_GAME_COMPLEX_TESTSITUATION_H
+
+
+class TestSituation {};
+
+
+#endif	// SOFTWARE_GAME_COMPLEX_TESTSITUATION_H

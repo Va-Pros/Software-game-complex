@@ -19,7 +19,7 @@ Flickable {
             questionSwap.currentIndex = currentIndex
         }
         Repeater {
-            model: ["Question creator", "Question editor"]
+            model: [qsTr("Question creator"), qsTr("Question editor")]
             TabButton {
                 text: modelData
                 width: undefined
@@ -36,6 +36,7 @@ Flickable {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         currentIndex: questionBar.currentIndex
+        interactive: false
         onCurrentIndexChanged: {
             questionBar.currentIndex = currentIndex
         }

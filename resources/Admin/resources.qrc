@@ -3,12 +3,41 @@
         <file>i18n/SGC_ru_RU.qm</file>
         <file>ui/main.qml</file>
         <file>ui/QuestionConstructor.qml</file>
+
         <file>ui/SituationConstructor.qml</file>
-        <file>ui/ResultsViewer.qml</file>
+        <file>icons/commutator.png</file>
+        <file>icons/computer.png</file>
+        <file>icons/router.png</file>
+        <file>icons/server.png</file>
+        <file>icons/optical.png</file>
+        <file>icons/radio.png</file>
+        <file>icons/wire.png</file>
+        <file>icons/accessControl.png</file>
+        <file>icons/firewall.png</file>
+        <file>icons/intrusionDetection.png</file>
+        <file>icons/os.png</file>
+        <file>icons/trustedBoot.png</file>
+        <file>icons/protectionLogo.png</file>
+        <file>ui/SituationWidgets/CanvasComponent.qml</file>
+        <file>ui/SituationWidgets/NodeComponent.qml</file>
+        <file>ui/SituationWidgets/EdgeComponent.qml</file>
+        <file>ui/SituationWidgets/SelectableElement.qml</file>
+        <file>ui/SituationWidgets/SituationUtils.js</file>
+        <file>ui/SituationWidgets/DividerElement.qml</file>
+        <file>ui/SituationWidgets/CategoryElement.qml</file>
+
         <file>ui/GameManagement.qml</file>
+        <file>ui/NumberOfCorrectAnswers.qml</file>
+        <file>ui/Theme.qml</file>
+        <file>ui/Tag.qml</file>
+        <file>ui/ThemeTextField.qml</file>
+
         <file>ui/QuestionCreator.qml</file>
         <file>ui/QuestionEditor.qml</file>
         <file>ui/QuestionArea.qml</file>
         <file>ui/ResultArea.qml</file>
+        <file>ui/ResultsViewer.qml</file>
+
+
     </qresource>
 </RCC>

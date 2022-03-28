@@ -1,4 +1,7 @@
+#include "QSqlRecord"
 #include "database.h"
+
+
 DataBase::DataBase(QObject* parent) : QObject(parent) {}
 DataBase::~DataBase() = default;
 void DataBase::connectToDataBase() { this->openDataBase(); }
@@ -14,12 +17,18 @@ bool DataBase::openDataBase() {
         return false;
     }
     QSet<QString> tables;
-    for (const auto& table: db.tables())
+    for (const auto& table: db.tables()) {
+        qDebug() << "found table: " << table;
         tables.insert(table);
+    }
     if (tables.find("question") == tables.end())
         DataBase::createQuestionTable();
     if (tables.find("total_report") == tables.end())
         DataBase::createTotalReportTable();
+
+    if (tables.find("situation") == tables.end())
+        DataBase::createSituationTable();
+
     return true;
 }
 void DataBase::closeDataBase() { db.close(); }
@@ -56,6 +65,23 @@ bool DataBase::createQuestionTable() {
     }
     return true;
 }
+
+bool DataBase::createSituationTable() {
+
+    QSqlQuery query;
+    if (!query.exec("CREATE TABLE Situation ("
+                    "id           SERIAL      PRIMARY KEY,"
+                    "name         TEXT        NOT NULL,"
+                    "data         TEXT        NOT NULL,"
+                    "difficulty   INTEGER     NOT NULL"
+                    ")")) {
+        qDebug() << "DataBase: error of create Situation";
+        qDebug() << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
 template<class T>
 int max_length(const QList<QList<T>>& list_list) {
     int _max = 0, tmp;
@@ -203,4 +229,64 @@ QList<QVariant> DataBase::selectAllFromQuestionTable(const QString& theme, const
 //        break;
     }
     return table;
+}
+
+QList<QVariant> DataBase::listAllSituations() {
+
+    QSqlQuery query;
+    query.prepare("select * from situation order by id;");
+
+    if (!query.exec()) {
+        qDebug() << "DataBase: error insert into Question";
+        qDebug() << query.lastError().text();
+        return {};
+    }
+
+    QVariantList table;
+    while (query.next()) {
+        QMap<QString, QVariant> map;
+        for (int i = 0; i < query.record().count(); i++) {
+            map[query.record().fieldName(i)] = query.value(i);
+        }
+        table.append(map);
+    }
+    return table;
+}
+
+qlonglong DataBase::insertORUpdateIntoSituationTable(qlonglong id, const QString& name, int difficulty, const QString& data) {
+    qDebug() << "inserting " << id << " _ " << name << " _ " << data;
+
+    QSqlQuery query;
+    if (id == -1) {
+        query.prepare("INSERT INTO Situation (name, data, difficulty) VALUES(:Name, :Data, :Difficulty);");
+    } else {
+        query.prepare(
+            "update Situation set (name, data, difficulty)"
+            "=(:Name, :Data, :Difficulty) where id=:Id");
+    }
+    query.bindValue(":Name", name);
+    query.bindValue(":Data", data);
+    query.bindValue(":Difficulty", difficulty);
+    query.bindValue(":Id", id);
+    if (!query.exec()) {
+        qDebug() << "DataBase: error insert into Situation";
+        qDebug() << query.lastError().text();
+        return -1;
+    }
+
+    return query.lastInsertId().toLongLong();
+}
+
+bool DataBase::deleteSituation(qlonglong id) {
+    if (id < 0) return false;
+
+    QSqlQuery query;
+    query.prepare("delete from situation where id=:Id;");
+    query.bindValue(":Id", id);
+    if (!query.exec()) {
+        qDebug() << "DataBase: error deleting Situation " << id;
+        qDebug() << query.lastError().text();
+        return false;
+    }
+    return true;
 }

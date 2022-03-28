@@ -2,231 +2,344 @@ import QtQuick 2.6
 import QtQuick.Layouts 1.0
 import QtQuick.Controls.Material 2.0
 import QtGraphicalEffects 1.0
-import QtQuick.Controls 2.13
-import org.kde.kirigami 2.4 as Kirigami
+import QtQuick.Controls 2.15
+import "qrc:/ui"
 
-Flickable {
+Page {
     id: gameManager
 
     property string name: "GameManager"
-    property string title: qsTr("Game manager")
 
     Connections {
         target: server
     }
-    Pane{
-        anchors.fill: parent
-        ColumnLayout {
-            Layout.alignment: Qt.AlignCenter
-            RowLayout{
-                Label{
-                    text: qsTr("Title:")
-                    font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.25
-                }
-                TextField {
-                    id: nameField
-                    Layout.fillWidth: true
-//                     Layout.maximumWidth: parent.width- pane.padding*2
-                }
+
+    Label {
+        id: titleLabel
+        anchors.verticalCenter: titleTextField.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: -(titleTextField.width / 2)
+        font.pixelSize: 20
+        text: qsTr("Title:")
+    }
+    TextField {
+        id: titleTextField
+        property string borderColor: "black"
+        anchors.top: parent.top
+        anchors.topMargin: 20
+        anchors.left: titleLabel.right
+        anchors.leftMargin: 10
+        selectByMouse: true
+        width: 300
+        height: 30
+        font.pixelSize: 20
+        placeholderText: qsTr("Enter description")
+        background: Rectangle {
+            implicitWidth: parent.width
+            implicitHeight: parent.height
+            color: "transparent"
+            border.color: parent.borderColor
+        }
+        onPressed: { borderColor = "black" }
+    }
+
+    Label {
+        id: testSettingsHeader
+        anchors.top: titleTextField.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.topMargin: 10
+        font.pixelSize: 30
+        text: qsTr("Test settings")
+    }
+
+    Label {
+        id: chooseThemeLabel
+        anchors.verticalCenter: chooseThemeBox.verticalCenter
+        anchors.right: titleLabel.right
+        font.pixelSize: 20
+        text: qsTr("Choose a theme:")
+    }
+    ComboBox {
+        id: chooseThemeBox
+        anchors.top: testSettingsHeader.bottom
+        anchors.topMargin: 10
+        anchors.left: chooseThemeLabel.right
+        anchors.leftMargin: 10
+        width: 300
+        height: 30
+        model: ListModel {
+            id: modelThemes
+            ListElement { text: qsTr("Theme 1") }
+            ListElement { text: qsTr("Theme 2") }
+            ListElement { text: qsTr("Theme 3") }
+        }
+        onActivated: {
+            gridView.model.append({ text: currentValue });
+            modelThemes.remove(currentIndex)
+        }
+    }
+    function onCrossClick(theme) {
+        modelThemes.append({ text: theme });
+        var idx = -1;
+        for (var i = 0; i < gridView.model.count; i++) {
+            if (gridView.model.get(i).text === theme) {
+                idx = i
+                break;
             }
-            RowLayout{
-                Layout.alignment: Qt.AlignCenter
-                Label {
-                    id:themeLabel
-                    text: qsTr("Theme:")
-                }
-                ComboBox {
-                    id : themeName
-                    textRole: "text"
-                    valueRole: "value"
-                    Layout.fillWidth: true
-//                     Layout.maximumWidth: Qt.application.screens[0].width * 0.42
-                    editable: true
-                    model: ListModel {
-                        id: themeModel
-                        ListElement { text:  qsTr("")}
-                        // themeModel.append({text: theme[idx]})
-                    }
-                }
-                Button {
-                    Layout.fillWidth: true
-    //                 Layout.maximumWidth: Qt.application.screens[0].width * 0.42 + themePanel.contentWidth
-                    text: qsTr("Add theme")
-                    icon.name: "list-add"
-                }
+        }
+        gridView.model.remove(idx)
+    }
+
+    Label {
+        id: checkeableThemesLabel
+        anchors.top: chooseThemeBox.bottom
+        anchors.topMargin: 10
+        anchors.right: titleLabel.right
+        font.pixelSize: 20
+        text: qsTr("Checkable themes:")
+    }
+
+    GridView {
+        id: gridView
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: checkeableThemesLabel.bottom
+        anchors.topMargin: 10
+        interactive: false
+        width: parent.width
+        height: ((Math.floor(count / 4)) + ((count % 4 === 0) ? 0 : 1)) * 100
+        cellWidth: (count > 4) ? (width / 4) : (width / count)
+        cellHeight: height / ((Math.floor(count / 4)) + ((count % 4 === 0) ? 0 : 1))
+
+        model: ListModel {}
+
+        delegate: Item {
+            property var checkThemeTextFieldsAndCountTotal: theme.checkThemeTextFieldsAndCountTotal
+            width: gridView.cellWidth
+            height: gridView.cellHeight
+            Theme {
+                id: theme
+                header: text
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
+                anchors.topMargin: 10
             }
-            RowLayout{
+        }
+    }
+
+    Label {
+        id: satisfactoryLabel
+        anchors.top: gridView.bottom
+        anchors.topMargin: 20
+        anchors.horizontalCenter: satisfactory.horizontalCenter
+        text: qsTr("3")
+    }
+    Label {
+        id: goodLabel
+        anchors.top: satisfactoryLabel.top
+        anchors.horizontalCenter: good.horizontalCenter
+        text: qsTr("4")
+    }
+    Label {
+        id: excellentLabel
+        anchors.top: goodLabel.top
+        anchors.horizontalCenter: excellent.horizontalCenter
+        text: qsTr("5")
+    }
+
+    Label {
+        id: numberOfCorrectAnswersLabel
+        anchors.verticalCenter: satisfactory.verticalCenter
+        anchors.right: titleLabel.right
+        font.pixelSize: 20
+        text: qsTr("Number of correct answers to score:")
+    }
+
+    NumberOfCorrectAnswers {
+        id: satisfactory
+        anchors.left: numberOfCorrectAnswersLabel.right
+        anchors.leftMargin: 10
+        anchors.top: satisfactoryLabel.bottom
+        anchors.topMargin: 5
+        defText: qsTr("70")
+        label: qsTr("%")
+    }
+    NumberOfCorrectAnswers {
+        id: good
+        anchors.left: satisfactory.right
+        anchors.leftMargin: 30
+        anchors.top: satisfactory.top
+        defText: qsTr("80")
+        label: qsTr("%")
+    }
+    NumberOfCorrectAnswers {
+        id: excellent
+        anchors.left: good.right
+        anchors.leftMargin: 30
+        anchors.top: good.top
+        defText: qsTr("90")
+        label: qsTr("%")
+    }
+
+    function checkTitle() {
+        if (isEmpty(titleTextField.text)) {
+            titleTextField.borderColor = "red"
+            return false
+        }        return true
+    }
+
+    function checkThemes() {
+        var result = true
+        for (var i = 0; i < gridView.count; i++) {
+            if (!gridView.itemAtIndex(i).checkThemeTextFieldsAndCountTotal()) {
+                result = false
             }
-            Label{
-                text: qsTr("Amount of questions:")
-                font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.25
+        }
+        return result
+    }
+
+    function checkNumberOfCorrectAnswers() {
+        var qmlObjects = [satisfactory, good, excellent]
+        var values = [ {value: 0}, {value: 0}, {value: 0} ]
+        for (var i = 0; i < qmlObjects.length; i++) {
+            if (!isValidInputLowerUpperBounds(qmlObjects[i].text, values[i], 1, 101)) {
+                qmlObjects[i].borderColor = "red"
+                return false;
             }
-            Pane{
-                //Layout.maximumWidth: parent.width- pane.padding*2
-                ColumnLayout{
-                    RowLayout{
-                        Layout.alignment: Qt.AlignCenter
-                        Label{ text: qsTr("Easy:")}
-                        ComboBox {
-                            id: easy
-                            Layout.fillWidth: true
-                            model: 11
-                            editable: true
-                            validator: IntValidator {
-                                top: 10
-                                bottom: 0
-                            }
-                        }
-                    }
-                    RowLayout{
-                        Layout.alignment: Qt.AlignCenter
-                        Label{ text: qsTr("\tMedium:")}
-                        ComboBox {
-                            id: medium
-                            Layout.fillWidth: true
-                            model: 11
-                            editable: true
-                            validator: IntValidator {
-                                top: 10
-                                bottom: 0
-                            }
-                        }
-                    }
-                    RowLayout{
-                        Layout.alignment: Qt.AlignCenter
-                        Label{ text: qsTr("\tHard:")}
-                        ComboBox {
-                            id: hard
-                            Layout.fillWidth: true
-                            model: 11
-                            editable: true
-                            validator: IntValidator {
-                                top: 10
-                                bottom: 0
-                            }
-                        }
-                    }
-                    RowLayout{
-                        Layout.alignment: Qt.AlignCenter
-                        Label{ text: qsTr("\tTotal:")}
-                        Label{
-                            id:count
-                            text:qsTr(`${easy.currentIndex+medium.currentIndex+hard.currentIndex}`)
-                        }
-                    }
-                }
+        }
+        for (i = 0; i < qmlObjects.length - 1; i++) {
+            if (!(values[i].value < values[i + 1].value)) {
+                qmlObjects[i].borderColor = "red"
+                qmlObjects[i + 1].borderColor = "red"
+                return false;
             }
-            Label{
-                text: qsTr("Grading rules:")
-                font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.25
-            }
-            Pane{
-                Layout.fillWidth: true
-                ColumnLayout{
-                    RowLayout{
-                        Layout.alignment: Qt.AlignCenter
-                        Label{ text: qsTr("Satisfactory:")}
-                        TextField {
-                            Layout.fillWidth: true
-                            id: satisfactory
-                            validator: IntValidator {
-                                top: 100
-                                bottom: 0
-                            }
-                        }
-                        Label{ text: qsTr("% or more")}
-                    }
-                    RowLayout{
-                        Layout.alignment: Qt.AlignCenter
-                        Label{ text: qsTr("Good:")}
-                        TextField {
-                            id: good
-                            Layout.fillWidth: true
-                            validator: IntValidator {
-                                top: 100
-                                bottom: 0
-                            }
-                        }
-                        Label{ text: qsTr("% or more")}
-                    }
-                    RowLayout{
-                        Layout.alignment: Qt.AlignCenter
-                        Label{text:qsTr("Excellent:")}
-                        TextField {
-                            id: excellent
-                            Layout.fillWidth: true
-                            validator: IntValidator {
-                                top: 100
-                                bottom: 0
-                            }
-                        }
-                        Label{ text: qsTr("% or more")}
-                    }
-                }
-            }
-            //Label{
-                //text: qsTr("Game settings")
-                //Layout.alignment: Qt.AlignCenter
-                //font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.5
-            //}
-            Label {
-                id:difficultyLabel
-                text: qsTr("Situation difficulty:")
-                font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.25
-            }
-            RowLayout {
-                id: difficultyRow
-                property int activeIdx: 0
-                Layout.alignment: Qt.AlignCenter
-                Repeater {
-                    model: [qsTr("Easy"),  qsTr("Medium"), qsTr("Hard")]
-                    RadioButton {
-                        text:modelData
-                        checked: index==difficultyRow.activeIdx
-                        onClicked: difficultyRow.activeIdx=index
-                    }
-                }
-            }
-            Label {
-                text: qsTr("Time:")
-                font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.25
-            }
-            Pane{
-                ColumnLayout{
-                    RowLayout{
-                        Layout.alignment: Qt.AlignCenter
-                        Label{ text: qsTr("Test time:")}
-                        TextField {
-                            Layout.fillWidth: true
-                            validator:IntValidator {
-                                bottom: 0
-                            }
-                        }
-                    }
-                    RowLayout{
-                        Label{ text: qsTr("Game time:")}
-                        TextField {
-                            Layout.fillWidth: true
-                            validator:IntValidator {
-                                bottom: 0
-                            }
-                        }
-                    }
-                }
-            }
-            Button {
-                id: serverAvaliable
-                Layout.fillWidth: true
-                text: qsTr("Start Server")
-                onClicked: {
-                    if (!server.isServerAvailable()) {
-                        server.onStart()
-                        serverAvaliable.text = qsTr("Server Stop")
-                    } else {
-                        server.onStop()
-                        serverAvaliable.text = qsTr("Start Server")
-                    }
-                }
+        }
+        return true
+    }
+
+    function checkTestTime() {
+        var wValue = {value: 0}
+        if (!isValidInputLowerBound(testTime.text, wValue, 1)) {
+            testTime.borderColor = "red"
+            return false;
+        }
+        return true
+    }
+
+    function checkGameTime() {
+        var wValue = {value: 0}
+        if (!isValidInputLowerBound(gameTime.text, wValue, 1)) {
+            gameTime.borderColor = "red"
+            return false;
+        }
+        return true
+    }
+
+    function isValidInputLowerUpperBounds(str, wValue, lowerBound, upperBound) {
+        return (isDigitOut(str, wValue)) && (wValue.value >= lowerBound) && (wValue.value < upperBound)
+    }
+
+    function isValidInputLowerBound(str, wValue, lowerBound) {
+        return (isDigitOut(str, wValue)) && (wValue.value >= lowerBound)
+    }
+
+    function isDigitOut(str, wValue) {
+        wValue.value = parseInt(str, 10);
+        return !isNaN(wValue.value)
+    }
+
+    function isDigit(str) {
+        return !isNaN(parseInt(str, 10))
+    }
+
+    function isEmpty(str) {
+        return (!str || 0 === str.length);
+    }
+
+    Label {
+        id: testTimeLabel
+        anchors.verticalCenter: testTime.verticalCenter
+        anchors.right: titleLabel.right
+        font.pixelSize: 20
+        text: qsTr("Test time:")
+    }
+    NumberOfCorrectAnswers {
+        id: testTime
+        anchors.left: testTimeLabel.right
+        anchors.leftMargin: 10
+        anchors.top: satisfactory.bottom
+        anchors.topMargin: 20
+        label: qsTr("min")
+    }
+
+    Label {
+        id: gameSettingsHeader
+        anchors.top: testTime.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.topMargin: 10
+        font.pixelSize: 30
+        text: qsTr("Game settings")
+    }
+    Label {
+        id: situationDifficultyLabel
+        anchors.verticalCenter: chooseDifficultyBox.verticalCenter
+        anchors.right: titleLabel.right
+        font.pixelSize: 20
+        text: qsTr("Difficulty of the situation:")
+    }
+
+    ComboBox {
+        id: chooseDifficultyBox
+        anchors.top: gameSettingsHeader.bottom
+        anchors.topMargin: 10
+        anchors.left: situationDifficultyLabel.right
+        anchors.leftMargin: 10
+        width: 300
+        height: 30
+        model: ListModel {
+            id: modelDifficulty
+            ListElement { text: qsTr("Easy") }
+            ListElement { text: qsTr("Medium") }
+            ListElement { text: qsTr("Hard") }
+        }
+        onActivated: {
+            console.log("Choose ", currentValue)
+        }
+    }
+
+    Label {
+        id: gameTimeLabel
+        anchors.verticalCenter: gameTime.verticalCenter
+        anchors.right: titleLabel.right
+        font.pixelSize: 20
+        text: qsTr("Game time:")
+    }
+
+    NumberOfCorrectAnswers {
+        id: gameTime
+        anchors.left: chooseDifficultyBox.left
+        anchors.top: chooseDifficultyBox.bottom
+        anchors.topMargin: 20
+        label: qsTr("min")
+    }
+
+    Button {
+        id: serverAvaliable
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: gameTime.bottom
+        anchors.topMargin: 20
+        text: qsTr("Start Server")
+        onClicked: {
+            checkTitle()
+            checkNumberOfCorrectAnswers();
+            checkTestTime();
+            checkGameTime();
+            checkThemes();
+            if (!server.isServerAvailable()) {
+                server.onStart()
+                serverAvaliable.text = qsTr("Server Stop")
+            } else {
+                server.onStop()
+                serverAvaliable.text = qsTr("Start Server")
             }
         }
     }
