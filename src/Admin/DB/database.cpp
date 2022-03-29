@@ -189,6 +189,50 @@ QList<QVariant> DataBase::generateTest(const QList<QString>& theme, const QList<
     }
     query.prepare("(SELECT  id, theme, difficulty, description, model, unnest(answers_list), "
                   "array_length(answers_list,2) FROM Question WHERE id IN (" + id_list + ") AND model NOT IN (2,5))"
+                  "UNION (SELECT  id, theme, difficulty, description, model, NULL, 0 FROM Question WHERE id IN "
+                  "(" + id_list + ") AND model IN (2,5)) ORDER BY id;");
+    if (!query.exec()) {
+        qDebug() << query.executedQuery();
+        qDebug() << "DataBase: generateTest (row)";
+        qDebug() << query.lastError().text();
+        return {};
+    }
+    QVariantList table;
+    while (query.next()) {
+        QVariantList row;
+        for (int i = 0; i < 7; i++)
+            row.append(query.value(i));
+        table.append(row);
+    }
+    return table;
+}
+QList<QVariant> DataBase::generateTest(const QList<QString>& theme, const QList<QList<int>>& count) {
+    QSet<QString> ids;
+    QSqlQuery query;
+    for (int i = 0; i < theme.length(); i++) {
+        query.prepare("select  id from question where is_deleted = false AND theme LIKE \'%" +
+                      theme[i] + "%\' AND difficulty = :Difficulty ORDER BY random()  LIMIT :Count ;");
+        for (int j = 0; j < 3; j++) {
+            query.bindValue(":Difficulty", j);
+            query.bindValue(":Count", count[i][j]);
+            if (!query.exec()) {
+                qDebug() << "DataBase: generateTest (id)";
+                qDebug() << query.lastError().text();
+                return {};
+            }
+            while (query.next()) {
+                ids.insert(query.value(i).toString());
+            }
+        }
+    }
+    QString id_list = "";
+    for (auto i = ids.begin(); i != ids.end(); i++) {
+        if (i != ids.begin())
+            id_list += ",";
+        id_list += *i;
+    }
+    query.prepare("(SELECT  id, theme, difficulty, description, model, unnest(answers_list), "
+                  "array_length(answers_list,2) FROM Question WHERE id IN (" + id_list + ") AND model NOT IN (2,5))"
                   "UNION ALL (SELECT  id, theme, difficulty, description, model, NULL, 0 FROM Question WHERE id IN "
                   "(" + id_list + ") AND model IN (2,5));");
 
@@ -289,4 +333,24 @@ bool DataBase::deleteSituation(qlonglong id) {
         return false;
     }
     return true;
+}
+
+QMap<QString, QVariant> DataBase::getAnySituation() {
+    QSqlQuery query;
+    query.prepare("select * from situation limit 1");
+
+    if (!query.exec()) {
+        qDebug() << "DataBase: error insert into Question";
+        qDebug() << query.lastError().text();
+        return {};
+    }
+
+    while (query.next()) {
+        QMap<QString, QVariant> map;
+        for (int i = 0; i < query.record().count(); i++) {
+            map[query.record().fieldName(i)] = query.value(i);
+        }
+        return map;
+    }
+    return {};
 }

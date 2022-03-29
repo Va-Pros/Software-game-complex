@@ -39,6 +39,36 @@ Page {
             questionEditorSwap.length=k;
             //console.log(qu3);
         }
+        function onNewMessage(message) {
+            console.log("newMessage:", message)
+            var data = message.split(';')
+            if (data[0] !== "0") return
+            data = data.splice(1);
+            var data2=data.reduce((rows, key, index) => (index % 7 == 0 ? rows.push([key]) : rows[rows.length-1].push(key)) && rows, []);
+            var qu3=[[]], k=0;
+            for(var i=0;i<data2.length;i++){
+                if(!i||qu3[k][0]!=data2[i][0]){
+                    if(i&&qu3[k][6]!="0")
+                        qu3[k][5]=qu3[k][5].reduce((rows, key, index) => (index % (qu3[k][6]-0) == 0 ? rows.push([key]) : rows[rows.length-1].push(key)) && rows, []);
+                    qu3.push([]);
+                    k++;
+                    if(data2[i][0]<1)break;
+                    for(var j=0;j<7;j++){
+                        if(j==5)
+                            qu3[k].push([]);
+                        else
+                            qu3[k].push(data2[i][j]);
+                    }
+                }
+                //if(data2[i][6])
+                    qu3[k][5].push(data2[i][5]);
+            }
+            qu3.push([]);
+            resultsModel.model = k
+            resultPage.model = qu3;
+            questionEditorSwap.length=k;
+            //console.log(qu3);
+        }
     }
     SplitView {
         anchors.fill: parent
@@ -61,6 +91,7 @@ Page {
                         text: `Finish test`
                         onClicked: {
                             console.log("hi, Arti!");
+                            //client.sendMessage("666;")
                             load_page("GamePage");
                         }
                     }
