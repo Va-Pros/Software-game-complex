@@ -3,8 +3,8 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import org.kde.kirigami 2.4 as Kirigami
 Pane {
-    id: fillInArea
-    property string title: qsTr("Question area")
+    id: typeInArea
+    property string title: qsTr("Single Choice area")
     ColumnLayout {
         id: questionAreaPanel
         anchors.left : parent.left
@@ -18,11 +18,12 @@ Pane {
         Label {
             id: area
         }
-        TextField {
-            id: answerField
-            Layout.fillWidth: true
-            placeholderText: qsTr("Type ans")
-            onAccepted: startButton.clicked()
+        Repeater {
+            id:ansField
+            model: []
+            RadioButton {
+                text:modelData
+            }
         }
         RowLayout{
              Button {
@@ -49,6 +50,7 @@ Pane {
     }
 
     function init(data) {
+        ansField.model = data[5][0];
         titleQuestionArea.text=`${data[1]} (+${Number(data[2])+1} point(s))`;
         area.text = `${data[3]}\n${data[5]}`;
     }

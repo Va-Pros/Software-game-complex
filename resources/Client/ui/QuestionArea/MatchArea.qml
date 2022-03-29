@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.15
 import org.kde.kirigami 2.4 as Kirigami
 Pane {
     id: matchArea
-    property string title: qsTr("Question area")
+    property string title: qsTr("Match area")
     property var variants: []
     ColumnLayout {
         id: questionAreaPanel
@@ -61,10 +61,10 @@ Pane {
     }
 
     function init(data) {
-        console.log(data);
+        //console.log(data);
         ansField.model = data[5][0];
         matchArea.variants = data[5][1];
         titleQuestionArea.text=`${data[1]}  (+${1+Number(data[2])} point(s))`;
-        area.text = `${data[3]}\n${data[5]}`;
+        area.text = `${data[3]}`;
     }
 }
