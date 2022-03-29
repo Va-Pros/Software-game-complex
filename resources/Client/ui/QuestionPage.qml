@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.15
 import org.kde.kirigami 2.4 as Kirigami
 
 Page {
+    id: questionPage
     title: qsTr("Question Page")
 
     Label {
@@ -91,6 +92,7 @@ Page {
             SplitView.minimumWidth: Math.max(tittleResultsPanel.width) * 1.8
             id: questionEditorSwap
             property int length: 0
+            property var pages: ["SingleChoiceArea", "MultipleChoiceArea", "TypeInArea", "MatchArea", "DropdownFillArea", "TypeInFillArea"]
             focus: true
             orientation: Qt.Vertical
             anchors.top: parent.bottom
@@ -111,11 +113,14 @@ Page {
                     id: pageExample
                     property string title: active? item.title:"..."
                     active: true
-                    source: (modelData[4] == 3) ?  "MatchArea.qml" : "FillInArea.qml"
+                    source: ("QuestionArea/" + questionEditorSwap.pages[modelData[4]] + ".qml")
                     onLoaded: item.init(modelData)
                 }
             }
         }
+    }
+    function saveAnswer(answer) {
+        client.sendMessage(`1;${questionEditorSwap.currentIndex};${answer}`)
     }
 }
 

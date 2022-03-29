@@ -35,7 +35,9 @@ void TcpServer::onReadyRead() {
             QList<QVariant> questions = DataBase::generateTest({""}, {{100, 100, 100}});
             for (const auto& q: questions)
                 back_message += ";" + q.toString().toUtf8();
-        } else if (data[0] == "1") {}
+        } else if (data[0] == "1") {
+            qInfo() << request;
+        }
     }
     emit newMessage(back_message);
 }

@@ -4,8 +4,12 @@
         <file>ui/main.qml</file>
         <file>ui/MainMenu.qml</file>
         <file>ui/QuestionPage.qml</file>
-        <file>ui/FillInArea.qml</file>
-        <file>ui/MatchArea.qml</file>
         <file>ui/GamePage.qml</file>
+        <file>ui/QuestionArea/TypeInArea.qml</file>
+        <file>ui/QuestionArea/MatchArea.qml</file>
+        <file>ui/QuestionArea/TypeInFillArea.qml</file>
+        <file>ui/QuestionArea/DropdownFillArea.qml</file>
+        <file>ui/QuestionArea/SingleChoiceArea.qml</file>
+        <file>ui/QuestionArea/MultipleChoiceArea.qml</file>
     </qresource>
 </RCC>
