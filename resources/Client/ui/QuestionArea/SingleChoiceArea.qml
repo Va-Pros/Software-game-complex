@@ -4,7 +4,8 @@ import QtQuick.Layouts 1.15
 import org.kde.kirigami 2.4 as Kirigami
 Pane {
     id: typeInArea
-    property string title: qsTr("Single Choice area")
+    property string title: qsTr("Single choice area")
+    property var answer:[null]
     ColumnLayout {
         id: questionAreaPanel
         anchors.left : parent.left
@@ -12,7 +13,6 @@ Pane {
         Label {
             id: titleQuestionArea
             font.italic: true
-            text: qsTr("Search Parameters:")
             font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.5
         }
         Label {
@@ -23,6 +23,7 @@ Pane {
             model: []
             RadioButton {
                 text:modelData
+                onCheckedChanged: answer[0]=modelData;
             }
         }
         RowLayout{
@@ -32,7 +33,7 @@ Pane {
                 text: qsTr("Prev")
                 visible:questionEditorSwap.currentIndex>2
                 onClicked: {
-                    console.log(questionEditorSwap.currentIndex);
+                    questionPage.saveAnswer(answer);
                     questionEditorSwap.currentIndex--;
                 }
             }
@@ -42,7 +43,7 @@ Pane {
                 text: qsTr("Next")
                 visible:questionEditorSwap.currentIndex<questionEditorSwap.length+1
                 onClicked: {
-                    console.log(questionEditorSwap.currentIndex);
+                    questionPage.saveAnswer(answer);
                     questionEditorSwap.currentIndex++;
                 }
             }
@@ -52,6 +53,6 @@ Pane {
     function init(data) {
         ansField.model = data[5][0];
         titleQuestionArea.text=`${data[1]} (+${Number(data[2])+1} point(s))`;
-        area.text = `${data[3]}\n${data[5]}`;
+        area.text = `${data[3]}`;
     }
 }

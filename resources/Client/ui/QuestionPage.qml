@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.15
 import org.kde.kirigami 2.4 as Kirigami
 
 Page {
+    id: questionPage
     title: qsTr("Question Page")
 
     Label {
@@ -117,6 +118,9 @@ Page {
                 }
             }
         }
+    }
+    function saveAnswer(answer) {
+        client.sendMessage(`1;${questionEditorSwap.currentIndex};${answer}`)
     }
 }
 

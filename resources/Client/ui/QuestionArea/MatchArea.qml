@@ -6,6 +6,7 @@ Pane {
     id: matchArea
     property string title: qsTr("Match area")
     property var variants: []
+    property var answer:[]
     ColumnLayout {
         id: questionAreaPanel
         anchors.left : parent.left
@@ -13,7 +14,6 @@ Pane {
         Label {
             id: titleQuestionArea
             font.italic: true
-            text: qsTr("Search Parameters:")
             font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.5
         }
         Label {
@@ -33,6 +33,9 @@ Pane {
                     id: ansCombo
                     editable: false
                     model: matchArea.variants
+                    onCurrentIndexChanged:{
+                        answer[index]=matchArea.variants[currentIndex];
+                    }
                 }
             }
         }
@@ -43,7 +46,7 @@ Pane {
                 text: qsTr("Prev")
                 visible:questionEditorSwap.currentIndex>2
                 onClicked: {
-                    console.log(questionEditorSwap.currentIndex);
+                    questionPage.saveAnswer(answer);
                     questionEditorSwap.currentIndex--;
                 }
             }
@@ -53,7 +56,7 @@ Pane {
                 text: qsTr("Next")
                 visible:questionEditorSwap.currentIndex<questionEditorSwap.length+1
                 onClicked: {
-                    console.log(questionEditorSwap.currentIndex);
+                    questionPage.saveAnswer(answer);
                     questionEditorSwap.currentIndex++;
                 }
             }
@@ -63,6 +66,8 @@ Pane {
     function init(data) {
         //console.log(data);
         ansField.model = data[5][0];
+        for(var i=0;i<data[5][0].length;i++)
+            answer.push(data[5][0][0]);
         matchArea.variants = data[5][1];
         titleQuestionArea.text=`${data[1]}  (+${1+Number(data[2])} point(s))`;
         area.text = `${data[3]}`;

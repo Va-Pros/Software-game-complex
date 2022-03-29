@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.15
 import org.kde.kirigami 2.4 as Kirigami
 Pane {
     id: typeInArea
-    property string title: qsTr("Type in area")
+    property string title: qsTr("Type in fill area")
     ColumnLayout {
         id: questionAreaPanel
         anchors.left : parent.left
@@ -12,7 +12,6 @@ Pane {
         Label {
             id: titleQuestionArea
             font.italic: true
-            text: qsTr("Search Parameters:")
             font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.5
         }
         Label {

@@ -5,6 +5,7 @@ import org.kde.kirigami 2.4 as Kirigami
 Pane {
     id: typeInArea
     property string title: qsTr("Type in area")
+    property var answer:[null]
     ColumnLayout {
         id: questionAreaPanel
         anchors.left : parent.left
@@ -12,7 +13,6 @@ Pane {
         Label {
             id: titleQuestionArea
             font.italic: true
-            text: qsTr("Search Parameters:")
             font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.5
         }
         Label {
@@ -21,7 +21,7 @@ Pane {
         TextField {
             id: answerField
             Layout.fillWidth: true
-            placeholderText: qsTr("Type ans")
+            placeholderText: qsTr("Type answer")
             onAccepted: startButton.clicked()
         }
         RowLayout{
@@ -31,7 +31,8 @@ Pane {
                 text: qsTr("Prev")
                 visible:questionEditorSwap.currentIndex>2
                 onClicked: {
-                    console.log(questionEditorSwap.currentIndex);
+                    answer[0]=answerField.text
+                    questionPage.saveAnswer(answer);
                     questionEditorSwap.currentIndex--;
                 }
             }
@@ -41,7 +42,8 @@ Pane {
                 text: qsTr("Next")
                 visible:questionEditorSwap.currentIndex<questionEditorSwap.length+1
                 onClicked: {
-                    console.log(questionEditorSwap.currentIndex);
+                    answer[0]=answerField.text
+                    questionPage.saveAnswer(answer);
                     questionEditorSwap.currentIndex++;
                 }
             }
@@ -50,6 +52,6 @@ Pane {
 
     function init(data) {
         titleQuestionArea.text=`${data[1]} (+${Number(data[2])+1} point(s))`;
-        area.text = `${data[3]}\n${data[5]}`;
+        area.text = `${data[3]}`;
     }
 }
