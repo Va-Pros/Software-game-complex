@@ -20,6 +20,7 @@ Page {
             Layout.fillWidth: true
             Label {
                 text: qsTr("ip:")
+                visible: false
             }
             TextField {
                 id: ipField
@@ -31,11 +32,13 @@ Page {
                     regExp:  /^((?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.){3}(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$/
                 }
                 //visible: themeAction.text === newThemeAction.text
+                visible: false
             }
             Button {
             id: buttonConnect
             Layout.fillWidth: true
             text: qsTr("check connection")
+            visible: false
             onClicked: {
                 console.log("connenting to " + ipField.displayText + ":45000");
                 if (ipField.acceptableInput)
@@ -71,6 +74,16 @@ Page {
             }
         }
 
+
+            Button {
+            id: connectButton
+            Layout.fillWidth: true
+            text: qsTr("Connect")
+            onClicked: {
+                if (ipField.acceptableInput)
+                   client.connectToServer(ipField.text, "45000")
+            }
+        }
         Button {
             id: startButton
             Layout.fillWidth: true
