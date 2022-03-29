@@ -52,7 +52,6 @@ Page {
             TextField {
                 id: nameField
                 Layout.fillWidth: true
-                placeholderText: qsTr("Семенов Максим Алексеевич")
                 onAccepted: startButton.clicked()
                 //visible: themeAction.text === newThemeAction.text
             }
@@ -65,7 +64,6 @@ Page {
             TextField {
                 id: platoonField
                 Layout.fillWidth: true
-                placeholderText: qsTr("Самый лучший в мире!")
                 onAccepted: startButton.clicked()
                 //visible: themeAction.text === newThemeAction.text
             }
