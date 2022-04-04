@@ -11,13 +11,10 @@ Pane {
         id: questionAreaPanel
         anchors.left : parent.left
         anchors.right : parent.right
-        Label {
-            id: titleQuestionArea
-            font.italic: true
-            font.pixelSize: 24
-        }
+
         Label {
             id: area
+            font.pixelSize: 20
         }
 
         Repeater {
@@ -27,37 +24,17 @@ Pane {
             RowLayout{
                 Label {
                     text: modelData
+                    font.pixelSize: 20
                 }
                 ComboBox {
                     Layout.fillWidth: true
                     id: ansCombo
                     editable: false
                     model: matchArea.variants
+                    font.pixelSize: 20
                     onCurrentIndexChanged:{
                         answer[index]=matchArea.variants[currentIndex];
                     }
-                }
-            }
-        }
-        RowLayout{
-             Button {
-                id: prevQuestion
-                Layout.fillWidth: true
-                text: qsTr("Prev")
-                visible:questionEditorSwap.currentIndex>2
-                onClicked: {
-                    questionPage.saveAnswer(answer);
-                    questionEditorSwap.currentIndex--;
-                }
-            }
-            Button {
-                id: nextQuestion
-                Layout.fillWidth: true
-                text: qsTr("Next")
-                visible:questionEditorSwap.currentIndex<questionEditorSwap.length+1
-                onClicked: {
-                    questionPage.saveAnswer(answer);
-                    questionEditorSwap.currentIndex++;
                 }
             }
         }
@@ -69,7 +46,6 @@ Pane {
         for(var i=0;i<data[5][0].length;i++)
             answer.push(data[5][0][0]);
         matchArea.variants = data[5][1];
-        titleQuestionArea.text=`${data[1]}  (+${1+Number(data[2])} point(s))`;
         area.text = `${data[3]}`;
     }
 }

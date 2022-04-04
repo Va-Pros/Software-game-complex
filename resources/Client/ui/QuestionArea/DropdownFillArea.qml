@@ -9,46 +9,21 @@ Pane {
         id: questionAreaPanel
         anchors.left : parent.left
         anchors.right : parent.right
-        Label {
-            id: titleQuestionArea
-            font.italic: true
-            font.pixelSize: 24
-        }
+
         Label {
             id: area
+            font.pixelSize: 20
         }
         TextField {
             id: answerField
             Layout.fillWidth: true
+            font.pixelSize: 20
             placeholderText: qsTr("Type answer")
             onAccepted: startButton.clicked()
-        }
-        RowLayout{
-             Button {
-                id: prevQuestion
-                Layout.fillWidth: true
-                text: qsTr("Prev")
-                visible:questionEditorSwap.currentIndex>2
-                onClicked: {
-                    console.log(questionEditorSwap.currentIndex);
-                    questionEditorSwap.currentIndex--;
-                }
-            }
-            Button {
-                id: nextQuestion
-                Layout.fillWidth: true
-                text: qsTr("Next")
-                visible:questionEditorSwap.currentIndex<questionEditorSwap.length+1
-                onClicked: {
-                    console.log(questionEditorSwap.currentIndex);
-                    questionEditorSwap.currentIndex++;
-                }
-            }
         }
     }
 
     function init(data) {
-        titleQuestionArea.text=`${data[1]} (+${Number(data[2])+1} point(s))`;
         area.text = `${data[3]}\n${data[5]}`;
     }
 }

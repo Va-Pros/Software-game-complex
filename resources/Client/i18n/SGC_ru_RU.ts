@@ -12,7 +12,7 @@
 <context>
     <name>BaseQuestionEditor</name>
     <message>
-        <location filename="../ui/QuestionWidgets/BaseQuestionEditor.qml" line="52"/>
+        <location filename="../ui/QuestionWidgets/BaseQuestionEditor.qml" line="51"/>
         <source>Answer</source>
         <translation>Ответ</translation>
     </message>
@@ -30,14 +30,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/QuestionArea/DropdownFillArea.qml" line="30"/>
         <source>Prev</source>
-        <translation type="unfinished">Предыдущий</translation>
+        <translation type="obsolete">Предыдущий</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionArea/DropdownFillArea.qml" line="40"/>
         <source>Next</source>
-        <translation type="unfinished">Следующий</translation>
+        <translation type="obsolete">Следующий</translation>
     </message>
 </context>
 <context>
@@ -100,12 +98,12 @@
 <context>
     <name>FillQuestionEditor</name>
     <message>
-        <location filename="../ui/QuestionWidgets/FillQuestionEditor.qml" line="10"/>
+        <location filename="../ui/QuestionWidgets/FillQuestionEditor.qml" line="9"/>
         <source>Input {txt} to spicify fill position. i&apos;th entering of {txt} in text will use i&apos;th variants list</source>
         <translation>Введите {txt}, чтобы указать позицию для вставки. Число позиций в тексте должно соответствовать числу списков</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionWidgets/FillQuestionEditor.qml" line="34"/>
+        <location filename="../ui/QuestionWidgets/FillQuestionEditor.qml" line="33"/>
         <source>Text gap count: %1; answer list count: %2</source>
         <translation>Позиций в тексте: %1; число списков: %2</translation>
     </message>
@@ -231,27 +229,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="28"/>
+        <location filename="../ui/MainMenu.qml" line="29"/>
         <source>127.0.0.1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="38"/>
+        <location filename="../ui/MainMenu.qml" line="40"/>
         <source>check connection</source>
         <translation type="unfinished">Проверить соединение</translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="50"/>
+        <location filename="../ui/MainMenu.qml" line="53"/>
         <source>name:</source>
         <translation type="unfinished">Имя</translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="62"/>
+        <location filename="../ui/MainMenu.qml" line="65"/>
         <source>platoon:</source>
         <translation type="unfinished">Взвод</translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="75"/>
+        <location filename="../ui/MainMenu.qml" line="79"/>
+        <source>Connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/MainMenu.qml" line="88"/>
         <source>Start Test</source>
         <translation type="unfinished">Начать игру</translation>
     </message>
@@ -274,13 +277,11 @@
     </message>
     <message>
         <location filename="../ui/MatchArea.qml" line="43"/>
-        <location filename="../ui/QuestionArea/MatchArea.qml" line="46"/>
         <source>Prev</source>
         <translation type="unfinished">Предыдущий</translation>
     </message>
     <message>
         <location filename="../ui/MatchArea.qml" line="53"/>
-        <location filename="../ui/QuestionArea/MatchArea.qml" line="56"/>
         <source>Next</source>
         <translation type="unfinished">Следующий</translation>
     </message>
@@ -298,35 +299,33 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/QuestionArea/MultipleChoiceArea.qml" line="33"/>
         <source>Prev</source>
-        <translation type="unfinished">Предыдущий</translation>
+        <translation type="obsolete">Предыдущий</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionArea/MultipleChoiceArea.qml" line="44"/>
         <source>Next</source>
-        <translation type="unfinished">Следующий</translation>
+        <translation type="obsolete">Следующий</translation>
     </message>
 </context>
 <context>
     <name>MultipleColumnsAnswersQuestionEditor</name>
     <message>
-        <location filename="../ui/QuestionWidgets/MultipleColumnsAnswersQuestionEditor.qml" line="59"/>
+        <location filename="../ui/QuestionWidgets/MultipleColumnsAnswersQuestionEditor.qml" line="58"/>
         <source>Answer list %1</source>
         <translation>Список %1</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionWidgets/MultipleColumnsAnswersQuestionEditor.qml" line="67"/>
+        <location filename="../ui/QuestionWidgets/MultipleColumnsAnswersQuestionEditor.qml" line="66"/>
         <source>Add answer variant</source>
         <translation>Добавить вариант ответа</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionWidgets/MultipleColumnsAnswersQuestionEditor.qml" line="72"/>
+        <location filename="../ui/QuestionWidgets/MultipleColumnsAnswersQuestionEditor.qml" line="71"/>
         <source>Remove list</source>
         <translation>Удалить список</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionWidgets/MultipleColumnsAnswersQuestionEditor.qml" line="89"/>
+        <location filename="../ui/QuestionWidgets/MultipleColumnsAnswersQuestionEditor.qml" line="88"/>
         <source>Add list</source>
         <translation>Добавить список</translation>
     </message>
@@ -334,90 +333,35 @@
 <context>
     <name>QuestionArea</name>
     <message>
-        <location filename="../ui/QuestionArea.qml" line="9"/>
-        <source>Question area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/QuestionArea.qml" line="29"/>
-        <source>Theme:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../ui/QuestionArea.qml" line="41"/>
         <source></source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/QuestionArea.qml" line="53"/>
-        <source>Difficulty:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/QuestionArea.qml" line="59"/>
         <source>Easy</source>
-        <translation type="unfinished">Лёгкий</translation>
+        <translation type="obsolete">Лёгкий</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionArea.qml" line="59"/>
         <source>Medium</source>
-        <translation type="unfinished">Средний</translation>
+        <translation type="obsolete">Средний</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionArea.qml" line="59"/>
         <source>Hard</source>
-        <translation type="unfinished">Тяжёлый</translation>
+        <translation type="obsolete">Тяжёлый</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionArea.qml" line="73"/>
-        <source>Content:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/QuestionArea.qml" line="80"/>
-        <source>Enter description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/QuestionArea.qml" line="153"/>
-        <source>Add option</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/QuestionArea.qml" line="170"/>
-        <source>Delete list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/QuestionArea.qml" line="187"/>
         <source>Add list</source>
-        <translation type="unfinished">Добавить список</translation>
+        <translation type="obsolete">Добавить список</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionArea.qml" line="202"/>
-        <source>Restore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/QuestionArea.qml" line="202"/>
-        <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/QuestionArea.qml" line="202"/>
-        <source>Clear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/QuestionArea.qml" line="215"/>
         <source>Save</source>
-        <translation type="unfinished">Сохранить</translation>
+        <translation type="obsolete">Сохранить</translation>
     </message>
 </context>
 <context>
     <name>QuestionConstructor</name>
     <message>
-        <location filename="../ui/QuestionConstructor.qml" line="8"/>
+        <location filename="../ui/QuestionConstructor.qml" line="7"/>
         <source>Question constructor</source>
         <translation>Конструктор вопросов</translation>
     </message>
@@ -499,14 +443,29 @@
 <context>
     <name>QuestionPage</name>
     <message>
-        <location filename="../ui/QuestionPage.qml" line="11"/>
-        <source>Question Page</source>
-        <translation type="unfinished"></translation>
+        <location filename="../ui/QuestionPage.qml" line="97"/>
+        <source>Prev</source>
+        <translation>Предыдущий</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionPage.qml" line="103"/>
+        <location filename="../ui/QuestionPage.qml" line="107"/>
+        <source>Next</source>
+        <translation>Следующий</translation>
+    </message>
+    <message>
+        <location filename="../ui/QuestionPage.qml" line="128"/>
         <source>Questions:</source>
-        <translation type="unfinished">Список вопросов</translation>
+        <translation>Список вопросов:</translation>
+    </message>
+    <message>
+        <location filename="../ui/QuestionPage.qml" line="172"/>
+        <source>Time left: %1:%2</source>
+        <translation>Оставшееся время: %1:%2</translation>
+    </message>
+    <message>
+        <location filename="../ui/QuestionPage.qml" line="178"/>
+        <source>Finish test</source>
+        <translation>Завершить</translation>
     </message>
 </context>
 <context>
@@ -548,14 +507,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/QuestionArea/SingleChoiceArea.qml" line="33"/>
         <source>Prev</source>
-        <translation type="unfinished">Предыдущий</translation>
+        <translation type="obsolete">Предыдущий</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionArea/SingleChoiceArea.qml" line="43"/>
         <source>Next</source>
-        <translation type="unfinished">Следующий</translation>
+        <translation type="obsolete">Следующий</translation>
     </message>
 </context>
 <context>
@@ -571,14 +528,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/QuestionArea/TypeInArea.qml" line="31"/>
         <source>Prev</source>
-        <translation type="unfinished">Предыдущий</translation>
+        <translation type="obsolete">Предыдущий</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionArea/TypeInArea.qml" line="42"/>
         <source>Next</source>
-        <translation type="unfinished">Следующий</translation>
+        <translation type="obsolete">Следующий</translation>
     </message>
 </context>
 <context>
@@ -594,14 +549,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/QuestionArea/TypeInFillArea.qml" line="30"/>
         <source>Prev</source>
-        <translation type="unfinished">Предыдущий</translation>
+        <translation type="obsolete">Предыдущий</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionArea/TypeInFillArea.qml" line="40"/>
         <source>Next</source>
-        <translation type="unfinished">Следующий</translation>
+        <translation type="obsolete">Следующий</translation>
     </message>
 </context>
 <context>
