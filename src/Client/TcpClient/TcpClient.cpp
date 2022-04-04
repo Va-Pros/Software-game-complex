@@ -19,6 +19,7 @@ void TcpClient::sendMessage(const QString &message) {
 void TcpClient::onConnected() {
 	qInfo() << "Connected to host.";
 	_isConnected = true;
+    emit connectedToServer();
 }
 
 void TcpClient::onReadyRead() {

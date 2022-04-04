@@ -249,39 +249,41 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="22"/>
-        <source>ip:</source>
-        <translation type="unfinished"></translation>
+        <location filename="../ui/MainMenu.qml" line="28"/>
+        <source>IP address:</source>
+        <translation>IP адрес:</translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="29"/>
+        <location filename="../ui/MainMenu.qml" line="52"/>
+        <source>Name:</source>
+        <translation>ФИО:</translation>
+    </message>
+    <message>
+        <location filename="../ui/MainMenu.qml" line="68"/>
+        <source>Platoon:</source>
+        <translation type="unfinished">Взвод:</translation>
+    </message>
+    <message>
+        <location filename="../ui/MainMenu.qml" line="38"/>
         <source>127.0.0.1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="40"/>
         <source>check connection</source>
-        <translation type="unfinished">Проверить соединение</translation>
+        <translation type="obsolete">Проверить соединение</translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="53"/>
         <source>name:</source>
-        <translation type="unfinished">Имя</translation>
+        <translation type="obsolete">Имя</translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="65"/>
         <source>platoon:</source>
-        <translation type="unfinished">Взвод</translation>
+        <translation type="obsolete">Взвод</translation>
     </message>
     <message>
-        <location filename="../ui/MainMenu.qml" line="79"/>
-        <source>Connect</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/MainMenu.qml" line="88"/>
+        <location filename="../ui/MainMenu.qml" line="85"/>
         <source>Start Test</source>
-        <translation type="unfinished">Начать игру</translation>
+        <translation>Начать игру</translation>
     </message>
     <message>
         <source>Question constructor</source>
