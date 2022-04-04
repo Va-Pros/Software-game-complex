@@ -1,7 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import org.kde.kirigami 2.4 as Kirigami
+
 Pane {
     id: fillInArea
     property string title: qsTr("Question area")
@@ -13,7 +13,7 @@ Pane {
             id: titleQuestionArea
             font.italic: true
             text: qsTr("Search Parameters:")
-            font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.5
+            font.pixelSize: 24
         }
         Label {
             id: area

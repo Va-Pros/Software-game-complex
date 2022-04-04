@@ -2,7 +2,6 @@
 #include <QTranslator>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <KLocalizedContext>
 #include <QDirIterator>
 #include <QQuickStyle>
 #include <QIcon>
@@ -53,7 +52,6 @@ int main(int argc, char **argv) {
 
 	TcpClient client;
 	engine.rootContext()->setContextProperty("client", &client);
-    engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
     engine.load(QUrl(QStringLiteral("qrc:ui/main.qml")));
 
     if (engine.rootObjects().isEmpty()) {

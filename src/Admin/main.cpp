@@ -1,6 +1,5 @@
 #include "DB/database.h"
 #include "TcpServer/TcpServer.hpp"
-#include <KLocalizedContext>
 #include <QApplication>
 #include <QDirIterator>
 #include <QIcon>
@@ -74,7 +73,6 @@ int main(int argc, char** argv) {
 //    engine.rootContext()->setContextProperty("myModel", model);
     engine.rootContext()->setContextProperty("database", &database);
     engine.rootContext()->setContextProperty("server", &tcpServer);
-    engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
     engine.load(QUrl(QStringLiteral("qrc:ui/main.qml")));
     if (engine.rootObjects().isEmpty()) {
         return -1;
