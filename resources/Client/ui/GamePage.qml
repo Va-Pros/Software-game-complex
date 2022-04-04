@@ -109,7 +109,7 @@ Controls.Page {
     property int dropMaxX: canvasRectangle.width - canvasItemSize - canvasRectangle.border.width
     property int dropMinY: canvasRectangle.border.width
     property int dropMaxY: canvasRectangle.height - canvasItemSize - canvasRectangle.border.width
-
+    property int role: -1
 
 
     function ensureInBoundsX(x) {
@@ -129,6 +129,15 @@ Controls.Page {
         return ensureInBoundsY(y - canvasItemSize / 2)
     }
 
+    function getRoleName(roleNumber) {
+        switch (roleNumber) {
+            case -1: return qsTr("No role")
+            case 0: return qsTr("Attacker")
+            case 1: return qsTr("Defender")
+            default: return qsTr("Unknown role")
+        }
+    }
+
     Item {
         anchors.margins: 16
         anchors.left: parent.left
@@ -137,13 +146,14 @@ Controls.Page {
         anchors.bottom: parent.bottom
 
 
-//        Label {
-//            id: situationName
-//            text: name
-//            anchors.left: parent.left
-//            anchors.right: parent.right
-//            anchors.top: parent.top
-//        }
+        Controls.Label {
+            id: userRoleLabel
+            text: qsTr("Your role: %1").arg(getRoleName(role))
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: parent.top
+            font.pixelSize: 20
+        }
 
         Controls.ScrollView {
             id: componentsRow
@@ -153,8 +163,23 @@ Controls.Page {
             anchors.left: parent.left
             anchors.right: parent.right
 //            anchors.top: difficultyRow.bottom
-            anchors.top: parent.top
+            anchors.top: userRoleLabel.bottom
             anchors.topMargin: 8
+
+            states: [
+                State {
+                    when: role !== 1 // not defender
+                    PropertyChanges {
+                        target: componentsRow
+                        visible: false
+                    }
+                    PropertyChanges {
+                        target: contentPanel
+                        anchors.top: componentsRow.anchors.top
+                    }
+                }
+            ]
+
             RowLayout {
                 Repeater {
                     model: selectionModel
@@ -462,6 +487,11 @@ Controls.Page {
     }
 
     function restoreNode(node) {
+        if (role !== 1) {
+            node.protection = []
+            return
+        }
+
         if (node.protection) {
             for (const protect of node.protection) {
                 restoreProtection(protect)
@@ -482,6 +512,7 @@ Controls.Page {
         if (model.difficulty) {
             difficulty = model.difficulty
         }
+        role = model.role
         const parsed = JSON.parse(model.data)
         for (const item of parsed) {
             switch(item.type) {

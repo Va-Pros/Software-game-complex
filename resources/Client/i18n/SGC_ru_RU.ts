@@ -25,7 +25,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/QuestionArea/DropdownFillArea.qml" line="23"/>
+        <location filename="../ui/QuestionArea/DropdownFillArea.qml" line="21"/>
         <source>Type answer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -181,37 +181,62 @@
         <translation>Средства защиты информации</translation>
     </message>
     <message>
-        <location filename="../ui/GamePage.qml" line="206"/>
+        <location filename="../ui/GamePage.qml" line="134"/>
+        <source>No role</source>
+        <translation>Без роли</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="135"/>
+        <source>Attacker</source>
+        <translation>Нарушитель</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="136"/>
+        <source>Defender</source>
+        <translation>Защитник</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="137"/>
+        <source>Unknown role</source>
+        <translation>Неизвестная роль</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="151"/>
+        <source>Your role: %1</source>
+        <translation>Ваша роль: %1</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="231"/>
         <source>Saved situations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/GamePage.qml" line="255"/>
+        <location filename="../ui/GamePage.qml" line="280"/>
         <source>Id: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/GamePage.qml" line="258"/>
+        <location filename="../ui/GamePage.qml" line="283"/>
         <source>Name: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/GamePage.qml" line="261"/>
+        <location filename="../ui/GamePage.qml" line="286"/>
         <source>Difficulty: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/GamePage.qml" line="361"/>
+        <location filename="../ui/GamePage.qml" line="386"/>
         <source>Reset</source>
         <translation>Сбросить</translation>
     </message>
     <message>
-        <location filename="../ui/GamePage.qml" line="381"/>
+        <location filename="../ui/GamePage.qml" line="406"/>
         <source>Finish</source>
         <translation>Завершить</translation>
     </message>
     <message>
-        <location filename="../ui/GamePage.qml" line="504"/>
+        <location filename="../ui/GamePage.qml" line="535"/>
         <source>New situation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -443,27 +468,27 @@
 <context>
     <name>QuestionPage</name>
     <message>
-        <location filename="../ui/QuestionPage.qml" line="97"/>
+        <location filename="../ui/QuestionPage.qml" line="124"/>
         <source>Prev</source>
         <translation>Предыдущий</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionPage.qml" line="107"/>
+        <location filename="../ui/QuestionPage.qml" line="131"/>
         <source>Next</source>
         <translation>Следующий</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionPage.qml" line="128"/>
+        <location filename="../ui/QuestionPage.qml" line="167"/>
         <source>Questions:</source>
         <translation>Список вопросов:</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionPage.qml" line="172"/>
+        <location filename="../ui/QuestionPage.qml" line="211"/>
         <source>Time left: %1:%2</source>
         <translation>Оставшееся время: %1:%2</translation>
     </message>
     <message>
-        <location filename="../ui/QuestionPage.qml" line="178"/>
+        <location filename="../ui/QuestionPage.qml" line="218"/>
         <source>Finish test</source>
         <translation>Завершить</translation>
     </message>
@@ -523,7 +548,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/QuestionArea/TypeInArea.qml" line="24"/>
+        <location filename="../ui/QuestionArea/TypeInArea.qml" line="22"/>
         <source>Type answer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -544,7 +569,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/QuestionArea/TypeInFillArea.qml" line="23"/>
+        <location filename="../ui/QuestionArea/TypeInFillArea.qml" line="21"/>
         <source>Type ans</source>
         <translation type="unfinished"></translation>
     </message>
