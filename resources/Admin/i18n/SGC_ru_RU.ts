@@ -362,19 +362,75 @@
 <context>
     <name>ResultsViewer</name>
     <message>
-        <location filename="../ui/ResultsViewer.qml" line="11"/>
+        <location filename="../ui/ResultsViewer.qml" line="13"/>
         <source>Results viewer</source>
         <translation type="unfinished">Просмотр результатов</translation>
     </message>
     <message>
-        <location filename="../ui/ResultsViewer.qml" line="34"/>
+        <location filename="../ui/ResultsViewer.qml" line="16"/>
+        <source>Name</source>
+        <translation>ФИО</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="17"/>
+        <source>Platoon</source>
+        <translation>Взвод</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="18"/>
+        <source>Role</source>
+        <translation>Роль</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="19"/>
+        <source>Test score</source>
+        <translation>Оценка за тест</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="20"/>
+        <source>Game score</source>
+        <translation>Оценка за игру</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="21"/>
+        <source>Total score</source>
+        <translation>Итог</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="40"/>
+        <source>Attacker</source>
+        <translation>Нарушитель</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="41"/>
+        <location filename="../ui/ResultsViewer.qml" line="43"/>
+        <source>In progress</source>
+        <translation>В процессе</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="42"/>
+        <source>Not started</source>
+        <translation>Не начато</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="48"/>
+        <source>Defender</source>
+        <translation>Защитник</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="77"/>
         <source>Search Parameters:</source>
         <translation type="unfinished">Параметры поиска:</translation>
     </message>
     <message>
-        <location filename="../ui/ResultsViewer.qml" line="47"/>
+        <location filename="../ui/ResultsViewer.qml" line="90"/>
         <source>Tittle:</source>
         <translation type="unfinished">Название:</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="304"/>
+        <source>Export data</source>
+        <translation>Сохранить в файл</translation>
     </message>
     <message>
         <location filename="../ui/ResultsViewer.qml" line="57"/>
@@ -382,28 +438,28 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/ResultsViewer.qml" line="58"/>
-        <location filename="../ui/ResultsViewer.qml" line="80"/>
+        <location filename="../ui/ResultsViewer.qml" line="101"/>
+        <location filename="../ui/ResultsViewer.qml" line="123"/>
         <source>Any</source>
         <translation type="unfinished">Любой</translation>
     </message>
     <message>
-        <location filename="../ui/ResultsViewer.qml" line="69"/>
+        <location filename="../ui/ResultsViewer.qml" line="112"/>
         <source>Platoon:</source>
         <translation type="unfinished">Взвод:</translation>
     </message>
     <message>
-        <location filename="../ui/ResultsViewer.qml" line="91"/>
+        <location filename="../ui/ResultsViewer.qml" line="134"/>
         <source>Name:</source>
         <translation type="unfinished">Имя:</translation>
     </message>
     <message>
-        <location filename="../ui/ResultsViewer.qml" line="102"/>
+        <location filename="../ui/ResultsViewer.qml" line="145"/>
         <source>Search</source>
         <translation type="unfinished">Найти</translation>
     </message>
     <message>
-        <location filename="../ui/ResultsViewer.qml" line="122"/>
+        <location filename="../ui/ResultsViewer.qml" line="165"/>
         <source>Results:</source>
         <translation type="unfinished">Результаты:</translation>
     </message>
