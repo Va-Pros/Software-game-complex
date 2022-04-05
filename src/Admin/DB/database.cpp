@@ -140,9 +140,11 @@ bool DataBase::insertIntoTotalReportTable(const QVariantList& data) {
     }
     return true;
 }
-bool DataBase::insertORUpdateIntoQuestionTable(int id, const QString& theme, int difficulty, const QString& description,
+int DataBase::insertORUpdateIntoQuestionTable(int id, const QString& theme, int difficulty, const QString& description,
                                                int model, const QList<QList<QString>>& answers_list,
                                                const QList<QList<bool>>& is_correct, bool is_deleted = false) {
+    qDebug() << "saving; " << theme << "; correct: " << qListToQString(is_correct);
+
     QSqlQuery query;
     if (id == -1)
         query.prepare("INSERT INTO Question (theme, difficulty, description, model, answers_list, is_correct)"
@@ -162,9 +164,9 @@ bool DataBase::insertORUpdateIntoQuestionTable(int id, const QString& theme, int
     if (!query.exec()) {
         qDebug() << "DataBase: error insert into Question";
         qDebug() << query.lastError().text();
-        return false;
+        return -1;
     }
-    return true;
+    return query.lastInsertId().toInt();
 }
 QList<QVariant> DataBase::generateTest(const QList<QString>& theme, const QList<QList<int>>& count) {
     QSet<QString> ids;

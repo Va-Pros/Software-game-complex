@@ -30,7 +30,7 @@ public:
 
 public slots:
     static bool insertIntoTotalReportTable(const QVariantList& data);
-    static bool insertORUpdateIntoQuestionTable(int id, const QString& theme, int difficulty,
+    static int insertORUpdateIntoQuestionTable(int id, const QString& theme, int difficulty,
                                         const QString& description, int model,
                                         const QList<QList<QString>>& answers_list,
                                   const QList<QList<bool>>& is_correct, bool is_deleted);

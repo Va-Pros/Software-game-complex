@@ -44,7 +44,7 @@ Flickable {
             model: ["QuestionCreator.qml", "QuestionEditor.qml"]
             Loader {
                 id: pageQuestionCreator
-                property string title: active? item.title:"..."
+                //property string title: active? item.title:"..."
                 active: true
                 source: modelData
                 //onLoaded: item.init()

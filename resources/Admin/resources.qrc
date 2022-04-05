@@ -38,6 +38,21 @@
         <file>ui/ResultArea.qml</file>
         <file>ui/ResultsViewer.qml</file>
 
+        <file>ui/QuestionWidgets/RegularQuestionInput.qml</file>
+        <file>ui/QuestionWidgets/BaseQuestionEditor.qml</file>
+        <file>ui/QuestionWidgets/MultipleColumnsAnswersQuestionEditor.qml</file>
+        <file>ui/QuestionWidgets/MatchQuestionEditor.qml</file>
+        <file>ui/QuestionWidgets/FillQuestionEditor.qml</file>
+        <file>ui/QuestionWidgets/DropDownFillQuestionEditor.qml</file>
+        <file>ui/QuestionWidgets/TypeInFillQuestionEditor.qml</file>
+        <file>ui/QuestionWidgets/OneColumnAnswersQuestionEditor.qml</file>
+        <file>ui/QuestionWidgets/TypeInQuestionEditor.qml</file>
+        <file>ui/QuestionWidgets/SingleChoiceQuestionEditor.qml</file>
+        <file>ui/QuestionWidgets/MultipleChoiceQuestionEditor.qml</file>
+        <file>ui/QuestionWidgets/EditorUtils.js</file>
+        <file>ui/QuestionWidgets/AnswerWidgets/AnswerInput.qml</file>
+        <file>ui/QuestionWidgets/AnswerWidgets/SingleChoiceAnswerInput.qml</file>
+        <file>ui/QuestionWidgets/AnswerWidgets/MultipleChoiceAnswerInput.qml</file>
 
     </qresource>
 </RCC>
