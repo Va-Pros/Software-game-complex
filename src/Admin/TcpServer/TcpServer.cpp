@@ -54,8 +54,12 @@ void TcpServer::onReadyRead() {
             QJsonObject obj;
             obj["id"] = QJsonValue(situation["id"].toLongLong());
             obj["role"] = QJsonValue(nextAttacker ? GAME_ROLE_ATTACKER : GAME_ROLE_DEFENDER);
+            obj["resources"] = QJsonValue(situation["resources"].toString());
+            obj["net"] = QJsonValue(situation["net"].toString());
+            obj["intruder"] = QJsonValue(situation["intruder"].toString());
+            obj["rights"] = QJsonValue(situation["rights"].toString());
             obj["data"] = QJsonValue(situation["data"].toString());
-            back_message = "666;" + QJsonDocument(obj).toJson();
+            back_message = "666;" + QJsonDocument(obj).toJson(QJsonDocument::JsonFormat::Compact);
             if (nextAttacker) {
                 gameMapping.append(QPair(client, (QTcpSocket*) nullptr));
             } else {

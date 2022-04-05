@@ -110,6 +110,10 @@ Controls.Page {
     property int dropMinY: canvasRectangle.border.width
     property int dropMaxY: canvasRectangle.height - canvasItemSize - canvasRectangle.border.width
     property int role: -1
+    property string resourcesType: qsTr("Unknown type")
+    property string net: qsTr("Unknown type")
+    property string intruder: qsTr("Unknown type")
+    property string rights: qsTr("Unknown type")
 
 
     function ensureInBoundsX(x) {
@@ -138,6 +142,50 @@ Controls.Page {
         }
     }
 
+    function getResourcesName(resourceValue) {
+        switch (resourceValue) {
+            case "personal": return qsTr("Personal data")
+            case "trade": return qsTr("Trade secret")
+            case "state1": return qsTr("State secret (OV)")
+            case "state2": return qsTr("State secret (SS)")
+            case "state3": return qsTr("State secret (S)")
+            default: return qsTr("Unknown resources type")
+        }
+    }
+
+    function getNetName(netValue) {
+        switch (netValue) {
+            case "common": return qsTr("Common access net")
+            case "asu": return qsTr("ASU TP")
+            case "itks": return qsTr("ITKS")
+            case "ispdn": return qsTr("ISPDN")
+            case "gis": return qsTr("GIS")
+            case "as": return qsTr("AS secret")
+            case "kinfra": return qsTr("Key infrastructure")
+            case "cinfra": return qsTr("Critical infrastructure")
+            case "cobject": return qsTr("Critical object system")
+            case "corporate": return qsTr("Corporate net")
+            case "local": return qsTr("Local net")
+            default: return qsTr("Unknown net type")
+        }
+    }
+
+    function getIntruderName(intruderValue) {
+        switch (intruderValue) {
+            case "internal": return qsTr("Internal intruder")
+            case "external": return qsTr("External intruder")
+            default: return qsTr("Unknown intruder type")
+        }
+    }
+
+    function getRightsName(rightsValue) {
+        switch (rightsValue) {
+            case "equal": return qsTr("Equal rights")
+            case "diff": return qsTr("Different rights")
+            default: return qsTr("Unknown rights type")
+        }
+    }
+
     Item {
         anchors.margins: 16
         anchors.left: parent.left
@@ -155,6 +203,38 @@ Controls.Page {
             font.pixelSize: 20
         }
 
+        RowLayout {
+            id: setupRow
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: userRoleLabel.bottom
+            spacing: 48
+
+            Controls.Label {
+                text: qsTr("Resources: %1").arg(resourcesType)
+                font.pixelSize: 20
+            }
+
+            Controls.Label {
+                text: qsTr("Net type: %1").arg(net)
+                font.pixelSize: 20
+            }
+
+            Controls.Label {
+                text: intruder
+                font.pixelSize: 20
+            }
+
+            Controls.Label {
+                text: rights
+                font.pixelSize: 20
+            }
+
+            Item {
+                Layout.fillWidth: true
+            }
+        }
+
         Controls.ScrollView {
             id: componentsRow
             Controls.ScrollBar.horizontal.policy: Controls.ScrollBar.AlwaysOn
@@ -162,8 +242,7 @@ Controls.Page {
             Layout.fillHeight: true
             anchors.left: parent.left
             anchors.right: parent.right
-//            anchors.top: difficultyRow.bottom
-            anchors.top: userRoleLabel.bottom
+            anchors.top: setupRow.bottom
             anchors.topMargin: 8
 
             states: [
@@ -528,6 +607,10 @@ Controls.Page {
             }
         }
         canvasModel = parsed
+        resourcesType = getResourcesName(model.resources)
+        net = getNetName(model.net)
+        intruder = getIntruderName(model.intruder)
+        rights = getRightsName(model.rights)
     }
 
     function reset() {

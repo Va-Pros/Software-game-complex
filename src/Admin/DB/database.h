@@ -16,7 +16,11 @@ public:
     ~DataBase() override;
     void connectToDataBase();
 
-    Q_INVOKABLE qlonglong insertORUpdateIntoSituationTable(qlonglong id, const QString& name, int difficulty, const QString& data);
+    Q_INVOKABLE qlonglong insertORUpdateIntoSituationTable(
+            qlonglong id, const QString& name, int difficulty,
+            const QString& resources, const QString& net, const QString& intruder, const QString& rights,
+            const QString& data
+    );
 
     Q_INVOKABLE QList<QVariant> listAllSituations();
 

@@ -73,7 +73,11 @@ bool DataBase::createSituationTable() {
                     "id           SERIAL      PRIMARY KEY,"
                     "name         TEXT        NOT NULL,"
                     "data         TEXT        NOT NULL,"
-                    "difficulty   INTEGER     NOT NULL"
+                    "difficulty   INTEGER     NOT NULL,"
+                    "resources    TEXT        NOT NULL,"
+                    "net          TEXT        NOT NULL,"
+                    "intruder     TEXT        NOT NULL,"
+                    "rights       TEXT        NOT NULL"
                     ")")) {
         qDebug() << "DataBase: error of create Situation";
         qDebug() << query.lastError().text();
@@ -253,20 +257,29 @@ QList<QVariant> DataBase::listAllSituations() {
     return table;
 }
 
-qlonglong DataBase::insertORUpdateIntoSituationTable(qlonglong id, const QString& name, int difficulty, const QString& data) {
+qlonglong DataBase::insertORUpdateIntoSituationTable(
+        qlonglong id, const QString& name, int difficulty,
+        const QString& resources, const QString& net, const QString& intruder, const QString& rights,
+        const QString& data
+) {
     qDebug() << "inserting " << id << " _ " << name << " _ " << data;
 
     QSqlQuery query;
     if (id == -1) {
-        query.prepare("INSERT INTO Situation (name, data, difficulty) VALUES(:Name, :Data, :Difficulty);");
+        query.prepare("INSERT INTO Situation (name, data, difficulty, resources, net, intruder, rights) "
+                      "VALUES(:Name, :Data, :Difficulty, :Resources, :Net, :Intruder, :Rights);");
     } else {
         query.prepare(
-            "update Situation set (name, data, difficulty)"
-            "=(:Name, :Data, :Difficulty) where id=:Id");
+            "update Situation set (name, data, difficulty, resources, net, intruder, rights)"
+            "=(:Name, :Data, :Difficulty, :Resources, :Net, :Intruder, :Rights) where id=:Id");
     }
     query.bindValue(":Name", name);
     query.bindValue(":Data", data);
     query.bindValue(":Difficulty", difficulty);
+    query.bindValue(":Resources", resources);
+    query.bindValue(":Net", net);
+    query.bindValue(":Intruder", intruder);
+    query.bindValue(":Rights", rights);
     query.bindValue(":Id", id);
     if (!query.exec()) {
         qDebug() << "DataBase: error insert into Situation";

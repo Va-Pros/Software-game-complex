@@ -181,62 +181,206 @@
         <translation>Средства защиты информации</translation>
     </message>
     <message>
-        <location filename="../ui/GamePage.qml" line="134"/>
+        <location filename="../ui/GamePage.qml" line="113"/>
+        <location filename="../ui/GamePage.qml" line="114"/>
+        <location filename="../ui/GamePage.qml" line="115"/>
+        <location filename="../ui/GamePage.qml" line="116"/>
+        <source>Unknown type</source>
+        <translation>Неизвестный тип</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="138"/>
         <source>No role</source>
         <translation>Без роли</translation>
     </message>
     <message>
-        <location filename="../ui/GamePage.qml" line="135"/>
+        <location filename="../ui/GamePage.qml" line="139"/>
         <source>Attacker</source>
         <translation>Нарушитель</translation>
     </message>
     <message>
-        <location filename="../ui/GamePage.qml" line="136"/>
+        <location filename="../ui/GamePage.qml" line="140"/>
         <source>Defender</source>
         <translation>Защитник</translation>
     </message>
     <message>
-        <location filename="../ui/GamePage.qml" line="137"/>
+        <location filename="../ui/GamePage.qml" line="141"/>
         <source>Unknown role</source>
         <translation>Неизвестная роль</translation>
     </message>
     <message>
+        <location filename="../ui/GamePage.qml" line="147"/>
+        <source>Personal data</source>
+        <translation>Персональные данные</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="148"/>
+        <source>Trade secret</source>
+        <translation>Коммерческая тайна</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="149"/>
+        <source>State secret (OV)</source>
+        <translation>Гостайна (ОВ)</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="150"/>
+        <source>State secret (SS)</source>
+        <translation>Гостайна (СС)</translation>
+    </message>
+    <message>
         <location filename="../ui/GamePage.qml" line="151"/>
+        <source>State secret (S)</source>
+        <translation>Готсайна (С)</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="152"/>
+        <source>Unknown resources type</source>
+        <translation>Неизвестный тип ресурсов</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="158"/>
+        <source>Common access net</source>
+        <translation>Сеть общего пользования</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="159"/>
+        <source>ASU TP</source>
+        <translation>АСУ ТП</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="160"/>
+        <source>ITKS</source>
+        <translation>ИТКС</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="161"/>
+        <source>ISPDN</source>
+        <translation>ИС ПДн</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="162"/>
+        <source>GIS</source>
+        <translation>ГИС</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="163"/>
+        <source>AS secret</source>
+        <translation>АС для работы с гостайной</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="164"/>
+        <source>Key infrastructure</source>
+        <translation>Система ключевой инф. инфраструктуры</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="165"/>
+        <source>Critical infrastructure</source>
+        <translation>Система критической инф. инфраструктуры</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="166"/>
+        <source>Critical object system</source>
+        <translation>Система критически важного объекта</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="167"/>
+        <source>Corporate net</source>
+        <translation>Корпоративная сеть</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="168"/>
+        <source>Local net</source>
+        <translation>Локальная сеть</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="169"/>
+        <source>Unknown net type</source>
+        <translation>Неизвестный тип сети</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="175"/>
+        <source>Internal intruder</source>
+        <translation>Внутренний нарушитель</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="176"/>
+        <source>External intruder</source>
+        <translation>Внешний нарушитель</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="177"/>
+        <source>Unknown intruder type</source>
+        <translation>Неизвестный тип нарушителя</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="183"/>
+        <source>Equal rights</source>
+        <translation>Равные права</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="184"/>
+        <source>Different rights</source>
+        <translation>Различные права</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="185"/>
+        <source>Unknown rights type</source>
+        <translation>Неизвестный тип прав</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="199"/>
         <source>Your role: %1</source>
         <translation>Ваша роль: %1</translation>
     </message>
     <message>
-        <location filename="../ui/GamePage.qml" line="231"/>
+        <location filename="../ui/GamePage.qml" line="214"/>
+        <source>Resources: %1</source>
+        <translation>Ресурсы: %1</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="219"/>
+        <source>Net type: %1</source>
+        <translation>Тип сети: %1</translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="224"/>
+        <location filename="../ui/GamePage.qml" line="229"/>
+        <source>%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/GamePage.qml" line="310"/>
         <source>Saved situations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/GamePage.qml" line="280"/>
+        <location filename="../ui/GamePage.qml" line="359"/>
         <source>Id: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/GamePage.qml" line="283"/>
+        <location filename="../ui/GamePage.qml" line="362"/>
         <source>Name: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/GamePage.qml" line="286"/>
+        <location filename="../ui/GamePage.qml" line="365"/>
         <source>Difficulty: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/GamePage.qml" line="386"/>
+        <location filename="../ui/GamePage.qml" line="465"/>
         <source>Reset</source>
         <translation>Сбросить</translation>
     </message>
     <message>
-        <location filename="../ui/GamePage.qml" line="406"/>
+        <location filename="../ui/GamePage.qml" line="485"/>
         <source>Finish</source>
         <translation>Завершить</translation>
     </message>
     <message>
-        <location filename="../ui/GamePage.qml" line="535"/>
+        <location filename="../ui/GamePage.qml" line="618"/>
         <source>New situation</source>
         <translation type="unfinished"></translation>
     </message>

@@ -2,7 +2,6 @@ import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15 as Controls
 import QtQuick.Dialogs 1.0
-import SituationConstructor 1.0
 import QtGraphicalEffects 1.15
 import "SituationWidgets" as SW
 
@@ -193,6 +192,70 @@ Controls.Page {
             }
         }
 
+        RowLayout {
+            id: additionalSetupRow
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: difficultyRow.bottom
+            anchors.topMargin: 4
+
+            Controls.ComboBox {
+                id: informationResourceCombo
+                textRole: "text"
+                valueRole: "value"
+                model: ListModel {
+                    ListElement { text: qsTr("Personal data"); value: "personal" }
+                    ListElement { text: qsTr("Trade secret"); value: "trade" }
+                    ListElement { text: qsTr("State secret (OV)"); value: "state1" }
+                    ListElement { text: qsTr("State secret (SS)"); value: "state2" }
+                    ListElement { text: qsTr("State secret (S)"); value: "state3" }
+                }
+            }
+
+            Controls.ComboBox {
+                id: netTypeCombo
+                textRole: "text"
+                valueRole: "value"
+                model: ListModel {
+                    ListElement { text: qsTr("Common access net"); value: "common" }
+                    ListElement { text: qsTr("ASU TP"); value: "asu" }
+                    ListElement { text: qsTr("ITKS"); value: "itks" }
+                    ListElement { text: qsTr("ISPDN"); value: "ispdn" }
+                    ListElement { text: qsTr("GIS"); value: "gis" }
+                    ListElement { text: qsTr("AS secret"); value: "as" }
+                    ListElement { text: qsTr("Key infrastructure"); value: "kinfra" }
+                    ListElement { text: qsTr("Critical infrastructure"); value: "cinfra" }
+                    ListElement { text: qsTr("Critical object system"); value: "cobject" }
+                    ListElement { text: qsTr("Corporate net"); value: "corporate" }
+                    ListElement { text: qsTr("Local net"); value: "local" }
+                }
+            }
+
+            Controls.ComboBox {
+                id: attackerTypeCombo
+                textRole: "text"
+                valueRole: "value"
+                model: ListModel {
+                    ListElement { text: qsTr("Internal intruder"); value: "internal" }
+                    ListElement { text: qsTr("External intruder"); value: "external" }
+                }
+            }
+
+            Controls.ComboBox {
+                id: userAccessRightsCombo
+                textRole: "text"
+                valueRole: "value"
+                model: ListModel {
+                    ListElement { text: qsTr("Equal rights"); value: "equal" }
+                    ListElement { text: qsTr("Different rights"); value: "diff" }
+                }
+            }
+
+            Item {
+                Layout.fillWidth: true
+            }
+        }
+
         Controls.ScrollView {
             id: componentsRow
             Controls.ScrollBar.horizontal.policy: Controls.ScrollBar.AlwaysOn
@@ -200,7 +263,7 @@ Controls.Page {
             Layout.fillHeight: true
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.top: difficultyRow.bottom
+            anchors.top: additionalSetupRow.bottom
             anchors.topMargin: 8
             RowLayout {
                 Repeater {
@@ -437,11 +500,6 @@ Controls.Page {
         }
     }
 
-    Component {
-        id: situationComponent
-        SituationModel {}
-    }
-
     function isEmpty(obj) {
         return !obj || (Object.keys(obj).length === 0 && Object.getPrototypeOf(obj) === Object.prototype)
     }
@@ -493,23 +551,14 @@ Controls.Page {
         }
         const dataToSave = JSON.stringify(modelToSave)
         console.log("dataToSave:", id, situationName.text, dataToSave)
-        const insertId = database.insertORUpdateIntoSituationTable(id, situationName.text, difficulty, dataToSave)
+        const insertId = database.insertORUpdateIntoSituationTable(
+                           id, situationName.text, difficulty, informationResourceCombo.currentValue, netTypeCombo.currentValue, attackerTypeCombo.currentValue, userAccessRightsCombo.currentValue, dataToSave
+                           )
         if (id == -1) {
             id = insertId
         }
 
         loadSavedModels()
-    }
-
-    Connections {
-        target: SituationModifyHelper
-        function onSaved(path) {
-            console.log("saved to path: ", path)
-        }
-        function onImported(situationModel, path) {
-            mapPath = path
-            console.log("imported:", situationModel.name, "__", situationModel.someData)
-        }
     }
 
     function restoreProtection(protection) {
@@ -548,6 +597,18 @@ Controls.Page {
             }
         }
         canvasModel = parsed
+        informationResourceCombo.currentIndex = findIndexInModel(informationResourceCombo.model, item => item.value === model.resources)
+        netTypeCombo.currentIndex = findIndexInModel(netTypeCombo.model, item => item.value === model.net)
+        attackerTypeCombo.currentIndex = findIndexInModel(attackerTypeCombo.model, item => item.value === model.intruder)
+        userAccessRightsCombo.currentIndex = findIndexInModel(userAccessRightsCombo.model, item => item.value === model.rights)
+    }
+
+    function findIndexInModel(model, filterFunction) {
+        for (var i = 0; i < model.count; i++) {
+            const item = model.get(i);
+            if (filterFunction(item)) return i;
+        }
+        return -1;
     }
 
     function loadSavedModels() {
@@ -561,6 +622,10 @@ Controls.Page {
         canvasModel = [{type: "node", subtype: "computer", image: "/icons/computer.png", x: 100, y: 100, protection: []}]
         selectedCanvasItem = -1
         itemsToPlace = ({})
+        informationResourceCombo.currentIndex = 0
+        netTypeCombo.currentIndex = 0
+        attackerTypeCombo.currentIndex = 0
+        userAccessRightsCombo.currentIndex = 0
     }
 
     Component.onCompleted: {
