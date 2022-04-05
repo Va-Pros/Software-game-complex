@@ -30,12 +30,14 @@ public:
 
 	Q_INVOKABLE bool deleteSituation(qlonglong id);
 
+    Q_INVOKABLE bool deleteQuestion(qlonglong id);
+
 	bool selectThemesAndNumberOfQuestions(Themes &themes);
 	QStringList selectUniqueThemes();
 
 public slots:
 	static bool insertIntoTotalReportTable(const QVariantList &data);
-	static bool insertORUpdateIntoQuestionTable(int id, const QString &theme, int difficulty,
+	static int insertORUpdateIntoQuestionTable(int id, const QString &theme, int difficulty,
 												const QString &description, int model,
 												const QList<QList<QString>> &answers_list,
 												const QList<QList<bool>> &is_correct, bool is_deleted);

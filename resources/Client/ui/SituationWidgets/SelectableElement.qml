@@ -129,6 +129,6 @@ Item {
     }
 
     Component.onCompleted: {
-        console.log("aa", JSON.stringify(Object.keys(itemData)))
+        //console.log("aa", JSON.stringify(Object.keys(itemData)))
     }
 }

@@ -1,7 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15 as Controls
-import QuestionCreator 1.0
+//import QuestionCreator 1.0
 import "EditorUtils.js" as EditorUtils
 
 MultipleColumnsAnswersQuestionEditor {
@@ -13,6 +13,10 @@ MultipleColumnsAnswersQuestionEditor {
         return EditorUtils.mapModel(getAnswerModel(), item => item.variant);
     }
 
+    function setAnswerModel(answerModel) {
+        setTwoDimensionalModel(answerModel)
+    }
+
     // override MultipleColumnsAnswersQuestionEditor
     function getArrayOfAnswerSubModels() {
         throw "unsupported"
@@ -21,6 +25,10 @@ MultipleColumnsAnswersQuestionEditor {
     // override MultipleColumnsAnswersQuestionEditor
     function getAnswerModel() {
         return getFirstSubModel();
+    }
+
+    function getSaveVariants() {
+        return [getVariants()]
     }
 
     Controls.Action {

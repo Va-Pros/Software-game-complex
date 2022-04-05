@@ -1,4 +1,5 @@
 function mapModel(model, mapFunction) {
+    if (Array.isArray(model)) return model.map(mapFunction)
     const mapped = [];
     for (var i = 0; i < model.count; i++) {
         mapped.push(mapFunction(model.get(i)));

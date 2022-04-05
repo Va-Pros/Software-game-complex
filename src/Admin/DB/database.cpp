@@ -101,7 +101,7 @@ int max_length(const QList<QList<T>> &list_list) {
 // может замакросить?
 QString qListToQString(const QList<QList<QString>> &list_list) {
 	QString str = "";
-	int n		= max_length(list_list);
+	int n		= max_length(list_list); // all arrays should have same size
 	for (auto list = list_list.begin(); list != list_list.end(); list++) {
 		if (list != list_list.begin())
 			str += ", ";
@@ -117,7 +117,7 @@ QString qListToQString(const QList<QList<QString>> &list_list) {
 }
 QString qListToQString(const QList<QList<bool>> &list_list) {
 	QString str = "";
-	int n		= max_length(list_list);
+	int n		= max_length(list_list); // all arrays should have same size
 	for (auto list = list_list.begin(); list != list_list.end(); list++) {
 		if (list != list_list.begin())
 			str += ", ";
@@ -144,9 +144,14 @@ bool DataBase::insertIntoTotalReportTable(const QVariantList &data) {
 	}
 	return true;
 }
-bool DataBase::insertORUpdateIntoQuestionTable(int id, const QString &theme, int difficulty, const QString &description,
+
+int DataBase::insertORUpdateIntoQuestionTable(int id, const QString &theme, int difficulty, const QString &description,
 											   int model, const QList<QList<QString>> &answers_list,
 											   const QList<QList<bool>> &is_correct, bool is_deleted = false) {
+
+    qDebug() << "answers: " << qListToQString(answers_list) << "; " << answers_list[0].size();
+    qDebug() << "correct: " << qListToQString(is_correct) << "; " << answers_list[0].size();
+
 	QSqlQuery query;
 	if (id == -1)
 		query.prepare("INSERT INTO Question (theme, difficulty, description, model, answers_list, is_correct)"
@@ -166,9 +171,9 @@ bool DataBase::insertORUpdateIntoQuestionTable(int id, const QString &theme, int
 	if (!query.exec()) {
 		qDebug() << "DataBase: error insert into Question";
 		qDebug() << query.lastError().text();
-		return false;
+		return -1;
 	}
-	return true;
+	return query.lastInsertId().toInt();
 }
 
 QList<QVariant> DataBase::generateTest(const QList<QString>& theme, const QList<QList<int>>& count) {
@@ -218,8 +223,8 @@ QList<QVariant> DataBase::generateTest(const QList<QString>& theme, const QList<
 QList<QVariant> DataBase::selectAllFromQuestionTable(const QString& theme, const QString& description,
                                                      int difficulty) {
     QSqlQuery query;
-    query.prepare("SELECT  id, theme, difficulty, description, model, unnest(answers_list), unnest(is_correct), "
-                  "array_length(answers_list,2) FROM Question WHERE is_deleted = false AND theme LIKE \'%" + theme +
+    query.prepare("SELECT  id, theme, difficulty, description, model, unnest(answers_list) as variant, unnest(is_correct) as correctness "
+                  ", array_length(answers_list, 2) FROM Question WHERE is_deleted = false AND theme LIKE \'%" + theme +
                   "%\' AND description LIKE \'%" + description + "%\' AND (difficulty = :Difficulty OR :Is_Any);");
     query.bindValue(":Difficulty", difficulty - 1);
     query.bindValue(":Is_Any", difficulty == 0);
@@ -229,15 +234,55 @@ QList<QVariant> DataBase::selectAllFromQuestionTable(const QString& theme, const
         qDebug() << query.lastError().text();
         return {};
     }
-    QVariantList table;
-    while (query.next()) {
-        QVariantList row;
-        for (int i = 0; i < 8; i++)
-            row.append(query.value(i));
-        table.append(row);
-//        break;
+
+    // Results look like this: `variants` and `correct` arrays' elements are spread one in line,
+    // so we need to combine them manually
+    //  id |   theme   | difficulty | description | model |  variant  | correct
+    //----+-----------+------------+-------------+-------+-----------+--------
+    //  1 | Theme1    |          1 | 1 + 1        |     1 | 2         | t
+    //  1 | Theme1    |          1 | 1 + 1        |     1 | 3         | f
+    QStringList arrayColumns = { "variant", "correctness" };
+    QStringList helperColumns = { "array_length" };
+
+    QMap<QVariant, QVariantMap> table;
+	while (query.next()) {
+        QVariant id = query.value("id");
+        int listLength = query.value("array_length").toInt();
+        if (table.contains(id)) { // only get array elements
+            for (const auto& columnName : arrayColumns) {
+                QVariant& columnValue = table[id][columnName];
+                QList<QVariantList>& columnValueList = *reinterpret_cast<QList<QVariantList>*>(columnValue.data());
+                QVariantList& lastList = columnValueList.last();
+                QVariant newItem = query.value(columnName);
+                if (lastList.size() < listLength) {
+                    lastList.append(newItem);
+                } else {
+                    QVariantList newLastList = { newItem };
+                    columnValueList.append(newLastList);
+                }
+            }
+        } else {
+            QMap<QString, QVariant> map;
+            for (int i = 0; i < query.record().count(); i++) {
+                QString columnName = query.record().fieldName(i);
+                if (helperColumns.contains(columnName)) continue;
+                if (arrayColumns.contains(columnName)) {
+                    QList<QVariantList> arrayColumn = { { query.value(i) } };
+                    map[columnName] = QVariant::fromValue(arrayColumn);
+                } else {
+                    map[columnName] = query.value(i);
+                }
+            }
+            table[id] = map;
+        }
+	}
+
+    QList<QVariant> result;
+    for (QVariantMap& map : table.values()) {
+        result.append(map);
     }
-    return table;
+
+    return result;
 }
 
 QList<QVariant> DataBase::listAllSituations() {
@@ -374,4 +419,18 @@ QMap<QString, QVariant> DataBase::getAnySituation() {
         return map;
     }
     return {};
+}
+bool DataBase::deleteQuestion(qlonglong id) {
+    if (id < 0)
+		return false;
+
+	QSqlQuery query;
+	query.prepare("update question set is_deleted = true where id=:Id;");
+	query.bindValue(":Id", id);
+	if (!query.exec()) {
+		qDebug() << "DataBase: error deleting question " << id;
+		qDebug() << query.lastError().text();
+		return false;
+	}
+	return true;
 }

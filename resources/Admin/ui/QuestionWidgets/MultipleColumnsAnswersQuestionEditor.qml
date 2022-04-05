@@ -1,7 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15 as Controls
-import QuestionCreator 1.0
+//import QuestionCreator 1.0
 import "EditorUtils.js" as EditorUtils
 import "AnswerWidgets"
 
@@ -20,6 +20,45 @@ BaseQuestionEditor {
 
     function getFirstSubModel() {
         return totalModel.get(0).listModel;
+    }
+
+    function setOneDimensionalModel(oneDimensionalModel) {
+        setTwoDimensionalModel([oneDimensionalModel])
+    }
+
+    function setTwoDimensionalModel(twoDimensionalModel) {
+        totalModel.clear()
+        for (let i = 0; i < twoDimensionalModel.length; i++) {
+            totalModel.append({listModel: twoDimensionalModel[i]})
+        }
+    }
+
+    function loadTwoDimensionalAnswerModel(questionModel) {
+        const mapped = []
+        const vars = questionModel.variant
+        const correctness = questionModel.correctness
+        for (let i = 0; i < vars.length; ++i) {
+            const subarray = []
+            const currentVars = vars[i]
+            for (let j = 0; j < currentVars.length; ++j) {
+                const variant = currentVars[j]
+                if (variant) { // skip empty variants
+                    subarray.push({variant, isRightAnswer: correctness[i][j]})
+                }
+            }
+            mapped.push(subarray)
+        }
+        setTwoDimensionalModel(mapped)
+    }
+
+    function getSaveVariants() {
+        const allModels = getArrayOfAnswerSubModels();
+        return EditorUtils.mapModel(allModels, model => EditorUtils.mapModel(model, item => item.variant))
+    }
+
+    function loadQuestion(questionModel) {
+        baseLoadQuestion(questionModel)
+        loadTwoDimensionalAnswerModel(questionModel)
     }
 
     ListModel {

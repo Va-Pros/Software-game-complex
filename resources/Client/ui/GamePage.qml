@@ -341,7 +341,7 @@ Controls.Page {
                             states: [
                                 State {
                                     when: {
-                                        console.log("id", modelData.id, "vs", id)
+                                        //console.log("id", modelData.id, "vs", id)
                                         return modelData.id === id
                                     }
                                     PropertyChanges {

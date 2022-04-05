@@ -1,7 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15 as Controls
-import QuestionCreator 1.0
+//import QuestionCreator 1.0
 import "EditorUtils.js" as EditorUtils
 
 FillQuestionEditor {
@@ -14,12 +14,17 @@ FillQuestionEditor {
         return ({ buttonGroup: group})
     }
 
-    // override FillQuestionEditor
-    function saveFillQuestion(theme, difficulty, isActive, questionText, gapIndices, answerModels) {
-        const variants = answerModels.map(qtModel => EditorUtils.mapModel(qtModel, item => item.variant));
-        const rightAnswers = answerModels.map(qtModel => EditorUtils.findIndexInModel(qtModel, item => item.isRightAnswer));
-        QuestionSaver.saveDropDownFillQuestion(questionText, gapIndices, variants, rightAnswers);
+    questionType: 4
+
+    function getCorrectnessArray() {
+        const allModels = getArrayOfAnswerSubModels();
+        return EditorUtils.mapModel(allModels, model => EditorUtils.mapModel(model, item => item.isRightAnswer))
     }
+
+//    function loadQuestion(questionModel) {
+//        baseLoadQuestion(questionModel)
+//        loadTwoDimensionalAnswerModel(questionModel)
+//    }
 
     Repeater {
         id: repeater

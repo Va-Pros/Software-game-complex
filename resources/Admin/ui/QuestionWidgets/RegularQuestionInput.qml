@@ -8,6 +8,10 @@ ColumnLayout {
         return inputArea.text;
     }
 
+    function setText(text) {
+        inputArea.text = text;
+    }
+
     Label {
         text: qsTr("Question text")
     }
