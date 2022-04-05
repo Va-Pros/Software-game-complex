@@ -10,7 +10,7 @@ Flickable {
     property string name: "questionEditor"
     property string title: qsTr("Question editor")
     Connections {
-        target: database
+        target: admin.database
     }
     SplitView {
         anchors.fill: parent
@@ -95,7 +95,7 @@ Flickable {
                             Layout.fillWidth: true
                             text: qsTr("Search")
                             onClicked: {
-                                var ans = database.selectAllFromQuestionTable(themeName.editText, contentField.text, difficultyMosel.currentIndex);
+                                var ans = admin.database.selectAllFromQuestionTable(themeName.editText, contentField.text, difficultyMosel.currentIndex);
                                 var ans2=ans.reduce((rows, key, index) => (index % 8 == 0 ? rows.push([key]) : rows[rows.length-1].push(key)) && rows, []);
                                 ans2.push([-1]);
                                 var ans3=[[]], k=0;

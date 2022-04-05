@@ -14,7 +14,7 @@ Pane {
     property var is_correct:[]
     property var singleChoiceIdx:[]
     Connections {
-        target: database
+        target: admin.database
     }
     ColumnLayout {
         id: questionAreaPanel
@@ -31,16 +31,10 @@ Pane {
             }
             ComboBox {
                 id : themeName
-                textRole: "text"
-                valueRole: "value"
                 Layout.fillWidth: true
                 Layout.maximumWidth: Qt.application.screens[0].width * 0.42
                 editable: true
-                model: ListModel {
-                    id: themeModel
-                    ListElement { text:  qsTr("")}
-                    // themeModel.append({text: theme[idx]})
-                }
+                model: admin.themes.themesModel.data
             }
         }
         RowLayout {
@@ -223,7 +217,8 @@ Pane {
         }
     }
     function updateDB(){
-        database.insertORUpdateIntoQuestionTable(id, themeName.editText, difficultyRow.activeIdx, descriptionArea.text, questionArea.type, answers_list, is_correct, is_deleted);
+        admin.database.insertORUpdateIntoQuestionTable(id, themeName.editText, difficultyRow.activeIdx, descriptionArea.text, questionArea.type, answers_list, is_correct, is_deleted);
+        admin.updateThemes();
     }
     function updateModel(){
         listModel.model=0;

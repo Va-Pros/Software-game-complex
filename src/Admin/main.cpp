@@ -1,12 +1,8 @@
-#include "DB/database.h"
-#include "GameManagement/backendLayer.h"
+#include "AdminBackend/Admin.h"
 #include "SituationConstructor/SituationModifyHelper.h"
-#include "TcpServer/TcpServer.hpp"
-#include "utils/enums.h"
 
 #include <KLocalizedContext>
 #include <QApplication>
-#include <QDirIterator>
 #include <QIcon>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -24,19 +20,11 @@ int registerVersion1(const char *uri) {
 void registerQmlTypes() {
 	// SituationConstructor
 	const char *situationConstructorUri = "SituationConstructor";
-	const char *checkableThemeUri				= "CheckableTheme";
-
 
 	qmlRegisterSingletonType<SituationModifyHelper>(situationConstructorUri, 1, 0, "SituationModifyHelper",
 													SituationModifyHelper::singletonProvider);
+
 	registerVersion1<SituationModel>(situationConstructorUri);
-//	registerVersion1<CheckableTheme>(checkableThemeUri);
-//	registerVersion1<Utils>(utilsUri);
-
-	//    qmlRegisterSingletonType<QuestionThemes>(questionCreatorUri, 1, 0, "QuestionThemes",
-	//    QuestionThemes::singletonProvider);
-
-	//    qmlregister
 }
 
 int main(int argc, char **argv) {
@@ -73,16 +61,9 @@ int main(int argc, char **argv) {
 
 	registerQmlTypes();
 	QQmlApplicationEngine engine;
-	TcpServer tcpServer;
-	DataBase database;
-	SessionSettings sessionSettings;
-	database.connectToDataBase();
-	//    ListModel* model = new ListModel();
+	Admin admin;
 
-	//    engine.rootContext()->setContextProperty("myModel", model);
-	engine.rootContext()->setContextProperty("database", &database);
-	engine.rootContext()->setContextProperty("server", &tcpServer);
-	engine.rootContext()->setContextProperty("sessionSettings", &sessionSettings);
+	engine.rootContext()->setContextProperty("admin", &admin);
 	engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
 	engine.load(QUrl(QStringLiteral("qrc:ui/main.qml")));
 	if (engine.rootObjects().isEmpty()) {

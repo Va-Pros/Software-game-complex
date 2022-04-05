@@ -3,6 +3,9 @@ import QtQuick.Controls 2.15
 
 Item {
     property string header
+    property string easy: easyTextField.text
+    property string medium: mediumTextField.text
+    property string hard: hardTextField.text
     property var checkThemeTextFieldsAndCountTotal: _checkThemeTextFieldsAndCountTotal
     height: childrenRect.height
 
@@ -83,10 +86,11 @@ Item {
     function _checkThemeTextFieldsAndCountTotal() {
         var qmlObjects = [easyTextField, mediumTextField, hardTextField]
         var values = [ {value: 0}, {value: 0}, {value: 0} ]
+        var upperBounds = [admin.themes.getNumberOfEasy(header), admin.themes.getNumberOfMedium(header), admin.themes.getNumberOfHard(header)]
         var sum = 0
         var result = true
         for (var i = 0; i < qmlObjects.length; i++) {
-            if (!isValidInputLowerUpperBounds(qmlObjects[i].text, values[i], 0, 101)) {
+            if (!isValidInputLowerUpperBounds(qmlObjects[i].text, values[i], 0, upperBounds[i] + 1)) {
                 qmlObjects[i].borderColor = "red"
                 result = false
             } else {

@@ -4,12 +4,9 @@
 #include <QObject>
 
 
-class Utils : public QObject {
-	Q_OBJECT
+enum class SituationDifficulty { UNDEFINED, EASY, MEDIUM, HARD };
+enum class QuestionDifficulty { EASY, MEDIUM, HARD };
 
-public:
-	Utils() : QObject() {}
-	enum SituationDifficulty { UNDEFINED, EASY, MEDIUM, HARD };
-	Q_ENUM(SituationDifficulty);
-};
+constexpr int NUMBER_OF_LEVEL_QUESTION_DIFFICULTY = static_cast<int>(QuestionDifficulty::HARD) + 1;
+
 #endif	// SOFTWARE_GAME_COMPLEX_ENUMS_H

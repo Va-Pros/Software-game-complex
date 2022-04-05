@@ -416,7 +416,7 @@ Controls.Page {
                 icon.name: "delete"
                 visible: id !== -1
                 onClicked: {
-                    if (database.deleteSituation(id)) {
+                    if (admin.database.deleteSituation(id)) {
                         id = -1
                         loadSavedModels()
                     }
@@ -493,7 +493,7 @@ Controls.Page {
         }
         const dataToSave = JSON.stringify(modelToSave)
         console.log("dataToSave:", id, situationName.text, dataToSave)
-        const insertId = database.insertORUpdateIntoSituationTable(id, situationName.text, difficulty, dataToSave)
+        const insertId = admin.database.insertORUpdateIntoSituationTable(id, situationName.text, difficulty, dataToSave)
         if (id == -1) {
             id = insertId
         }
@@ -551,7 +551,7 @@ Controls.Page {
     }
 
     function loadSavedModels() {
-        foundModels = database.listAllSituations()
+        foundModels = admin.database.listAllSituations()
     }
 
     function reset() {

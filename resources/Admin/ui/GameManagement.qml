@@ -13,7 +13,7 @@ Page {
     property string name: "GameManager"
 
     Connections {
-        target: server
+        target: admin.server
     }
 
     Label {
@@ -69,19 +69,14 @@ Page {
         anchors.leftMargin: 10
         width: 300
         height: 30
-        model: ListModel {
-            id: modelThemes
-            ListElement { text: qsTr("Theme 1") }
-            ListElement { text: qsTr("Theme 2") }
-            ListElement { text: qsTr("Theme 3") }
-        }
+        model: admin.themes.gameSettingsThemesModel.data
         onActivated: {
             gridView.model.append({ text: currentValue });
-            modelThemes.remove(currentIndex)
+            admin.themes.gameSettingsThemesModel.remove(currentIndex)
         }
     }
     function onCrossClick(theme) {
-        modelThemes.append({ text: theme });
+        admin.themes.gameSettingsThemesModel.add(theme);
         var idx = -1;
         for (var i = 0; i < gridView.model.count; i++) {
             if (gridView.model.get(i).text === theme) {
@@ -116,6 +111,10 @@ Page {
 
         delegate: Item {
             property var checkThemeTextFieldsAndCountTotal: theme.checkThemeTextFieldsAndCountTotal
+            property string themeTitle: theme.header
+            property string easy: theme.easy
+            property string medium: theme.medium
+            property string hard: theme.hard
             width: gridView.cellWidth
             height: gridView.cellHeight
             Theme {
@@ -335,14 +334,6 @@ Page {
         Component.onCompleted: visible = false
     }
 
-//    CheckableTheme {
-//        id: theme1
-//        title: "THEME1"
-//        numberOfEasyQuestions: 3
-//        numberOfMediumQuestions: 4
-//        numberOfHardQuestions: 5
-//    }
-
     Button {
         id: serverAvaliable
         anchors.horizontalCenter: parent.horizontalCenter
@@ -353,13 +344,20 @@ Page {
             if (!checkInput()) {
                 alertNotValidInput.open()
             } else {
-                sessionSettings.setSettings(titleTextField.text, titleTextField.text, satisfactory.text, good.text,
+                admin.sessionSettings.setSettings(titleTextField.text, satisfactory.text, good.text,
                                             excellent.text, testTime.text, chooseDifficultyBox.currentIndex, gameTime.text);
-                if (!server.isServerAvailable()) {
-                    server.onStart()
+                for (var i = 0; i < gridView.count; i++) {
+                    admin.sessionSettings.addTheme(gridView.itemAtIndex(i).themeTitle,
+                                                   parseInt(gridView.itemAtIndex(i).easy, 10),
+                                                   parseInt(gridView.itemAtIndex(i).medium, 10),
+                                                   parseInt(gridView.itemAtIndex(i).hard, 10))
+                }
+                admin.sessionSettings.printThemes()
+                if (!admin.server.isServerAvailable()) {
+                    admin.server.onStart()
                     serverAvaliable.text = qsTr("Server Stop")
                 } else {
-                    server.onStop()
+                    admin.server.onStop()
                     serverAvaliable.text = qsTr("Start Server")
                 }
             }
