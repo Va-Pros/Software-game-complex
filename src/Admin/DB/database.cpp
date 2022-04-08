@@ -171,30 +171,6 @@ bool DataBase::insertORUpdateIntoQuestionTable(int id, const QString &theme, int
 	return true;
 }
 
-QList<QVariant> DataBase::selectAllFromQuestionTable(const QString &theme, const QString &description, int difficulty) {
-	QSqlQuery query;
-	query.prepare("select  id, theme, difficulty, description, model, unnest(answers_list), unnest(is_correct), "
-				  "array_length(answers_list,2) from question where is_deleted = false AND theme LIKE \'%" +
-				  theme + "%\' AND description LIKE \'%" + description +
-				  "%\' AND (difficulty = :Difficulty OR :Is_Any);");
-	query.bindValue(":Difficulty", difficulty - 1);
-	query.bindValue(":Is_Any", difficulty == 0);
-	qDebug() << query.executedQuery();
-	if (!query.exec()) {
-		qDebug() << "DataBase: error insert into Question";
-		qDebug() << query.lastError().text();
-		return {};
-	}
-	QVariantList table;
-	while (query.next()) {
-		QVariantList row;
-		for (int i = 0; i < 8; i++)
-			row.append(query.value(i));
-		table.append(row);
-		//        break;
-	}
-	return table;
-
 QList<QVariant> DataBase::generateTest(const QList<QString>& theme, const QList<QList<int>>& count) {
     QSet<QString> ids;
     QSqlQuery query;

@@ -1,7 +1,6 @@
 #include "AdminBackend/Admin.h"
 #include "SituationConstructor/SituationModifyHelper.h"
 
-#include <KLocalizedContext>
 #include <QApplication>
 #include <QIcon>
 #include <QQmlApplicationEngine>
@@ -64,7 +63,6 @@ int main(int argc, char **argv) {
 	Admin admin;
 
 	engine.rootContext()->setContextProperty("admin", &admin);
-	engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
 	engine.load(QUrl(QStringLiteral("qrc:ui/main.qml")));
 	if (engine.rootObjects().isEmpty()) {
 		return -1;
