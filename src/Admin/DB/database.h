@@ -22,6 +22,11 @@ public:
 														   const QString &data);
 
 	Q_INVOKABLE QList<QVariant> listAllSituations();
+  Q_INVOKABLE qlonglong insertORUpdateIntoSituationTable(
+            qlonglong id, const QString& name, int difficulty,
+            const QString& resources, const QString& net, const QString& intruder, const QString& rights,
+            const QString& data
+    );
 
 	Q_INVOKABLE bool deleteSituation(qlonglong id);
 
@@ -29,12 +34,14 @@ public:
 	QStringList selectUniqueThemes();
 
 public slots:
-	static bool insertIntoTotalReportTable(const QVariantList &data);
-	static bool insertORUpdateIntoQuestionTable(int id, const QString &theme, int difficulty,
-												const QString &description, int model,
-												const QList<QList<QString>> &answers_list,
-												const QList<QList<bool>> &is_correct, bool is_deleted);
-	static QList<QVariant> selectAllFromQuestionTable(const QString &theme, const QString &description, int difficulty);
+    static bool insertIntoTotalReportTable(const QVariantList& data);
+    static bool insertORUpdateIntoQuestionTable(int id, const QString& theme, int difficulty,
+                                        const QString& description, int model,
+                                        const QList<QList<QString>>& answers_list,
+                                  const QList<QList<bool>>& is_correct, bool is_deleted);
+    static QList<QVariant> selectAllFromQuestionTable(const QString& theme, const QString& description,
+                                                      int difficulty);
+    static QList<QVariant> generateTest(const QList<QString>& theme, const QList<QList<int>>& count);
 
 private:
 	QSqlDatabase db;

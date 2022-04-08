@@ -1,13 +1,16 @@
 #include "TcpServer.hpp"
 #include "../DB/database.h"
+#include<string>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 TcpServer::TcpServer(QObject* parent) : QObject(parent) {
+
+//    qDebug()
     connect(&_server, &QTcpServer::newConnection, this, &TcpServer::onNewConnection);
     connect(this, &TcpServer::newMessage, this, &TcpServer::onNewMessage);
 //    database.connectToDataBase();
 }
-
-void TcpServer::sendMessage(const QString &message) { emit newMessage("Server: " + message.toUtf8()); }
 
 void TcpServer::onNewConnection() {
     const auto client = _server.nextPendingConnection();
@@ -15,7 +18,7 @@ void TcpServer::onNewConnection() {
         return;
     }
 
-    qInfo() << "New client connected.";
+    qInfo() << "New client connected." << this->getClientKey(client);
 
     _clients.insert(this->getClientKey(client), client);
 
@@ -32,23 +35,40 @@ void TcpServer::onReadyRead() {
 
     QByteArray request = client->readAll();
     QList<QByteArray> data = request.split(';');
+    QByteArray back_message;
     if (!data.empty()) {
-        qInfo() << "user# " + this->getClientKey(client).toUtf8();
-        qInfo() << "type = " + data[0];
-        for (int i = 1; i < data.size(); i++)
-            qInfo() << "  + " + data[i];
-
         if (data[0] == "0") {
             QVariantList row;
             row.append(data[1]);
             row.append(data[2]);
             DataBase::insertIntoTotalReportTable(row);
+            back_message = "0";
+            QList<QVariant> questions = DataBase::generateTest({""}, {{100, 100, 100}});
+            for (const auto& q: questions)
+                back_message += ";" + q.toString().toUtf8();
+        } else if (data[0] == "1") {
+            qInfo() << request;
+        }
+        else if (data[0] == "666") {
+            auto situation = DataBase::getAnySituation();
+            QJsonObject obj;
+            obj["id"] = QJsonValue(situation["id"].toLongLong());
+            obj["role"] = QJsonValue(nextAttacker ? GAME_ROLE_ATTACKER : GAME_ROLE_DEFENDER);
+            obj["resources"] = QJsonValue(situation["resources"].toString());
+            obj["net"] = QJsonValue(situation["net"].toString());
+            obj["intruder"] = QJsonValue(situation["intruder"].toString());
+            obj["rights"] = QJsonValue(situation["rights"].toString());
+            obj["data"] = QJsonValue(situation["data"].toString());
+            back_message = "666;" + QJsonDocument(obj).toJson(QJsonDocument::JsonFormat::Compact);
+            if (nextAttacker) {
+                gameMapping.append(QPair(client, (QTcpSocket*) nullptr));
+            } else {
+                gameMapping.last().second = client;
+            }
+            nextAttacker = !nextAttacker;
         }
     }
-
-    const auto message = this->getClientKey(client).toUtf8() + ": " + request;
-
-    emit newMessage(message);
+    emit newMessage(client, back_message);
 }
 
 void TcpServer::onClientDisconnected() {
@@ -60,13 +80,11 @@ void TcpServer::onClientDisconnected() {
 
     _clients.remove(this->getClientKey(client));
 }
-
-void TcpServer::onNewMessage(const QByteArray &ba) {
-    qInfo() << ba;
-    for (const auto &client: qAsConst(_clients)) {
-        client->write(ba);
-        client->flush();
-    }
+void TcpServer::onNewMessage(QTcpSocket* sender, const QByteArray& ba) {
+//    const auto client = qobject_cast<QTcpSocket*>(sender());
+//    qInfo() << "onNewMessage" << ba;
+    sender->write(ba);
+    sender->flush();
 }
 
 QString TcpServer::getClientKey(const QTcpSocket* client) const {
@@ -87,6 +105,7 @@ void TcpServer::onStop() {
         //		qInfo() << this->getClientKey(client).toUtf8();
         client->deleteLater();
     }
+    gameMapping.clear();
     _isServerAvailable = false;
 }
 

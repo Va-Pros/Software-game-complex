@@ -11,7 +11,7 @@
     <message>
         <location filename="../ui/GameManagement.qml" line="36"/>
         <source>Enter description</source>
-        <translation type="unfinished">Ведите название</translation>
+        <translation type="unfinished">Введите название</translation>
     </message>
     <message>
         <location filename="../ui/GameManagement.qml" line="52"/>
@@ -236,7 +236,7 @@
     <message>
         <location filename="../ui/QuestionConstructor.qml" line="22"/>
         <source>Question creator</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Создание вопросов</translation>
     </message>
     <message>
         <location filename="../ui/QuestionConstructor.qml" line="22"/>
@@ -249,7 +249,7 @@
     <message>
         <location filename="../ui/QuestionCreator.qml" line="11"/>
         <source>Question creator</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Создание вопросов</translation>
     </message>
     <message>
         <location filename="../ui/QuestionCreator.qml" line="33"/>
@@ -362,19 +362,75 @@
 <context>
     <name>ResultsViewer</name>
     <message>
-        <location filename="../ui/ResultsViewer.qml" line="11"/>
+        <location filename="../ui/ResultsViewer.qml" line="13"/>
         <source>Results viewer</source>
         <translation type="unfinished">Просмотр результатов</translation>
     </message>
     <message>
-        <location filename="../ui/ResultsViewer.qml" line="34"/>
+        <location filename="../ui/ResultsViewer.qml" line="16"/>
+        <source>Name</source>
+        <translation>ФИО</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="17"/>
+        <source>Platoon</source>
+        <translation>Взвод</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="18"/>
+        <source>Role</source>
+        <translation>Роль</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="19"/>
+        <source>Test score</source>
+        <translation>Оценка за тест</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="20"/>
+        <source>Game score</source>
+        <translation>Оценка за игру</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="21"/>
+        <source>Total score</source>
+        <translation>Итог</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="40"/>
+        <source>Attacker</source>
+        <translation>Нарушитель</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="41"/>
+        <location filename="../ui/ResultsViewer.qml" line="43"/>
+        <source>In progress</source>
+        <translation>В процессе</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="42"/>
+        <source>Not started</source>
+        <translation>Не начато</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="48"/>
+        <source>Defender</source>
+        <translation>Защитник</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="77"/>
         <source>Search Parameters:</source>
         <translation type="unfinished">Параметры поиска:</translation>
     </message>
     <message>
-        <location filename="../ui/ResultsViewer.qml" line="47"/>
+        <location filename="../ui/ResultsViewer.qml" line="90"/>
         <source>Tittle:</source>
         <translation type="unfinished">Название:</translation>
+    </message>
+    <message>
+        <location filename="../ui/ResultsViewer.qml" line="304"/>
+        <source>Export data</source>
+        <translation>Сохранить в файл</translation>
     </message>
     <message>
         <location filename="../ui/ResultsViewer.qml" line="57"/>
@@ -382,28 +438,28 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/ResultsViewer.qml" line="58"/>
-        <location filename="../ui/ResultsViewer.qml" line="80"/>
+        <location filename="../ui/ResultsViewer.qml" line="101"/>
+        <location filename="../ui/ResultsViewer.qml" line="123"/>
         <source>Any</source>
         <translation type="unfinished">Любой</translation>
     </message>
     <message>
-        <location filename="../ui/ResultsViewer.qml" line="69"/>
+        <location filename="../ui/ResultsViewer.qml" line="112"/>
         <source>Platoon:</source>
         <translation type="unfinished">Взвод:</translation>
     </message>
     <message>
-        <location filename="../ui/ResultsViewer.qml" line="91"/>
+        <location filename="../ui/ResultsViewer.qml" line="134"/>
         <source>Name:</source>
         <translation type="unfinished">Имя:</translation>
     </message>
     <message>
-        <location filename="../ui/ResultsViewer.qml" line="102"/>
+        <location filename="../ui/ResultsViewer.qml" line="145"/>
         <source>Search</source>
         <translation type="unfinished">Найти</translation>
     </message>
     <message>
-        <location filename="../ui/ResultsViewer.qml" line="122"/>
+        <location filename="../ui/ResultsViewer.qml" line="165"/>
         <source>Results:</source>
         <translation type="unfinished">Результаты:</translation>
     </message>
@@ -411,62 +467,162 @@
 <context>
     <name>SituationConstructor</name>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="11"/>
+        <location filename="../ui/SituationConstructor.qml" line="10"/>
         <source>Situation constructor</source>
         <translation>Конструктор обстановок</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="66"/>
+        <location filename="../ui/SituationConstructor.qml" line="65"/>
         <source>Vertex</source>
         <translation>Вершина</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="30"/>
+        <location filename="../ui/SituationConstructor.qml" line="29"/>
         <source>Computer</source>
         <translation>Компьютер</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="31"/>
+        <location filename="../ui/SituationConstructor.qml" line="30"/>
         <source>Router</source>
         <translation>Роутер</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="32"/>
+        <location filename="../ui/SituationConstructor.qml" line="31"/>
         <source>Commutator</source>
         <translation>Коммутатор</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="33"/>
+        <location filename="../ui/SituationConstructor.qml" line="32"/>
         <source>Server</source>
         <translation>Сервер</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="88"/>
+        <location filename="../ui/SituationConstructor.qml" line="87"/>
         <source>Edge</source>
         <translation>Ребро</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="179"/>
+        <location filename="../ui/SituationConstructor.qml" line="178"/>
         <source>Difficulty:</source>
         <translation>Сложность:</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="183"/>
+        <location filename="../ui/SituationConstructor.qml" line="182"/>
         <source>Easy</source>
         <translation>Лёгкий</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="183"/>
+        <location filename="../ui/SituationConstructor.qml" line="182"/>
         <source>Medium</source>
         <translation>Средний</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="183"/>
+        <location filename="../ui/SituationConstructor.qml" line="182"/>
         <source>Hard</source>
         <translation>Тяжёлый</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="253"/>
+        <location filename="../ui/SituationConstructor.qml" line="207"/>
+        <source>Personal data</source>
+        <translation>Персональные данные</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="208"/>
+        <source>Trade secret</source>
+        <translation>Коммерческая тайна</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="209"/>
+        <source>State secret (OV)</source>
+        <translation>Гостайна (ОВ)</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="210"/>
+        <source>State secret (SS)</source>
+        <translation>Гостайна (СС)</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="211"/>
+        <source>State secret (S)</source>
+        <translation>Готсайна (С)</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="220"/>
+        <source>Common access net</source>
+        <translation>Сеть общего пользования</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="221"/>
+        <source>ASU TP</source>
+        <translation>АСУ ТП</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="222"/>
+        <source>ITKS</source>
+        <translation>ИТКС</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="223"/>
+        <source>ISPDN</source>
+        <translation>ИС ПДн</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="224"/>
+        <source>GIS</source>
+        <translation>ГИС</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="225"/>
+        <source>AS secret</source>
+        <translation>АС для работы с гостайной</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="226"/>
+        <source>Key infrastructure</source>
+        <translation>Система ключевой инф. инфраструктуры</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="227"/>
+        <source>Critical infrastructure</source>
+        <translation>Система критической инф. инфраструктуры</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="228"/>
+        <source>Critical object system</source>
+        <translation>Система критически важного объекта</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="229"/>
+        <source>Corporate net</source>
+        <translation>Корпоративная сеть</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="230"/>
+        <source>Local net</source>
+        <translation>Локальная сеть</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="239"/>
+        <source>Internal intruder</source>
+        <translation>Внутренний нарушитель</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="240"/>
+        <source>External intruder</source>
+        <translation>Внешний нарушитель</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="249"/>
+        <source>Equal rights</source>
+        <translation>Равные права</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="250"/>
+        <source>Different rights</source>
+        <translation>Различные права</translation>
+    </message>
+    <message>
+        <location filename="../ui/SituationConstructor.qml" line="316"/>
         <source>Saved situations:</source>
         <translation>Сохранённые:</translation>
     </message>
@@ -475,82 +631,82 @@
         <translation type="vanished">Сохранённые</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="302"/>
+        <location filename="../ui/SituationConstructor.qml" line="365"/>
         <source>Id: %1</source>
         <translation>Id: %1</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="305"/>
+        <location filename="../ui/SituationConstructor.qml" line="368"/>
         <source>Name: %1</source>
         <translation>Название: %1</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="308"/>
+        <location filename="../ui/SituationConstructor.qml" line="371"/>
         <source>Difficulty: %1</source>
         <translation>Сложность: %1</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="408"/>
+        <location filename="../ui/SituationConstructor.qml" line="471"/>
         <source>Reset</source>
         <translation>Сбросить</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="408"/>
+        <location filename="../ui/SituationConstructor.qml" line="471"/>
         <source>New</source>
         <translation>Новая топология</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="415"/>
+        <location filename="../ui/SituationConstructor.qml" line="478"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="559"/>
+        <location filename="../ui/SituationConstructor.qml" line="620"/>
         <source>New situation</source>
         <translation>Новая ситуация</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="34"/>
+        <location filename="../ui/SituationConstructor.qml" line="33"/>
         <source>Electric connection</source>
         <translation>Электросвязь</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="35"/>
+        <location filename="../ui/SituationConstructor.qml" line="34"/>
         <source>Radio connection</source>
         <translation>Радиосвязь</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="36"/>
+        <location filename="../ui/SituationConstructor.qml" line="35"/>
         <source>Optical connection</source>
         <translation>Оптоволоконная связь</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="107"/>
+        <location filename="../ui/SituationConstructor.qml" line="106"/>
         <source>Protection Tools</source>
         <translation>Средства защиты информации</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="37"/>
+        <location filename="../ui/SituationConstructor.qml" line="36"/>
         <source>Operating System</source>
         <translation>Операционная система</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="38"/>
+        <location filename="../ui/SituationConstructor.qml" line="37"/>
         <source>Firewall</source>
         <translation>Межсетевой экран</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="39"/>
+        <location filename="../ui/SituationConstructor.qml" line="38"/>
         <source>Trusted Boot</source>
         <translation>Средство доверенной загрузки</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="40"/>
+        <location filename="../ui/SituationConstructor.qml" line="39"/>
         <source>Intrusion Detection</source>
         <translation>Система обнаружения вторжений</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="41"/>
+        <location filename="../ui/SituationConstructor.qml" line="40"/>
         <source>Access Control</source>
         <translation>Средства разграничения доступа</translation>
     </message>
@@ -559,7 +715,7 @@
         <translation type="obsolete">Загрузить топологию</translation>
     </message>
     <message>
-        <location filename="../ui/SituationConstructor.qml" line="428"/>
+        <location filename="../ui/SituationConstructor.qml" line="491"/>
         <source>Save map</source>
         <translation>Сохранить топологию</translation>
     </message>

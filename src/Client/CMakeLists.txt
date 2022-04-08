@@ -34,16 +34,6 @@ else()
     find_package(Qt5 COMPONENTS ${COMPONENTS} REQUIRED)
 endif()
 
-set(KF_MIN_VERSION "5.86.0")
-find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
-
-set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
-
-include(KDEInstallDirs)
-include(ECMInstallIcons)
-
-find_package(KF5 ${KF_MIN_VERSION} REQUIRED COMPONENTS Kirigami2 I18n CoreAddons IconThemes)
-
 add_executable(Client
         main.cpp
         ../../resources/Client/resources.qrc
@@ -54,7 +44,6 @@ add_executable(Client
 
 target_link_libraries(Client
         Qt5::Widgets Qt5::Quick Qt5::QuickControls2
-        KF5::Kirigami2 KF5::I18n KF5::IconThemes
         Qt5::Network
 )
 

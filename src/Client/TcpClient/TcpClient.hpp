@@ -12,7 +12,8 @@ public:
 
 
 signals:
-	void newMessage(const QByteArray &ba);
+	void newMessage(const QString &ba);
+	void connectedToServer();
 
 public slots:
 	void connectToServer(const QString &ip, const QString &port);

@@ -19,11 +19,13 @@ void TcpClient::sendMessage(const QString &message) {
 void TcpClient::onConnected() {
 	qInfo() << "Connected to host.";
 	_isConnected = true;
+    emit connectedToServer();
 }
 
 void TcpClient::onReadyRead() {
 	const auto message = _socket.readAll();
-	emit newMessage(message);
+//     qInfo() << message;
+    emit newMessage(message);
 }
 
 void TcpClient::onErrorOccurred(QAbstractSocket::SocketError error) { qWarning() << "Error:" << error; }

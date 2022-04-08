@@ -69,18 +69,23 @@ bool DataBase::createQuestionTable() {
 }
 
 bool DataBase::createSituationTable() {
-	QSqlQuery query;
-	if (!query.exec("CREATE TABLE Situation ("
-					"id           SERIAL      PRIMARY KEY,"
-					"name         TEXT        NOT NULL,"
-					"data         TEXT        NOT NULL,"
-					"difficulty   INTEGER     NOT NULL"
-					")")) {
-		qDebug() << "DataBase: error of create Situation";
-		qDebug() << query.lastError().text();
-		return false;
-	}
-	return true;
+
+QSqlQuery query;
+if (!query.exec("CREATE TABLE Situation ("
+                "id           SERIAL      PRIMARY KEY,"
+                "name         TEXT        NOT NULL,"
+                "data         TEXT        NOT NULL,"
+                "difficulty   INTEGER     NOT NULL,"
+                "resources    TEXT        NOT NULL,"
+                "net          TEXT        NOT NULL,"
+                "intruder     TEXT        NOT NULL,"
+                "rights       TEXT        NOT NULL"
+                ")")) {
+    qDebug() << "DataBase: error of create Situation";
+    qDebug() << query.lastError().text();
+    return false;
+}
+return true;
 }
 
 template<class T>
@@ -165,6 +170,7 @@ bool DataBase::insertORUpdateIntoQuestionTable(int id, const QString &theme, int
 	}
 	return true;
 }
+
 QList<QVariant> DataBase::selectAllFromQuestionTable(const QString &theme, const QString &description, int difficulty) {
 	QSqlQuery query;
 	query.prepare("select  id, theme, difficulty, description, model, unnest(answers_list), unnest(is_correct), "
@@ -188,6 +194,74 @@ QList<QVariant> DataBase::selectAllFromQuestionTable(const QString &theme, const
 		//        break;
 	}
 	return table;
+
+QList<QVariant> DataBase::generateTest(const QList<QString>& theme, const QList<QList<int>>& count) {
+    QSet<QString> ids;
+    QSqlQuery query;
+    for (int i = 0; i < theme.length(); i++) {
+        query.prepare("select  id from question where is_deleted = false AND theme LIKE \'%" +
+                      theme[i] + "%\' AND difficulty = :Difficulty ORDER BY random()  LIMIT :Count ;");
+        for (int j = 0; j < 3; j++) {
+            query.bindValue(":Difficulty", j);
+            query.bindValue(":Count", count[i][j]);
+            if (!query.exec()) {
+                qDebug() << "DataBase: generateTest (id)";
+                qDebug() << query.lastError().text();
+                return {};
+            }
+            while (query.next()) {
+                ids.insert(query.value(i).toString());
+            }
+        }
+    }
+    QString id_list = "";
+    for (auto i = ids.begin(); i != ids.end(); i++) {
+        if (i != ids.begin())
+            id_list += ",";
+        id_list += *i;
+    }
+    query.prepare("(SELECT  id, theme, difficulty, description, model, unnest(answers_list), "
+                  "array_length(answers_list,2) FROM Question WHERE id IN (" + id_list + ") AND model NOT IN (2,5))"
+                  "UNION ALL (SELECT  id, theme, difficulty, description, model, NULL, 0 FROM Question WHERE id IN "
+                  "(" + id_list + ") AND model IN (2,5));");
+
+    if (!query.exec()) {
+        qDebug() << "DataBase: generateTest (row)";
+        qDebug() << query.lastError().text();
+        return {};
+    }
+    QVariantList table;
+    while (query.next()) {
+        QVariantList row;
+        for (int i = 0; i < 7; i++)
+            row.append(query.value(i));
+        table.append(row);
+    }
+    return table;
+}
+QList<QVariant> DataBase::selectAllFromQuestionTable(const QString& theme, const QString& description,
+                                                     int difficulty) {
+    QSqlQuery query;
+    query.prepare("SELECT  id, theme, difficulty, description, model, unnest(answers_list), unnest(is_correct), "
+                  "array_length(answers_list,2) FROM Question WHERE is_deleted = false AND theme LIKE \'%" + theme +
+                  "%\' AND description LIKE \'%" + description + "%\' AND (difficulty = :Difficulty OR :Is_Any);");
+    query.bindValue(":Difficulty", difficulty - 1);
+    query.bindValue(":Is_Any", difficulty == 0);
+//    qDebug() << query.executedQuery();
+    if (!query.exec()) {
+        qDebug() << "DataBase: selectAllFromQuestionTable";
+        qDebug() << query.lastError().text();
+        return {};
+    }
+    QVariantList table;
+    while (query.next()) {
+        QVariantList row;
+        for (int i = 0; i < 8; i++)
+            row.append(query.value(i));
+        table.append(row);
+//        break;
+    }
+    return table;
 }
 
 QList<QVariant> DataBase::listAllSituations() {
@@ -211,28 +285,37 @@ QList<QVariant> DataBase::listAllSituations() {
 	return table;
 }
 
-qlonglong DataBase::insertORUpdateIntoSituationTable(qlonglong id, const QString &name, int difficulty,
-													 const QString &data) {
-	qDebug() << "inserting " << id << " _ " << name << " _ " << data;
+qlonglong DataBase::insertORUpdateIntoSituationTable(
+        qlonglong id, const QString& name, int difficulty,
+        const QString& resources, const QString& net, const QString& intruder, const QString& rights,
+        const QString& data
+) {
+    qDebug() << "inserting " << id << " _ " << name << " _ " << data;
 
-	QSqlQuery query;
-	if (id == -1) {
-		query.prepare("INSERT INTO Situation (name, data, difficulty) VALUES(:Name, :Data, :Difficulty);");
-	} else {
-		query.prepare("update Situation set (name, data, difficulty)"
-					  "=(:Name, :Data, :Difficulty) where id=:Id");
-	}
-	query.bindValue(":Name", name);
-	query.bindValue(":Data", data);
-	query.bindValue(":Difficulty", difficulty);
-	query.bindValue(":Id", id);
-	if (!query.exec()) {
-		qDebug() << "DataBase: error insert into Situation";
-		qDebug() << query.lastError().text();
-		return -1;
-	}
+    QSqlQuery query;
+    if (id == -1) {
+        query.prepare("INSERT INTO Situation (name, data, difficulty, resources, net, intruder, rights) "
+                      "VALUES(:Name, :Data, :Difficulty, :Resources, :Net, :Intruder, :Rights);");
+    } else {
+        query.prepare(
+            "update Situation set (name, data, difficulty, resources, net, intruder, rights)"
+            "=(:Name, :Data, :Difficulty, :Resources, :Net, :Intruder, :Rights) where id=:Id");
+    }
+    query.bindValue(":Name", name);
+    query.bindValue(":Data", data);
+    query.bindValue(":Difficulty", difficulty);
+    query.bindValue(":Resources", resources);
+    query.bindValue(":Net", net);
+    query.bindValue(":Intruder", intruder);
+    query.bindValue(":Rights", rights);
+    query.bindValue(":Id", id);
+    if (!query.exec()) {
+        qDebug() << "DataBase: error insert into Situation";
+        qDebug() << query.lastError().text();
+        return -1;
+    }
 
-	return query.lastInsertId().toLongLong();
+    return query.lastInsertId().toLongLong();
 }
 
 bool DataBase::deleteSituation(qlonglong id) {
@@ -295,4 +378,24 @@ bool DataBase::selectThemesAndNumberOfQuestions(Themes &themes) {
 		themes.addTheme(uniqueThemes[i], numberOfQuestions);
 	}
 	return true;
+}
+
+QMap<QString, QVariant> DataBase::getAnySituation() {
+    QSqlQuery query;
+    query.prepare("select * from situation limit 1");
+
+    if (!query.exec()) {
+        qDebug() << "DataBase: error insert into Question";
+        qDebug() << query.lastError().text();
+        return {};
+    }
+
+    while (query.next()) {
+        QMap<QString, QVariant> map;
+        for (int i = 0; i < query.record().count(); i++) {
+            map[query.record().fieldName(i)] = query.value(i);
+        }
+        return map;
+    }
+    return {};
 }

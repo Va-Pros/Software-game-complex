@@ -10,20 +10,31 @@ Page {
 
     Connections {
         target: client
+        function onConnectedToServer() {
+            client.sendMessage("0;" + nameField.text + ";" + platoonField.text)
+            load_page("QuestionPage")
+        }
     }
 
     ColumnLayout {
-        anchors.left : parent.left
-        anchors.right : parent.right
+        anchors.centerIn: parent
+        implicitWidth: 600
+        width: 600
 
-        RowLayout {
+        Item {
             Layout.fillWidth: true
+            implicitHeight: ipField.height
             Label {
-                text: qsTr("ip:")
+                text: qsTr("IP address:")
+                font.pixelSize: 20
+                anchors.left: parent.left
             }
             TextField {
                 id: ipField
+                width: 400
+                anchors.right: parent.right
                 Layout.fillWidth: true
+                text: "127.0.0.1"
                 placeholderText: qsTr("127.0.0.1")
                 onAccepted: buttonConnect.clicked()
                 validator: RegExpValidator {
@@ -31,40 +42,38 @@ Page {
                 }
                 //visible: themeAction.text === newThemeAction.text
             }
-            Button {
-            id: buttonConnect
-            Layout.fillWidth: true
-            text: qsTr("check connection")
-            onClicked: {
-                console.log("connenting to " + ipField.displayText + ":45000");
-                if (ipField.acceptableInput)
-                    client.connectToServer(ipField.text, "45000")
-            }
-        }
 
         }
-        RowLayout {
+        Item {
             Layout.fillWidth: true
-                Label {
-                text: qsTr("name:")
+            implicitHeight: nameField.height
+            Label {
+                font.pixelSize: 20
+                text: qsTr("Name:")
+                anchors.left: parent.left
             }
             TextField {
                 id: nameField
+                width: 400
+                anchors.right: parent.right
                 Layout.fillWidth: true
-                placeholderText: qsTr("Семенов Максим Алексеевич")
                 onAccepted: startButton.clicked()
                 //visible: themeAction.text === newThemeAction.text
             }
         }
-        RowLayout {
+        Item {
             Layout.fillWidth: true
-                Label {
-                text: qsTr("platoon:")
+            implicitHeight: platoonField.height
+            Label {
+                text: qsTr("Platoon:")
+                font.pixelSize: 20
+                anchors.left: parent.left
             }
             TextField {
                 id: platoonField
+                width: 400
+                anchors.right: parent.right
                 Layout.fillWidth: true
-                placeholderText: qsTr("Самый лучший в мире!")
                 onAccepted: startButton.clicked()
                 //visible: themeAction.text === newThemeAction.text
             }
@@ -75,10 +84,8 @@ Page {
             Layout.fillWidth: true
             text: qsTr("Start Test")
             onClicked: {
-                if (client.isConnected()) {
-                    client.sendMessage("0;" + nameField.text + ";" + platoonField.text)
-                    load_page("QuestionPage")
-                }
+                if (ipField.acceptableInput)
+                   client.connectToServer(ipField.text, "45000")
             }
         }
 

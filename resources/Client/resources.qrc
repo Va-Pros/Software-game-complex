@@ -4,6 +4,34 @@
         <file>ui/main.qml</file>
         <file>ui/MainMenu.qml</file>
         <file>ui/QuestionPage.qml</file>
-        <file>ui/QuestionArea.qml</file>
+        <file>ui/GamePage.qml</file>
+        <file>ui/SituationWidgets/CanvasComponent.qml</file>
+        <file>ui/SituationWidgets/CategoryElement.qml</file>
+        <file>ui/SituationWidgets/DividerElement.qml</file>
+        <file>ui/SituationWidgets/EdgeComponent.qml</file>
+        <file>ui/SituationWidgets/NodeComponent.qml</file>
+        <file>ui/SituationWidgets/SelectableElement.qml</file>
+        <file>ui/SituationWidgets/SituationElement.qml</file>
+        <file>icons/commutator.png</file>
+        <file>icons/computer.png</file>
+        <file>icons/router.png</file>
+        <file>icons/server.png</file>
+        <file>icons/optical.png</file>
+        <file>icons/radio.png</file>
+        <file>icons/wire.png</file>
+        <file>icons/accessControl.png</file>
+        <file>icons/firewall.png</file>
+        <file>icons/intrusionDetection.png</file>
+        <file>icons/os.png</file>
+        <file>icons/trustedBoot.png</file>
+        <file>icons/protectionLogo.png</file>
+        <file>ui/ExamFinishedPage.qml</file>
+        <file>ui/GamePage.qml</file>
+        <file>ui/QuestionArea/TypeInArea.qml</file>
+        <file>ui/QuestionArea/MatchArea.qml</file>
+        <file>ui/QuestionArea/TypeInFillArea.qml</file>
+        <file>ui/QuestionArea/DropdownFillArea.qml</file>
+        <file>ui/QuestionArea/SingleChoiceArea.qml</file>
+        <file>ui/QuestionArea/MultipleChoiceArea.qml</file>
     </qresource>
 </RCC>

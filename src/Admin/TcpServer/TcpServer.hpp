@@ -8,6 +8,9 @@
 #include <QVariantList>
 #include "../DB/database.h"
 
+#define GAME_ROLE_ATTACKER 0
+#define GAME_ROLE_DEFENDER 1
+
 class TcpServer : public QObject {
 Q_OBJECT
 
@@ -16,11 +19,9 @@ public:
 
 signals:
 
-    void newMessage(const QByteArray &ba);
+    void newMessage(QTcpSocket* sender, const QByteArray &ba);
 
 public slots:
-
-    void sendMessage(const QString &message);
 
     void onStart();//or resumeAccepting?
     void onStop();//or pauseAccepting?
@@ -34,7 +35,7 @@ private slots:
 
     void onClientDisconnected();
 
-    void onNewMessage(const QByteArray &ba);
+    void onNewMessage(QTcpSocket* sender, const QByteArray &ba);
 
 
 private:
@@ -44,6 +45,8 @@ private:
     QTcpServer _server;
     QHash<QString, QTcpSocket*> _clients;
     bool _isServerAvailable = false;
+    QList<QPair<QTcpSocket*, QTcpSocket*>> gameMapping;
+    bool nextAttacker = true;
 //    DataBase database;
 };
 
