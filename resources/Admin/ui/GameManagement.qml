@@ -3,6 +3,8 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls.Material 2.0
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 2.15
+import QtQuick.Dialogs 1.1
+//import CheckableTheme 1.0
 import "qrc:/ui"
 
 Page {
@@ -11,7 +13,7 @@ Page {
     property string name: "GameManager"
 
     Connections {
-        target: server
+        target: admin.server
     }
 
     Label {
@@ -67,19 +69,14 @@ Page {
         anchors.leftMargin: 10
         width: 300
         height: 30
-        model: ListModel {
-            id: modelThemes
-            ListElement { text: qsTr("Theme 1") }
-            ListElement { text: qsTr("Theme 2") }
-            ListElement { text: qsTr("Theme 3") }
-        }
+        model: admin.themes.gameSettingsThemesModel.data
         onActivated: {
             gridView.model.append({ text: currentValue });
-            modelThemes.remove(currentIndex)
+            admin.themes.gameSettingsThemesModel.remove(currentIndex)
         }
     }
     function onCrossClick(theme) {
-        modelThemes.append({ text: theme });
+        admin.themes.gameSettingsThemesModel.add(theme);
         var idx = -1;
         for (var i = 0; i < gridView.model.count; i++) {
             if (gridView.model.get(i).text === theme) {
@@ -114,6 +111,10 @@ Page {
 
         delegate: Item {
             property var checkThemeTextFieldsAndCountTotal: theme.checkThemeTextFieldsAndCountTotal
+            property string themeTitle: theme.header
+            property string easy: theme.easy
+            property string medium: theme.medium
+            property string hard: theme.hard
             width: gridView.cellWidth
             height: gridView.cellHeight
             Theme {
@@ -178,6 +179,10 @@ Page {
         anchors.top: good.top
         defText: qsTr("90")
         label: qsTr("%")
+    }
+
+    function checkInput() {
+        return checkTitle() & checkNumberOfCorrectAnswers() & checkTestTime() & checkGameTime() & checkThemes();
     }
 
     function checkTitle() {
@@ -322,6 +327,13 @@ Page {
         label: qsTr("min")
     }
 
+    MessageDialog {
+        id: alertNotValidInput
+        title: qsTr("Invalid input")
+        text: qsTr("Incorrect data in red cells")
+        Component.onCompleted: visible = false
+    }
+
     Button {
         id: serverAvaliable
         anchors.horizontalCenter: parent.horizontalCenter
@@ -329,18 +341,28 @@ Page {
         anchors.topMargin: 20
         text: qsTr("Start Server")
         onClicked: {
-            checkTitle()
-            checkNumberOfCorrectAnswers();
-            checkTestTime();
-            checkGameTime();
-            checkThemes();
-            if (!server.isServerAvailable()) {
-                server.onStart()
-                serverAvaliable.text = qsTr("Server Stop")
+            if (!checkInput()) {
+                alertNotValidInput.open()
             } else {
-                server.onStop()
-                serverAvaliable.text = qsTr("Start Server")
+                admin.sessionSettings.setSettings(titleTextField.text, satisfactory.text, good.text,
+                                            excellent.text, testTime.text, chooseDifficultyBox.currentIndex, gameTime.text);
+                for (var i = 0; i < gridView.count; i++) {
+                    admin.sessionSettings.addTheme(gridView.itemAtIndex(i).themeTitle,
+                                                   parseInt(gridView.itemAtIndex(i).easy, 10),
+                                                   parseInt(gridView.itemAtIndex(i).medium, 10),
+                                                   parseInt(gridView.itemAtIndex(i).hard, 10))
+                }
+                admin.sessionSettings.printThemes()
+                if (!admin.server.isServerAvailable()) {
+                    admin.server.onStart()
+                    serverAvaliable.text = qsTr("Server Stop")
+                } else {
+                    admin.server.onStop()
+                    serverAvaliable.text = qsTr("Start Server")
+                }
             }
+
+
         }
     }
 }
