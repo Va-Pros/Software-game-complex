@@ -14,7 +14,7 @@ Flickable {
     property var searchModel: []
     property int selectedInSearch: -1
 
-
+    property var difficulties: [qsTr("Easy"),  qsTr("Medium"), qsTr("Hard")]
 
     onSelectedTypeChanged: {
         if (selectedType < 0) return
@@ -185,11 +185,85 @@ Flickable {
                             Layout.fillWidth: true
                             Layout.fillHeight: true
                             model: searchModel
-                            delegate: Button {
+                            delegate: Item {
                                 Layout.fillWidth: true
-                                text: `${modelData.theme}:${modelData.description}`
-                                onClicked: selectedInSearch = index
-                                flat: selectedInSearch !== index
+                                height: itemContent.height
+
+                                Rectangle {
+                                    id: itemBackground
+                                    anchors.fill: parent
+                                    color: "transparent"
+                                    states: [
+
+                                        State {
+                                            name: "hovered"
+                                            when: itemMouseArea.containsMouse
+                                            PropertyChanges {
+                                                target: itemBackground
+                                                color: "lightgrey"
+                                            }
+                                        },
+                                        State {
+                                            name: "selected"
+                                            when: selectedInSearch === index
+                                            PropertyChanges {
+                                                target: itemBackground
+                                                color: "darkgrey"
+                                            }
+                                        }
+                                    ]
+                                }
+
+
+                                ColumnLayout {
+                                    id: itemContent
+                                    Label {
+                                        text: modelData.theme
+                                        font.bold: true
+                                        font.pixelSize: 20
+                                    }
+
+                                    Label {
+                                        text: modelData.description
+                                        font.pixelSize: 18
+                                    }
+
+                                    Label {
+                                        property string diff : difficulties[modelData.difficulty]
+                                        property string qType: listTypeModel.get(modelData.model).questionType
+
+                                        text: `${diff} | ${qType}`
+                                        font.pixelSize: 14
+                                    }
+
+                                }
+
+                                Rectangle {
+                                    anchors.top: parent.top
+                                    anchors.left: parent.left
+                                    anchors.right: parent.right
+                                    color: "black"
+                                    height: 2
+                                    visible: index > 0
+                                }
+
+
+
+//                                Button {
+//                                    Layout.fillWidth: true
+//                                    text: `${modelData.theme}:${modelData.description}`
+//                                    onClicked: selectedInSearch = index
+//                                    flat: selectedInSearch !== index
+//                                }
+                                MouseArea {
+                                    id: itemMouseArea
+                                    anchors.fill: parent
+                                    onClicked: {
+                                        selectedInSearch = index
+                                    }
+                                    hoverEnabled: true
+
+                                }
                             }
                         }
                     }
