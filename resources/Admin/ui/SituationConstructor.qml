@@ -1,11 +1,12 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
-import QtQuick.Controls 2.15 as Controls
+import QtQuick.Controls 2.15
 import QtQuick.Dialogs 1.0
 import QtGraphicalEffects 1.15
 import "SituationWidgets" as SW
+import "HelperWidgets"
 
-Controls.Page {
+Page {
     id: page
     title: qsTr("Situation constructor")
 
@@ -160,7 +161,7 @@ Controls.Page {
         anchors.bottom: parent.bottom
 
 
-        Controls.TextField {
+        TextField {
             id: situationName
             text: name
             anchors.left: parent.left
@@ -173,14 +174,14 @@ Controls.Page {
             anchors.top: situationName.bottom
             anchors.topMargin: 8
 
-            Controls.Label {
-                id:difficultyLabel
+            Label {
+                id: difficultyLabel
                 text: qsTr("Difficulty:")
             }
             Repeater {
                 id: difficultyRepeater
                 model: [qsTr("Easy"),  qsTr("Medium"), qsTr("Hard")]
-                Controls.RadioButton {
+                RadioButton {
                     text: modelData
                     checked: index === difficulty
                     onCheckedChanged:{
@@ -199,7 +200,7 @@ Controls.Page {
             anchors.top: difficultyRow.bottom
             anchors.topMargin: 4
 
-            Controls.ComboBox {
+            ComboBox {
                 id: informationResourceCombo
                 textRole: "text"
                 valueRole: "value"
@@ -212,7 +213,7 @@ Controls.Page {
                 }
             }
 
-            Controls.ComboBox {
+            ComboBox {
                 id: netTypeCombo
                 textRole: "text"
                 valueRole: "value"
@@ -231,7 +232,7 @@ Controls.Page {
                 }
             }
 
-            Controls.ComboBox {
+            ComboBox {
                 id: attackerTypeCombo
                 textRole: "text"
                 valueRole: "value"
@@ -241,7 +242,7 @@ Controls.Page {
                 }
             }
 
-            Controls.ComboBox {
+            ComboBox {
                 id: userAccessRightsCombo
                 textRole: "text"
                 valueRole: "value"
@@ -256,9 +257,9 @@ Controls.Page {
             }
         }
 
-        Controls.ScrollView {
+        ScrollView {
             id: componentsRow
-            Controls.ScrollBar.horizontal.policy: Controls.ScrollBar.AlwaysOn
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOn
             Layout.fillWidth: true
             Layout.fillHeight: true
             anchors.left: parent.left
@@ -291,16 +292,17 @@ Controls.Page {
                 //            MouseArea {
                 //                anchors.fill: parent
                 //                onWheel: {
-                //                    if (wheel.angleDelta.y > 0) Controls.ScrollBar.horizontal.decrease()
-                //                    else Controls.ScrollBar.horizontal.increase()
+                //                    if (wheel.angleDelta.y > 0) ScrollBar.horizontal.decrease()
+                //                    else ScrollBar.horizontal.increase()
                 //                }
                 //            }
             }
         }
 
 
-        Item {
+        SplitView {
             id: contentPanel
+            orientation: Qt.Horizontal
 
             anchors {
                 top: componentsRow.bottom
@@ -311,76 +313,196 @@ Controls.Page {
                 bottomMargin: 20
             }
 
-            Controls.Label {
-                id: savedSituationsLabel
-                text: qsTr("Saved situations:")
-                font.pixelSize: 24
-                anchors {
-                    top: contentPanel.top
-                    left: contentPanel.left
+            ColumnLayout {
+                SplitView.minimumWidth: 200
+                SplitView.maximumWidth: 500
+
+                Label {
+                    text: qsTr("Search:")
+                    font.pixelSize: 24
                 }
-            }
 
-            ListView {
-                id: savedSituationList
-                anchors {
-                    top: savedSituationsLabel.bottom
-                    bottom: contentPanel.bottom
-                    left: contentPanel.left
-                }
-                width: contentItem.childrenRect.width
-                clip: true
-
-                model: foundModels
-                delegate: Component {
-                    Item {
-                        id: delegateRoot
-                        width: 200
-                        height: savedItemContent.height
-
-
-                        Rectangle {
-                            id: selectionRect
-                            anchors.fill: delegateRoot
-                            anchors.rightMargin: 16
-                            color: "transparent"
-                            states: [
-                                State {
-                                    when: {
-                                        console.log("id", modelData.id, "vs", id)
-                                        return modelData.id === id
-                                    }
-                                    PropertyChanges {
-                                        target: selectionRect
-                                        color: "grey"
-                                    }
-                                }
-                            ]
-                        }
-                        ColumnLayout {
-                            id: savedItemContent
-                            Layout.margins: 20
-                            //                implicitWidth: 100
-                            Controls.Label {
-                                text: qsTr("Id: %1").arg(modelData.id)
-                            }
-                            Controls.Label {
-                                text: qsTr("Name: %1").arg(modelData.name)
-                            }
-                            Controls.Label {
-                                text: qsTr("Difficulty: %1").arg(difficultyRepeater.model[modelData.difficulty])
-                            }
-                        }
-
-                        MouseArea {
-                            anchors.fill: delegateRoot
-                            onClicked: {
-                                loadModel(modelData)
-                            }
-                        }
+                RowLayout{
+                    Label {
+                        id: nameLabel
+                        text: qsTr("Name:")
+                    }
+                    TextField {
+                        id: nameField
+                        Layout.fillWidth: true
                     }
                 }
+                RowLayout{
+                    Label {
+                        id: difficultySearchLabel
+                        text: qsTr("Difficulty:")
+                    }
+                    ComboBox {
+                        Layout.fillWidth: true
+                        id: difficultySearchModel
+                        editable: false
+                        model: [qsTr("Any"), qsTr("Easy"), qsTr("Medium"), qsTr("Hard")]
+                    }
+                }
+
+                Button {
+                    id: buttonSearch
+                    Layout.fillWidth: true
+                    text: qsTr("Search")
+                    onClicked: {
+                        foundModels = admin.database.searchSituations(nameField.text, difficultySearchModel.currentIndex - 1);
+                    }
+                }
+
+                Label {
+                    id: savedSituationsLabel
+                    text: qsTr("Found situations:")
+                    font.pixelSize: 24
+                }
+
+                MyVerticalListView {
+                    model: foundModels
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    delegate: //Component {
+                        Item {
+                            id: delegateRoot
+                            //width: 200
+                            Layout.fillWidth: true
+                            height: wrapper.height + 2 * wrapper.anchors.margins
+
+
+                            Rectangle {
+                                id: selectionRect
+                                anchors.fill: delegateRoot
+
+                                color: "transparent"
+                                states: [
+                                    State {
+                                        when: itemMouseArea.containsMouse
+                                        PropertyChanges {
+                                            target: selectionRect
+                                            color: "lightgrey"
+                                        }
+                                    },
+                                    State {
+                                        when: modelData.id === id
+                                        PropertyChanges {
+                                            target: selectionRect
+                                            color: "grey"
+                                        }
+                                    }
+                                ]
+                            }
+
+                            Item {
+                                id: wrapper
+                                anchors.fill: parent
+                                anchors.margins: 8
+                                height: savedItemContent.height
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+
+                            ColumnLayout {
+                                id: savedItemContent
+                                //Layout.margins: 20
+                                //anchors.margins: 8
+                                //                implicitWidth: 100
+//                                Label {
+//                                    text: qsTr("Id: %1").arg(modelData.id)
+//                                }
+                                Label {
+                                    text: qsTr("Name: %1").arg(modelData.name)
+                                }
+                                Label {
+                                    text: qsTr("Difficulty: %1").arg(difficultyRepeater.model[modelData.difficulty])
+                                }
+                            }
+                            }
+
+                            MouseArea {
+                                id: itemMouseArea
+                                anchors.fill: delegateRoot
+                                hoverEnabled: true
+                                onClicked: {
+                                    loadModel(modelData)
+                                }
+                            }
+                        }
+                    //}
+                }
             }
+
+//            Label {
+//                id: savedSituationsLabel
+//                text: qsTr("Saved situations:")
+//                font.pixelSize: 24
+//                anchors {
+//                    top: contentPanel.top
+//                    left: contentPanel.left
+//                }
+//            }
+
+//            ListView {
+//                id: savedSituationList
+//                anchors {
+//                    top: savedSituationsLabel.bottom
+//                    bottom: contentPanel.bottom
+//                    left: contentPanel.left
+//                }
+//                width: contentItem.childrenRect.width
+//                clip: true
+
+//                model: foundModels
+//                delegate: Component {
+//                    Item {
+//                        id: delegateRoot
+//                        width: 200
+//                        height: savedItemContent.height
+
+
+//                        Rectangle {
+//                            id: selectionRect
+//                            anchors.fill: delegateRoot
+//                            anchors.rightMargin: 16
+//                            color: "transparent"
+//                            states: [
+//                                State {
+//                                    when: {
+//                                        console.log("id", modelData.id, "vs", id)
+//                                        return modelData.id === id
+//                                    }
+//                                    PropertyChanges {
+//                                        target: selectionRect
+//                                        color: "grey"
+//                                    }
+//                                }
+//                            ]
+//                        }
+//                        ColumnLayout {
+//                            id: savedItemContent
+//                            Layout.margins: 20
+//                            //                implicitWidth: 100
+//                            Label {
+//                                text: qsTr("Id: %1").arg(modelData.id)
+//                            }
+//                            Label {
+//                                text: qsTr("Name: %1").arg(modelData.name)
+//                            }
+//                            Label {
+//                                text: qsTr("Difficulty: %1").arg(difficultyRepeater.model[modelData.difficulty])
+//                            }
+//                        }
+
+//                        MouseArea {
+//                            anchors.fill: delegateRoot
+//                            onClicked: {
+//                                loadModel(modelData)
+//                            }
+//                        }
+//                    }
+//                }
+//            }
 
             Rectangle {
                 id: canvasRectangle
@@ -394,13 +516,13 @@ Controls.Page {
                 //            bottomMargin: 20
                 //        }
 
-                anchors {
-                    top: contentPanel.top
-                    bottom: contentPanel.bottom
-                    right: contentPanel.right
+//                anchors {
+//                    top: contentPanel.top
+//                    bottom: contentPanel.bottom
+//                    right: contentPanel.right
 
-                    left: savedSituationList.right
-                }
+//                    left: savedSituationList.right
+//                }
 
                 border.color: "black"
                 border.width: 5
@@ -466,14 +588,14 @@ Controls.Page {
             anchors.right: parent.right
             Layout.alignment: Qt.AlignRight
 
-            Controls.Button {
+            Button {
                 Layout.alignment: Qt.AlignRight
                 text: id === -1 ? qsTr("Reset") : qsTr("New")
                 icon.name: id === -1 ? "edit-reset" : "document-new"
                 onClicked: reset()
             }
 
-            Controls.Button {
+            Button {
                 Layout.alignment: Qt.AlignRight
                 text: qsTr("Delete")
                 icon.name: "delete"
@@ -486,14 +608,14 @@ Controls.Page {
                 }
             }
 
-            Controls.Button {
+            Button {
                 Layout.alignment: Qt.AlignRight
                 text: qsTr("Save map")
                 icon.name: "document-save"
                 onClicked: save()
             }
 
-            Controls.Action {
+            Action {
                 shortcut: StandardKey.Save
                 onTriggered: save()
             }
@@ -551,7 +673,12 @@ Controls.Page {
         }
         const dataToSave = JSON.stringify(modelToSave)
         console.log("dataToSave:", id, situationName.text, dataToSave)
-        const insertId = admin.database.insertORUpdateIntoSituationTable(id, situationName.text, difficulty, dataToSave)
+        const insertId = admin.database.insertORUpdateIntoSituationTable(
+                           id, situationName.text, difficulty,
+                           informationResourceCombo.currentValue, netTypeCombo.currentValue,
+                           attackerTypeCombo.currentValue, userAccessRightsCombo.currentValue,
+                           dataToSave
+                           )
         if (id == -1) {
             id = insertId
         }

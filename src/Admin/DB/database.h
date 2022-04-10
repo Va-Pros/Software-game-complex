@@ -26,6 +26,8 @@ public:
 
 	Q_INVOKABLE QList<QVariant> listAllSituations();
 
+    Q_INVOKABLE QList<QVariant> searchSituations(const QString &name, int difficulty);
+
 	Q_INVOKABLE static QMap<QString, QVariant> getAnySituation();
 
 	Q_INVOKABLE bool deleteSituation(qlonglong id);

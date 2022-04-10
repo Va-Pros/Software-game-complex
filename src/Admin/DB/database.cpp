@@ -434,3 +434,30 @@ bool DataBase::deleteQuestion(qlonglong id) {
 	}
 	return true;
 }
+
+QList<QVariant> DataBase::searchSituations(const QString& name, int difficulty) {
+
+    QSqlQuery query;
+    query.prepare("SELECT * FROM Situation WHERE name iLIKE \'%" + name +
+                  "%\' AND (difficulty = :Difficulty OR :Is_Any);");
+    query.bindValue(":Difficulty", difficulty);
+    query.bindValue(":Is_Any", difficulty < 0);
+//    qDebug() << query.executedQuery();
+    if (!query.exec()) {
+        qDebug() << "DataBase: selectAllFromQuestionTable";
+        qDebug() << query.lastError().text();
+        return {};
+    }
+
+    QVariantList situations;
+
+    while (query.next()) {
+        QMap<QString, QVariant> map;
+        for (int i = 0; i < query.record().count(); i++) {
+            map[query.record().fieldName(i)] = query.value(i);
+        }
+        situations.append(map);
+    }
+
+    return situations;
+}
