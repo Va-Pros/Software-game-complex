@@ -26,14 +26,25 @@ Pane {
                     text: modelData
                     font.pixelSize: 20
                 }
+
+                Label {
+                    text: " - "
+                    font.pixelSize: 20
+                }
+
                 ComboBox {
                     Layout.fillWidth: true
                     id: ansCombo
                     editable: false
                     model: matchArea.variants
                     font.pixelSize: 20
+                    currentIndex: index
                     onCurrentIndexChanged:{
                         answer[index]=matchArea.variants[currentIndex];
+                    }
+
+                    onModelChanged: {
+                        currentIndex = Math.min(index, model.length - 1)
                     }
                 }
             }

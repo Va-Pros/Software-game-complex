@@ -11,7 +11,7 @@ Page {
 
         // TODO: rewrite
         function onNewMessage(message) {
-            console.log("newMessage:", message)
+            //console.log("newMessage:", message)
             var data = message.split(';')
             if (data[0] !== "0") return
             data = data.splice(1);
@@ -36,8 +36,6 @@ Page {
             }
 //            qu3.push([]);
             qu3.splice(0, 1)
-
-            console.log("parsed:", JSON.stringify(qu3))
 
             questionCount = k;
 
@@ -94,7 +92,7 @@ Page {
                 Layout.fillHeight: true
                 id: questionStack
                 property int length: 0
-                property var pages: ["SingleChoiceArea", "MultipleChoiceArea", "TypeInArea", "MatchArea", "DropdownFillArea", "TypeInFillArea"]
+                property var pages: ["SingleChoiceArea", "MultipleChoiceArea", "TypeInArea", "MatchArea", "FillArea", "FillArea"]
                 focus: true
                 currentIndex: questionIndex
                 Repeater {
@@ -103,7 +101,7 @@ Page {
                     Loader {
                         // index 0
                         id: pageExample
-                        property string title: active? item.title:"..."
+                        //property string title: active? item.title:"..."
                         active: true
                         source: ("QuestionArea/" + questionStack.pages[modelData[4]] + ".qml")
                         onLoaded: {
@@ -224,7 +222,6 @@ Page {
     }
 
     function endTest() {
-        console.log("hi, Arti!");
         //client.sendMessage("666;")
         load_page("GamePage");
     }

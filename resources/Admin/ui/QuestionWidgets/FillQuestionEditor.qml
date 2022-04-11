@@ -38,4 +38,23 @@ MultipleColumnsAnswersQuestionEditor {
 //    function saveFillQuestion(theme, difficulty, isActive, questionText, gapIndices, answerModels) {
 //        throw "AbstractFunction"
 //    }
+
+    function validate() {
+
+        let questionText = getQuestionText();
+        const formatter = "{txt}";
+
+        const gapIndices = [];
+        var gapIndex = questionText.indexOf(formatter)
+        while (gapIndex !== -1) {
+            gapIndices.push(gapIndex);
+
+            questionText = questionText.substring(0, gapIndex) + questionText.substring(gapIndex + formatter.length);
+            gapIndex = questionText.indexOf(formatter)
+        }
+
+        const answerModels = getArrayOfAnswerSubModels()
+
+        return gapIndices.length === answerModels.length;
+    }
 }

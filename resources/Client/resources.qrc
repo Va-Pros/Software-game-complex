@@ -33,5 +33,10 @@
         <file>ui/QuestionArea/DropdownFillArea.qml</file>
         <file>ui/QuestionArea/SingleChoiceArea.qml</file>
         <file>ui/QuestionArea/MultipleChoiceArea.qml</file>
+        <file>ui/QuestionArea/FillComponents/TextComponent.qml</file>
+        <file>ui/QuestionArea/FillComponents/InputComponent.qml</file>
+        <file>ui/QuestionArea/FillComponents/DropDownComponent.qml</file>
+        <file>ui/QuestionArea/FillArea.qml</file>
+        <file>ui/QuestionArea/FillItemPlacer.qml</file>
     </qresource>
 </RCC>

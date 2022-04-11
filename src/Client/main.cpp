@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
 
 	TcpClient client;
 	engine.rootContext()->setContextProperty("client", &client);
-    engine.load(QUrl(QStringLiteral("qrc:ui/main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/ui/main.qml")));
 
     if (engine.rootObjects().isEmpty()) {
         return -1;

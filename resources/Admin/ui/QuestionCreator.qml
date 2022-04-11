@@ -209,10 +209,24 @@ Page {
 
         Button {
             Layout.alignment: Qt.AlignRight
+            visible: getQuestionWidget().questionId < 0
+            text: qsTr("Reset")
+            icon.name: "edit-reset"
+            onClicked: {
+                updateQuestionEditor()
+            }
+        }
+
+        Button {
+            Layout.alignment: Qt.AlignRight
             visible: getQuestionWidget().questionId >= 0
             text: qsTr("Delete")
             icon.name: "delete"
-            onClicked: admin.database.deleteQuestion(getQuestionWidget().questionId)
+            onClicked: {
+                admin.database.deleteQuestion(getQuestionWidget().questionId)
+                updateQuestionEditor()
+                search()
+            }
         }
 
         Button {
@@ -276,6 +290,7 @@ Page {
         showInfo(qsTr("Saving.."))
         try {
             getQuestionWidget().saveQuestion(theme, difficulty, false)
+            search()
         } catch(e) {
             showError(qsTr("Unhandled error while saving: %1").arg(e))
         }

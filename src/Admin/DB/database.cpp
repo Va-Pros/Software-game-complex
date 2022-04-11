@@ -173,7 +173,8 @@ int DataBase::insertORUpdateIntoQuestionTable(int id, const QString &theme, int 
 		qDebug() << query.lastError().text();
 		return -1;
 	}
-	return query.lastInsertId().toInt();
+
+	return id < 0 ? query.lastInsertId().toInt() : id;
 }
 
 QList<QVariant> DataBase::generateTest(const QList<QString>& theme, const QList<QList<int>>& count) {

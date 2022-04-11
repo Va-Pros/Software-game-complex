@@ -16,11 +16,21 @@ ColumnLayout {
         text: qsTr("Question text")
     }
 
-    TextArea {
-        id: inputArea
-        implicitHeight: 100
+    Flickable {
+        id: flickable
+        //anchors.fill: parent
+        Layout.preferredHeight: 200
         Layout.fillWidth: true
-        placeholderText: qsTr("Question text")
+
+        TextArea.flickable: TextArea {
+            id: inputArea
+
+
+            wrapMode: TextEdit.Wrap
+            placeholderText: qsTr("Question text")
+        }
+
+        ScrollBar.vertical: ScrollBar { }
     }
 
     Action {

@@ -97,7 +97,7 @@ Controls.Page {
             var data = message.split(';')
             if (data[0] !== "666") return
 
-            console.log("newMessage:", JSON.parse(data[1]).data)
+            //console.log("newMessage:", JSON.parse(data[1]).data)
             const parsed = JSON.parse(data[1])
             lastLoaded = parsed
             loadModel(parsed)

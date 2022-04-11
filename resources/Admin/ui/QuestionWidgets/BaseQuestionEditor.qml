@@ -48,10 +48,15 @@ ColumnLayout {
         throw "AbstractFunction"
     }
 
+    function validate() {
+        return true;
+    }
+
     function saveQuestion(theme, difficulty, isDelete) {
+        if (!validate()) return
         const updatedId = admin.database.insertORUpdateIntoQuestionTable(questionId, theme, difficulty, getQuestionText(), questionType, getSaveVariants(), getCorrectnessArray(), isDelete)
         if (updatedId < 0) {
-            console.log("error")
+            console.log("error: ", updatedId)
         } else {
             questionId = updatedId
         }

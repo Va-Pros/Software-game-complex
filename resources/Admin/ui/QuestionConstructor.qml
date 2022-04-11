@@ -12,7 +12,6 @@ Flickable {
     property string title: qsTr("Question constructor")
     property int selectedType: 0
     property var searchModel: []
-    property int selectedInSearch: -1
 
     property var difficulties: [qsTr("Easy"),  qsTr("Medium"), qsTr("Hard")]
 
@@ -20,15 +19,6 @@ Flickable {
         if (selectedType < 0) return
         //selectedInSearch = -1
         updateQuestionEditor()
-    }
-
-    onSelectedInSearchChanged: {
-        if (selectedInSearch < 0) return
-        //selectedType = -1
-        const questionModel = searchModel[selectedInSearch]
-        selectedType = questionModel.model
-        //setQuestionEditorIndex(questionModel.model)
-        pageQuestionCreator.item.load(questionModel)
     }
 
 //    TabBar {
@@ -117,7 +107,7 @@ Flickable {
                             onClicked: {
                                 if (selectedType === index) selectedType = -1
                                 selectedType = index
-                                selectedInSearch = -1
+                                //selectedInSearch = -1
                             }
                         }
                     }
@@ -169,9 +159,7 @@ Flickable {
                             id: buttonSearch
                             Layout.fillWidth: true
                             text: qsTr("Search")
-                            onClicked: {
-                                searchModel = admin.database.selectAllFromQuestionTable(themeName.editText, contentField.text, difficultyMosel.currentIndex);
-                            }
+                            onClicked: search()
                         }
 
                         Label {
@@ -205,7 +193,8 @@ Flickable {
                                         },
                                         State {
                                             name: "selected"
-                                            when: selectedInSearch === index
+                                            when: modelData.id === getCurrentQuestionWidget().questionId
+
                                             PropertyChanges {
                                                 target: itemBackground
                                                 color: "darkgrey"
@@ -247,19 +236,13 @@ Flickable {
                                     visible: index > 0
                                 }
 
-
-
-//                                Button {
-//                                    Layout.fillWidth: true
-//                                    text: `${modelData.theme}:${modelData.description}`
-//                                    onClicked: selectedInSearch = index
-//                                    flat: selectedInSearch !== index
-//                                }
                                 MouseArea {
                                     id: itemMouseArea
                                     anchors.fill: parent
                                     onClicked: {
-                                        selectedInSearch = index
+                                        const questionModel = searchModel[index]
+                                        selectedType = questionModel.model
+                                        pageQuestionCreator.item.load(questionModel)
                                     }
                                     hoverEnabled: true
 
@@ -290,6 +273,10 @@ Flickable {
         }
     }
 
+    function getCurrentQuestionWidget() {
+        return pageQuestionCreator.item.getQuestionWidget()
+    }
+
     function updateQuestionEditor() {
         setQuestionEditorIndex(selectedType)
     }
@@ -303,4 +290,11 @@ Flickable {
         setQuestionEditor(item.questionType, item.widgetPath)
     }
 
+    function search() {
+        searchModel = admin.database.selectAllFromQuestionTable(themeName.editText, contentField.text, difficultyMosel.currentIndex);
+    }
+
+    Component.onCompleted: {
+        search()
+    }
 }
