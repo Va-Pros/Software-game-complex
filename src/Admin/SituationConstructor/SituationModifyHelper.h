@@ -44,24 +44,24 @@ public:
         const QString& path
     ) {
 
-        SituationModel model;
-
-        QFile file(QUrl(path).toLocalFile());
-        if (file.open(QIODevice::ReadOnly | QIODevice::ExistingOnly)) {
-
-            QDataStream in(&file);
-            in >> model;
-
-            file.flush();
-            file.close();
-
-            QVariant variant;
-            variant.setValue(&model);
-
-            emit imported(variant, path);
-        } else {
-            emit importFailed("File opening failed", path);
-        }
+//        SituationModel model;
+//
+//        QFile file(QUrl(path).toLocalFile());
+//        if (file.open(QIODevice::ReadOnly | QIODevice::ExistingOnly)) {
+//
+//            QDataStream in(&file);
+//            in >> model;
+//
+//            file.flush();
+//            file.close();
+//
+//            QVariant variant;
+//            variant.setValue(&model);
+//
+//            emit imported(variant, path);
+//        } else {
+//            emit importFailed("File opening failed", path);
+//        }
     }
 
     static SituationModifyHelper* singletonProvider(QQmlEngine* engine, QJSEngine* scriptEngine)

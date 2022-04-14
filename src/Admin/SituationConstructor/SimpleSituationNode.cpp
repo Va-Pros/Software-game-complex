@@ -4,12 +4,14 @@
 
 #include "SimpleSituationNode.h"
 
-SimpleSituationNode::SimpleSituationNode(const QString& name, const QString& image) : name(name), image(image) {}
+SimpleSituationNode::SimpleSituationNode(
+        const QString& subtype,
+        const QList<ProtectionTool*>& protectionTools
+) : subtype(subtype), protectionTools(protectionTools) {}
 
-QString SimpleSituationNode::getName() {
-    return name;
+QString SimpleSituationNode::getSubtype() {
+    return subtype;
 }
-
-QString SimpleSituationNode::getImage() {
-    return image;
+QList<ProtectionTool*> SimpleSituationNode::getProtectionTools(){
+    return protectionTools;
 }

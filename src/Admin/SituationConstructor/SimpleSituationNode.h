@@ -11,15 +11,15 @@
 class SimpleSituationNode : public SituationNode {
 
 public:
-    SimpleSituationNode(const QString& name, const QString& image);
+    SimpleSituationNode(const QString& subtype, const QList<ProtectionTool*>& protectionTools);
 
-    QString getName() override;
+    QString getSubtype() override;
 
-    QString getImage() override;
+    QList<ProtectionTool*> getProtectionTools() override;
 
 private:
-    QString name;
-    QString image;
+    QString subtype;
+    QList<ProtectionTool*> protectionTools;
 
 };
 

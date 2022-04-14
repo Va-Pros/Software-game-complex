@@ -8,11 +8,16 @@
 #include <QList>
 #include <QObject>
 #include "SituationNode.h"
+#include "SituationEdge.h"
 
 class SituationNet : public QObject {
     Q_OBJECT
 
 public:
+    SituationNet(QObject *parent, const QList<SituationNode *> & nodes, const QList<SituationEdge*> & edges):QObject(parent), nodes(nodes), edges(edges){}
+
+    SituationNet(const SituationNet& other): SituationNet(nullptr, other.nodes, other.edges) {}
+
     const QList<SituationNode*>& getNodes() const {
         return nodes;
     }
@@ -21,8 +26,13 @@ public:
         SituationNet::nodes = nodes;
     }
 
+    const QList<SituationEdge *> & getEdges() const {
+        return edges;
+    }
+
 private:
     QList<SituationNode*> nodes;
+    QList<SituationEdge*> edges;
 
 };
 

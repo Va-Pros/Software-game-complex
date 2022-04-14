@@ -9,32 +9,25 @@
 #include <QString>
 #include <QMetaType>
 #include <QDebug>
+#include "SituationNet.h"
 
 class SituationModel : public QObject {
     Q_OBJECT
 
     Q_PROPERTY(QString name READ getName WRITE setName)
-    Q_PROPERTY(int someData READ getSomeData WRITE setSomeData)
 
 public:
-    SituationModel() : QObject(), name(), someData(0) {
-        qDebug() << "newModel1";
-    }
+    enum class Difficulty {
+        SIMPLE,
+        MEDIUM,
+        HARD
+    };
 
-    SituationModel(const QString& name, int someData) : QObject(), name(name), someData(someData) {
-        qDebug() << "newModel2";
-    }
 
-    SituationModel(const SituationModel& model) : SituationModel(model.name, model.someData) {
-        qDebug() << "newModel3";
-    }
+    SituationModel(QObject *parent, int id, const QString & name, Difficulty difficulty, const SituationNet & graph, const QString & resources, const QString & net, const QString & intruder, const QString & rights):QObject(parent),id(id),name(name),difficulty(difficulty),graph(graph),resources(resources),net(net),intruder(intruder),rights(rights){}
 
     [[nodiscard]] const QString& getName() const {
         return name;
-    }
-
-    [[nodiscard]] int getSomeData() const {
-        return someData;
     }
 
     void setName(const QString& name) {
@@ -42,16 +35,72 @@ public:
         SituationModel::name = name;
     }
 
-    void setSomeData(int someData) {
-        qDebug() << "setting data " << someData;
-        SituationModel::someData = someData;
+    int getId() const{
+        return id;
+    }
+
+    void setId(int id){
+        SituationModel::id = id;
+    }
+
+    Difficulty getDifficulty() const{
+        return difficulty;
+    }
+
+    void setDifficulty(Difficulty difficulty){
+        SituationModel::difficulty = difficulty;
+    }
+
+    const SituationNet & getGraph() const{
+        return graph;
+    }
+
+//    void setGraph(const SituationNet & graph){
+//        SituationModel::graph = graph;
+//    }
+
+    const QString & getResources() const{
+        return resources;
+    }
+
+    void setResources(const QString & resources){
+        SituationModel::resources = resources;
+    }
+
+    const QString & getNet() const{
+        return net;
+    }
+
+    void setNet(const QString & net){
+        SituationModel::net = net;
+    }
+
+    const QString & getIntruder() const{
+        return intruder;
+    }
+
+    void setIntruder(const QString & intruder){
+        SituationModel::intruder = intruder;
+    }
+
+    const QString & getRights() const{
+        return rights;
+    }
+
+    void setRights(const QString & rights){
+        SituationModel::rights = rights;
     }
 
 
-
 private:
+    int id;
     QString name;
-    int someData;
+    Difficulty difficulty;
+    SituationNet graph;
+    QString resources;
+    QString net;
+    QString intruder;
+    QString rights;
 
 };
 
@@ -59,6 +108,6 @@ QDataStream &operator<<(QDataStream & out, const SituationModel & model);
 
 QDataStream &operator>>(QDataStream & in, SituationModel & model);
 
-Q_DECLARE_METATYPE(SituationModel)
+//Q_DECLARE_METATYPE(SituationModel)
 
 #endif //SOFTWARE_GAME_COMPLEX_SITUATIONMODEL_H

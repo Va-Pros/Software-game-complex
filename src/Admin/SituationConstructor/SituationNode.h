@@ -8,14 +8,21 @@
 
 #include <QString>
 #include <QObject>
+#include <QList>
+#include "ProtectionTool.h"
+#include "SituationItem.h"
 
-class SituationNode : public QObject {
+class SituationNode : public SituationItem {
     Q_OBJECT
 
 public:
-    virtual QString getName() = 0;
+    QString getType() override {
+        return "node";
+    }
 
-    virtual QString getImage() = 0;
+    virtual QString getSubtype() = 0;
+
+    virtual QList<ProtectionTool*> getProtectionTools() = 0;
 
 };
 

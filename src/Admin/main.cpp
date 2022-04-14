@@ -1,5 +1,5 @@
 #include "AdminBackend/Admin.h"
-#include "SituationConstructor/SituationModifyHelper.h"
+//#include "SituationConstructor/SituationModifyHelper.h"
 
 #include <QApplication>
 #include <QIcon>
@@ -20,10 +20,10 @@ void registerQmlTypes() {
 	// SituationConstructor
 	const char *situationConstructorUri = "SituationConstructor";
 
-	qmlRegisterSingletonType<SituationModifyHelper>(situationConstructorUri, 1, 0, "SituationModifyHelper",
-													SituationModifyHelper::singletonProvider);
+//	qmlRegisterSingletonType<SituationModifyHelper>(situationConstructorUri, 1, 0, "SituationModifyHelper",
+//													SituationModifyHelper::singletonProvider);
 
-	registerVersion1<SituationModel>(situationConstructorUri);
+	//registerVersion1<SituationModel>(situationConstructorUri);
 }
 
 int main(int argc, char **argv) {

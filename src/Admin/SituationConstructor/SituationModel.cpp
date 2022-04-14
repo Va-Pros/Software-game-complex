@@ -8,7 +8,7 @@
 QDataStream &operator<<(QDataStream & out, const SituationModel & model) {
 
     out << model.getName();
-    out << model.getSomeData();
+    //out << model.getSomeData();
 
     return out;
 }
@@ -21,8 +21,8 @@ QDataStream &operator>>(QDataStream & in, SituationModel & model) {
     in >> string;
     model.setName(string);
 
-    in >> integer;
-    model.setSomeData(integer);
+//    in >> integer;
+//    model.setSomeData(integer);
 
     return in;
 }
