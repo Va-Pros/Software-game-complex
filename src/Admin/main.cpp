@@ -7,6 +7,7 @@
 #include <QQmlContext>
 #include <QQuickStyle>
 #include <QTranslator>
+#include <QStyleFactory>
 //#define LIST_RESOURCES
 
 template<typename T>
@@ -37,8 +38,9 @@ int main(int argc, char **argv) {
 	app.setOrganizationDomain("somecompany.com");
 	app.setApplicationName("Software-game complex");
 #ifdef Q_OS_WIN
-	QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
-	QApplication::setStyle(QStringLiteral("breeze"));
+//	qDebug() << QStyleFactory::keys();
+//	QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
+//	QApplication::setStyle(QStringLiteral("breeze"));
 #endif
 #ifdef LIST_RESOURCES
 	QDirIterator it(":", QDirIterator::Subdirectories);

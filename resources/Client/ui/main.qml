@@ -6,8 +6,7 @@ import QtQuick.Window 2.2
 ApplicationWindow {
     visible: true
     title: qsTr("Client Panel")
-    width: Screen.desktopAvailableWidth
-    height: Screen.desktopAvailableHeight
+    visibility: "Maximized"
 
     StackView {
         anchors.fill: parent

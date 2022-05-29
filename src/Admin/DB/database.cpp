@@ -11,9 +11,28 @@ bool DataBase::openDataBase() {
 	// 	qDebug() << QSqlDatabase::drivers();
 	db = QSqlDatabase::addDatabase("QPSQL");
 	db.setHostName("localhost");
-	db.setUserName("postgres");
-	db.setPassword("123");
-	db.setPort(5432);
+
+	auto username = qgetenv("SGC_USER");
+	if (username.isEmpty()) {
+		qDebug() << "DB USERNAME UNKNOWN, PLEASE SET 'SGC_USER' env variable";
+		throw "DB USER ERROR";
+	}
+
+	auto pass = qgetenv("SGC_PASSWORD");
+	if (username.isEmpty()) {
+		qDebug() << "DB PASSWORD UNKNOWN, PLEASE SET 'SGC_PASSWORD' env variable";
+		throw "DB PASS ERROR";
+	}
+
+	db.setUserName(username);
+	db.setPassword(pass);
+	bool hasPort;
+	int port = qEnvironmentVariableIntValue("SGC_PORT", &hasPort);
+	if (!hasPort) {
+		port = 5432;
+		qDebug() << "Assuming db port 5432";
+	}
+	db.setPort(port);
 	if (!db.open()) {
 		qDebug() << db.lastError().text();
 		return false;

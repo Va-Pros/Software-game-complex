@@ -6,12 +6,11 @@ import QtGraphicalEffects 1.0
 import QtQuick.Window 2.2
 
 ApplicationWindow {
-    width: Screen.desktopAvailableWidth
-    height: Screen.desktopAvailableHeight
     minimumWidth: 1024
     minimumHeight: 512
     visible: true
     title: qsTr("Admin Panel")
+    visibility: "Maximized"
 
     TabBar {
         id: mainBar
